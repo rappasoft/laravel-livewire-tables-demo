@@ -67,9 +67,9 @@ class UsersTable extends DataTableComponent
                     'yes' => 'Yes',
                     'no'  => 'No',
                 ]),
-            'created_from' => Filter::make('Created From')
+            'verified_from' => Filter::make('Verified From')
                 ->date(),
-            'created_to' => Filter::make('Created To')
+            'verified_to' => Filter::make('Verified To')
                 ->date(),
         ];
     }
@@ -84,7 +84,9 @@ class UsersTable extends DataTableComponent
 
                return $query->whereNull('verified');
            })
-           ->when($this->getFilter('active'), fn($query, $active) => $query->where('active', $active === 'yes'));
+            ->when($this->getFilter('active'), fn($query, $active) => $query->where('active', $active === 'yes'))
+            ->when($this->getFilter('verified_from'), fn($query, $date) => $query->where('email_verified_at', '>=', $date))
+            ->when($this->getFilter('verified_to'), fn($query, $date) => $query->where('email_verified_at', '<=', $date));
 
     }
 
