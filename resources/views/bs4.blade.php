@@ -19,7 +19,7 @@
 
     <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <p class="lead">Bootstrap 4 Implementation</p>
+        <p class="lead">Bootstrap 4 Implementation - <a href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" target="_blank">Gist</a></p>
     </div>
 
     <div class="container">

@@ -19,7 +19,7 @@
 
     <div class="px-4 my-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <p class="lead">Bootstrap 5 Implementation</p>
+        <p class="lead">Bootstrap 5 Implementation - <a href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" target="_blank">Gist</a></p>
     </div>
 
     <div class="container">
