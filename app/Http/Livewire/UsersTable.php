@@ -13,18 +13,11 @@ class UsersTable extends DataTableComponent
     public bool $columnSelect = true;
     public string $defaultSortColumn = 'sort';
     public bool $reorderEnabled = true;
-
+    public bool $hideBulkActionsOnEmpty = true;
     public array $bulkActions = [
         'activate'   => 'Activate',
         'deactivate' => 'Deactivate',
     ];
-
-    public function reorder($items): void
-    {
-        foreach ($items as $item) {
-            optional(User::find((int)$item['value']))->update(['sort' => (int)$item['order']]);
-        }
-    }
 
     public function columns(): array
     {
@@ -88,6 +81,13 @@ class UsersTable extends DataTableComponent
             ->when($this->getFilter('verified_from'), fn($query, $date) => $query->where('email_verified_at', '>=', $date))
             ->when($this->getFilter('verified_to'), fn($query, $date) => $query->where('email_verified_at', '<=', $date));
 
+    }
+
+    public function reorder($items): void
+    {
+        foreach ($items as $item) {
+            optional(User::find((int)$item['value']))->update(['sort' => (int)$item['order']]);
+        }
     }
 
     public function activate(): void
