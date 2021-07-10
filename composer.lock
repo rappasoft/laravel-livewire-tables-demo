@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "56421df17a05d212f7c37b9bc74335d5",
+    "content-hash": "27e8fae4d315e0509ca58e9683ca24e3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2571,11 +2571,17 @@
         },
         {
             "name": "rappasoft/laravel-livewire-tables",
-            "version": "dev-develop",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rappasoft/laravel-livewire-tables.git",
+                "reference": "e273ef7416edfdb2622f9ac8bfd7420bb9ee0987"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Livewire Tables",
-                "reference": "e32165b24eca861034a4e0f6447e5c430fa63f70"
+                "type": "zip",
+                "url": "https://api.github.com/repos/rappasoft/laravel-livewire-tables/zipball/e273ef7416edfdb2622f9ac8bfd7420bb9ee0987",
+                "reference": "e273ef7416edfdb2622f9ac8bfd7420bb9ee0987",
+                "shasum": ""
             },
             "require": {
                 "illuminate/contracts": "^8.0",
@@ -2603,22 +2609,7 @@
                     "Rappasoft\\LaravelLivewireTables\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Rappasoft\\LaravelLivewireTables\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit --colors=always"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2638,10 +2629,17 @@
                 "rappasoft",
                 "tables"
             ],
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/rappasoft/laravel-livewire-tables/issues",
+                "source": "https://github.com/rappasoft/laravel-livewire-tables/tree/v1.11.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/rappasoft",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-07-10T21:03:13+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
