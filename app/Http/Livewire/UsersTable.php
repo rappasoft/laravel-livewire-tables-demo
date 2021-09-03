@@ -24,11 +24,13 @@ class UsersTable extends DataTableComponent
         return [
             Column::make('Sort')
                 ->sortable(),
+//                ->selected(),
 //                ->addClass('hello')
 //                ->addAttributes(['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Tooltip on top']),
             Column::make('Name')
                   ->sortable()
                   ->searchable(),
+//                  ->selected(),
             Column::make('E-mail', 'email')
                   ->sortable()
                   ->searchable(),
