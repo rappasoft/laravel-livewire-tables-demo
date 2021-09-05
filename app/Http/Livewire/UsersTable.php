@@ -10,6 +10,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class UsersTable extends DataTableComponent
 {
 
+    public bool $dumpFilters = false;
     public bool $columnSelect = true;
     public string $defaultSortColumn = 'sort';
     public bool $reorderEnabled = true;
