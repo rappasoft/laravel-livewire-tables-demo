@@ -10,35 +10,22 @@ use Rappasoft\LaravelLivewireTables\Views\Filter;
 class UsersTable extends DataTableComponent
 {
 
-    public bool $dumpFilters = false;
     public bool $columnSelect = true;
     public string $defaultSortColumn = 'sort';
     public bool $reorderEnabled = true;
-    public bool $hideBulkActionsOnEmpty = false;
-    public bool $useHeaderAsFooter = false;
-    public bool $responsive = true;
-    public function bulkActions(): array
-    {
-        return [
-            'activate'   => __('Activate'),
-            'deactivate' => __('Deactivate'),
-        ];
-    }
+    public array $bulkActions = [
+        'activate'   => 'Activate',
+        'deactivate' => 'Deactivate',
+    ];
 
     public function columns(): array
     {
         return [
             Column::make('Sort')
                 ->sortable(),
-//                ->footer(fn($rows) => 'Total: ' . $rows->sum('sort')),
-//                ->selected(),
-//                ->addClass('hello')
-//                ->addAttributes(['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Tooltip on top']),
             Column::make('Name')
                   ->sortable()
                   ->searchable(),
-//                  ->linkTo(fn($value, $column, $row) => route('tw', $row->id)),
-//                  ->selected(),
             Column::make('E-mail', 'email')
                   ->sortable()
                   ->searchable(),
