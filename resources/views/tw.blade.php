@@ -4,15 +4,12 @@
 
     <title>Tailwind 2 Tables</title>
 
-    <link href="https://unpkg.com/@tailwindcss/forms/dist/forms.min.css" rel="stylesheet">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+    <livewire:styles />
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
-    <livewire:styles />
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
     @include('includes.buttons')
