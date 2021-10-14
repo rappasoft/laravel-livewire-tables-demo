@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ef0a28a088e43ef57fcd03258354e0b",
+    "content-hash": "dc14ac544740d90d34f4da52caf4344c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2899,16 +2899,16 @@
         },
         {
             "name": "rappasoft/laravel-livewire-tables",
-            "version": "v1.0.0",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rappasoft/laravel-livewire-tables.git",
-                "reference": "3236a6239dea01df77d4223acc53121970dc88a9"
+                "reference": "91f1f2b09081f29a415de2fc8065eb02fa5788c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rappasoft/laravel-livewire-tables/zipball/3236a6239dea01df77d4223acc53121970dc88a9",
-                "reference": "3236a6239dea01df77d4223acc53121970dc88a9",
+                "url": "https://api.github.com/repos/rappasoft/laravel-livewire-tables/zipball/91f1f2b09081f29a415de2fc8065eb02fa5788c0",
+                "reference": "91f1f2b09081f29a415de2fc8065eb02fa5788c0",
                 "shasum": ""
             },
             "require": {
@@ -2918,6 +2918,7 @@
                 "spatie/laravel-package-tools": "^1.4.3"
             },
             "require-dev": {
+                "ext-sqlite3": "*",
                 "orchestra/testbench": "^6.13",
                 "phpunit/phpunit": "^9.3",
                 "spatie/laravel-ray": "^1.9",
@@ -2958,7 +2959,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rappasoft/laravel-livewire-tables/issues",
-                "source": "https://github.com/rappasoft/laravel-livewire-tables/tree/v1.0.0"
+                "source": "https://github.com/rappasoft/laravel-livewire-tables/tree/v1.18.0"
             },
             "funding": [
                 {
@@ -2966,7 +2967,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-16T20:59:21+00:00"
+            "time": "2021-10-14T03:21:55+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

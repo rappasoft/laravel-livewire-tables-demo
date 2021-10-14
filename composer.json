@@ -11,7 +11,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "rappasoft/laravel-livewire-tables": "v1.0"
+        "rappasoft/laravel-livewire-tables": "v1.18"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
