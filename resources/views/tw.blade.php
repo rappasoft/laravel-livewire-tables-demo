@@ -19,7 +19,7 @@
         <p class="lead">Tailwind 2 Implementation - <a href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" class="underline" target="_blank">Gist</a></p>
     </div>
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto pb-6">
         <div>
             <livewire:users-table />
         </div>

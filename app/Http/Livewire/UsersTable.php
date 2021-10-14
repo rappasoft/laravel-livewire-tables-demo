@@ -13,10 +13,21 @@ class UsersTable extends DataTableComponent
     public bool $columnSelect = true;
     public string $defaultSortColumn = 'sort';
     public bool $reorderEnabled = true;
+    public bool $useHeaderAsFooter = true;
     public array $bulkActions = [
         'activate'   => 'Activate',
         'deactivate' => 'Deactivate',
     ];
+
+    public $columnSearch = [
+        'name' => null,
+        'email' => null,
+    ];
+
+    public function boot()
+    {
+        $this->queryString['columnSearch'] = ['except' => null];
+    }
 
     public function columns(): array
     {
@@ -24,11 +35,19 @@ class UsersTable extends DataTableComponent
             Column::make('Sort')
                 ->sortable(),
             Column::make('Name')
-                  ->sortable()
-                  ->searchable(),
+                ->sortable()
+                ->searchable()
+                ->asHtml()
+                ->secondaryHeader(function() {
+                    return view('tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
+                }),
             Column::make('E-mail', 'email')
                   ->sortable()
-                  ->searchable(),
+                  ->searchable()
+                  ->asHtml()
+                  ->secondaryHeader(function() {
+                      return view('tables.cells.input-search', ['field' => 'email', 'columnSearch' => $this->columnSearch]);
+                  }),
             Column::make('Active')
                   ->sortable()
                   ->format(function ($value) {
@@ -78,8 +97,9 @@ class UsersTable extends DataTableComponent
            })
             ->when($this->getFilter('active'), fn($query, $active) => $query->where('active', $active === 'yes'))
             ->when($this->getFilter('verified_from'), fn($query, $date) => $query->where('email_verified_at', '>=', $date))
-            ->when($this->getFilter('verified_to'), fn($query, $date) => $query->where('email_verified_at', '<=', $date));
-
+            ->when($this->getFilter('verified_to'), fn($query, $date) => $query->where('email_verified_at', '<=', $date))
+            ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('name', 'like', '%' . $name . '%'))
+            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('email', 'like', '%' . $email . '%'));
     }
 
     public function reorder($items): void
