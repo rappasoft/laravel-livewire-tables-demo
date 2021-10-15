@@ -8,6 +8,7 @@ module.exports = {
         './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './app/Http/Livewire/UsersTable.php',
     ],
 
     theme: {
