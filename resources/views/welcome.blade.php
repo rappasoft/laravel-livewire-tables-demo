@@ -12,9 +12,9 @@
 
         <div class="col-lg-6 mx-auto">
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a href="{{ route('bs4') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 4</a>
-                <a href="{{ route('bs5') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 5</a>
                 <a href="{{ route('tw') }}" class="btn btn-primary btn-lg px-4 gap-3">Tailwind 2</a>
+                <a href="{{ route('bs5') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 5</a>
+                <a href="{{ route('bs4') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 4</a>
             </div>
         </div>
     </div>
