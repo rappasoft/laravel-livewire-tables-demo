@@ -6,6 +6,7 @@ module.exports = {
     purge: [
         './vendor/laravel/jetstream/**/*.blade.php',
         './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
+        './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './app/Http/Livewire/UsersTable.php',

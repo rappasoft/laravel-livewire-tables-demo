@@ -11,16 +11,18 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "rappasoft/laravel-livewire-tables": "^1.0"
+        "mediconesystems/livewire-datatables": "^0.6.8",
+        "rappasoft/laravel-livewire-tables": "*"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
+        "barryvdh/laravel-debugbar": "^3.6",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.3.3",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "files": [
@@ -76,5 +78,14 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../Livewire Tables",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }
