@@ -5,65 +5,102 @@ namespace App\Http\Livewire;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\BooleanColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\SelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\MultiSelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\DateFilter;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 
-class UsersTableV2 extends DataTableComponent
+class UsersTable extends DataTableComponent
 {
-
-    // protected $model = User::class;
 
     public string $tableName = 'users1';
     public array $users1 = [];
-
-//    public array $bulkActions = [
-//        'activate' => 'Activate',
-//    ];
+    
+    public $columnSearch = [
+        'name' => null,
+        'email' => null,
+    ];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-            // ->setDebugEnabled()
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
-            // ->setFilterLayoutSlideDown()
-            ->setHideBulkActionsWhenEmptyEnabled();
+            ->setSecondaryHeaderTrAttributes(function($rows) {
+                return ['class' => 'bg-gray-100'];
+            })
+            ->setSecondaryHeaderTdAttributes(function(Column $column, $rows) {
+                if ($column->isField('id')) {
+                    return ['class' => 'text-red-500'];
+                }
 
-//        $this->setBulkActions([
-//            'activate' => 'Activate',
-//        ]);
+                return ['default' => true];
+            })
+            ->setFooterTrAttributes(function($rows) {
+                return ['class' => 'bg-gray-100'];
+            })
+            ->setFooterTdAttributes(function(Column $column, $rows) {
+                if ($column->isField('name')) {
+                    return ['class' => 'text-green-500'];
+                }
+
+                return ['default' => true];
+            })
+            ->setHideBulkActionsWhenEmptyEnabled();
     }
 
     public function columns(): array
     {
         return [
-            Column::make('One off column')
-                ->label(function($row, Column $column) {
-                    return view('tables.cells.one-off')->withRow($row)->withColumn($column);
+            LinkColumn::make('My Link')
+                ->title(fn($row) => 'Edit')
+                ->location(fn($row) => 'https://'.$row->id.'google.com')
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'underline text-blue-500',
+                    ];
+                }),
+            ImageColumn::make('Avatar')
+                ->location(function($row) {
+                    return asset('img/logo-'.$row->id.'.png');
+                })
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'w-8 h-8 rounded-full',
+                    ];
                 }),
             Column::make('Order', 'sort')
                 ->sortable()
-                ->collapseOnMobile(),
+                ->collapseOnMobile()
+                ->excludeFromColumnSelect(),
             Column::make('ID', 'id')
                 ->sortable()
                 ->setSortingPillTitle('Key')
-                ->setSortingPillDirections('0-9', '9-0'),
+                ->setSortingPillDirections('0-9', '9-0')
+                ->secondaryHeader(function($rows) {
+                    return $rows->sum('id');
+                })
+                ->html(),
             Column::make('Name')
                 ->sortable()
                 ->searchable()
-                ->view('tables.cells.actions'),
-//                ->format(function($value) {
-////                    return '<strong class="text-red-500">'.$value.'</strong>';
-//                    return view('tables.cells.actions')->withValue($value);
-//                }),
+                ->secondaryHeader(function() {
+                    return view('tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
+                })
+                ->footer(function($rows) {
+                    return '<strong>Name Footer</strong>';
+                })
+                ->html(),
             Column::make('E-mail', 'email')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->secondaryHeader(function() {
+                    return view('tables.cells.input-search', ['field' => 'email', 'columnSearch' => $this->columnSearch]);
+                }),
             Column::make('Address', 'address.address')
                 ->sortable()
                 ->searchable()
@@ -76,28 +113,14 @@ class UsersTableV2 extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->collapseOnTablet(),
-
-//            Column::make('Average Child Age', 'children.age:avg')
-//                ->sortable()
-//                ->collapseOnMobile(),
             BooleanColumn::make('Active')
                 ->sortable()
                 ->collapseOnMobile(),
-//                ->setCallback(function($value) {
-//                    return (bool)$value === false;
-//                })
-//                ->setSuccessValue(false),
-//            Column::make('Tags')
-//                ->label()
-//                ->collapseOnTablet(),
             Column::make('Verified', 'email_verified_at')
                 ->sortable()
                 ->collapseOnTablet(),
-                
-            // TODO
-            Column::make('Tags', 'tags.name')
+            Column::make('Tags')
                 ->label(fn($row) => $row->tags->pluck('name')->implode(', '))
-            
         ];
     }
 
@@ -118,24 +141,6 @@ class UsersTableV2 extends DataTableComponent
                 ->setFilterPillValues([
                     '3' => 'Tag 1',        
                 ]),
-            // SelectFilter::make('Filter 3', 'email_verified_at')
-            //     ->options([
-            //         ''    => 'Any',
-            //         'yes' => 'Yes',
-            //         'no'  => 'No',
-            //     ]),
-            // SelectFilter::make('Filter 4', 'email_verified_at')
-            //     ->options([
-            //         ''    => 'Any',
-            //         'yes' => 'Yes',
-            //         'no'  => 'No',
-            //     ]),
-            // SelectFilter::make('Filter 5', 'email_verified_at')
-            //     ->options([
-            //         ''    => 'Any',
-            //         'yes' => 'Yes',
-            //         'no'  => 'No',
-            //     ]),
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
                 ->options([
@@ -185,8 +190,9 @@ class UsersTableV2 extends DataTableComponent
 
     public function builder(): Builder
     {
-        return User::query();
-            //  ->when($this->getAppliedFilter('active'), fn($query, $active) => $query->where('active', $active === '1'));
+        return User::query()
+            ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('users.name', 'like', '%' . $name . '%'))
+            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('users.email', 'like', '%' . $email . '%'));
     }
 
     public function bulkActions(): array

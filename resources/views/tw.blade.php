@@ -1,4 +1,9 @@
-<html>
+<html
+    x-cloak
+    x-data="{darkMode: localStorage.getItem('dark') === 'true'}"
+    x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
+    x-bind:class="{'dark': darkMode}"
+>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,7 +16,7 @@
     <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
-<body>
+<body class="dark:bg-gray-900 dark:text-white">
     @include('includes.buttons')
 
     <div class="px-3 py-3 pt-5 pb-6 mx-auto text-center">
@@ -19,10 +24,15 @@
         <p class="lead">Tailwind 2 Implementation - <a href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" class="underline" target="_blank">Gist</a></p>
     </div>
 
-    <div class="pb-6 mx-auto space-y-10 overflow-y-scroll max-w-7xl">
-        <livewire:users-table-v2 />
-{{--        <livewire:users-table-v22 />--}}
-{{--        <livewire:medic-one />--}}
+    <div class="mb-8 text-center">
+        <button x-cloak x-on:click="darkMode = !darkMode;">
+            <span x-show="!darkMode" class="w-8 h-8 p-2 ml-3 text-gray-700 transition bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200">Dark</span>
+            <span x-show="darkMode" class="w-8 h-8 p-2 ml-3 text-gray-100 transition bg-gray-700 rounded-md cursor-pointer dark:hover:bg-gray-600">Light</span>
+        </button>
+    </div>
+
+    <div class="pb-6 mx-auto space-y-10 max-w-7xl">
+       <livewire:users-table />
     </div>
 
     <livewire:scripts />

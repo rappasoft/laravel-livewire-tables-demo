@@ -17,13 +17,13 @@
 <body>
     @include('includes.buttons')
 
-    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <div class="px-3 py-3 mx-auto text-center pt-md-5 pb-md-4">
+        <img class="mx-auto mb-4 d-block" src="https://getbootstrap.com/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <p class="lead">Bootstrap 4 Implementation - <a href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" target="_blank">Gist</a></p>
     </div>
 
     <div class="container">
-        <livewire:users-table />
+        <livewire:users-table theme="bootstrap-4" />
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
