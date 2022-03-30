@@ -10,4 +10,3 @@
           @endif
           clip-rule="evenodd"></path>
 </svg>
-

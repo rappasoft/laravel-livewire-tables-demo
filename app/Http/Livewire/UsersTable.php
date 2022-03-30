@@ -4,172 +4,223 @@ namespace App\Http\Livewire;
 
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 
 class UsersTable extends DataTableComponent
 {
 
-    public bool $dumpFilters = false;
-    public bool $columnSelect = true;
-    public string $defaultSortColumn = 'sort';
-    public bool $reorderEnabled = true;
-    public array $bulkActions = [
-        'activate'   => 'Activate',
-        'deactivate' => 'Deactivate',
-    ];
-
+    public string $tableName = 'users1';
+    public array $users1 = [];
+    
     public $columnSearch = [
         'name' => null,
         'email' => null,
     ];
 
-    public function boot()
+    public function configure(): void
     {
-        $this->queryString['columnSearch'] = ['except' => null];
+        $this->setPrimaryKey('id')
+            ->setReorderEnabled()
+            ->setHideReorderColumnUnlessReorderingEnabled()
+            ->setSecondaryHeaderTrAttributes(function($rows) {
+                return ['class' => 'bg-gray-100'];
+            })
+            ->setSecondaryHeaderTdAttributes(function(Column $column, $rows) {
+                if ($column->isField('id')) {
+                    return ['class' => 'text-red-500'];
+                }
+
+                return ['default' => true];
+            })
+            ->setFooterTrAttributes(function($rows) {
+                return ['class' => 'bg-gray-100'];
+            })
+            ->setFooterTdAttributes(function(Column $column, $rows) {
+                if ($column->isField('name')) {
+                    return ['class' => 'text-green-500'];
+                }
+
+                return ['default' => true];
+            })
+            ->setHideBulkActionsWhenEmptyEnabled();
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Sort')
-                ->sortable()
-                ->footer(function($rows) {
-                    return 'Sum: ' . $rows->sum('sort');
+            LinkColumn::make('My Link')
+                ->title(fn($row) => 'Edit')
+                ->location(fn($row) => 'https://'.$row->id.'google.com')
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'underline text-blue-500',
+                    ];
                 }),
+            ImageColumn::make('Avatar')
+                ->location(function($row) {
+                    return asset('img/logo-'.$row->id.'.png');
+                })
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'w-8 h-8 rounded-full',
+                    ];
+                }),
+            Column::make('Order', 'sort')
+                ->sortable()
+                ->collapseOnMobile()
+                ->excludeFromColumnSelect(),
+            Column::make('ID', 'id')
+                ->sortable()
+                ->setSortingPillTitle('Key')
+                ->setSortingPillDirections('0-9', '9-0')
+                ->secondaryHeader(function($rows) {
+                    return $rows->sum('id');
+                })
+                ->html(),
             Column::make('Name')
                 ->sortable()
                 ->searchable()
-                ->asHtml()
                 ->secondaryHeader(function() {
                     return view('tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
-                }),
-            Column::make('E-mail', 'email')
-                  ->sortable()
-                  ->searchable()
-                  ->asHtml()
-                  ->secondaryHeader(function() {
-                      return view('tables.cells.input-search', ['field' => 'email', 'columnSearch' => $this->columnSearch]);
-                  }),
-            Column::make('Active')
-                  ->sortable()
-                  ->format(function ($value) {
-                      return view('tables.cells.boolean',
-                          [
-                              'boolean' => $value
-                          ]
-                      );
-                  }),
-            Column::make('Tags')
-                ->format(function($value, $column, $user) {
-                    return $user->tags()->pluck('name')->implode('<br/>');
                 })
-                ->asHtml(),
+                ->footer(function($rows) {
+                    return '<strong>Name Footer</strong>';
+                })
+                ->html(),
+            Column::make('E-mail', 'email')
+                ->sortable()
+                ->searchable()
+                ->secondaryHeader(function() {
+                    return view('tables.cells.input-search', ['field' => 'email', 'columnSearch' => $this->columnSearch]);
+                }),
+            Column::make('Address', 'address.address')
+                ->sortable()
+                ->searchable()
+                ->collapseOnTablet(),
+            Column::make('Address Group', 'address.group.name')
+                ->sortable()
+                ->searchable()
+                ->collapseOnTablet(),
+            Column::make('Group City', 'address.group.city.name')
+                ->sortable()
+                ->searchable()
+                ->collapseOnTablet(),
+            BooleanColumn::make('Active')
+                ->sortable()
+                ->collapseOnMobile(),
             Column::make('Verified', 'email_verified_at')
-                  ->sortable()
-                  ->excludeFromSelectable(),
+                ->sortable()
+                ->collapseOnTablet(),
+            Column::make('Tags')
+                ->label(fn($row) => $row->tags->pluck('name')->implode(', '))
         ];
     }
 
     public function filters(): array
     {
         return [
-            'verified' => Filter::make('E-mail Verified')
-                ->select([
-                    ''    => 'Any',
-                    'yes' => 'Yes',
-                    'no'  => 'No',
-                ]),
-            'active'   => Filter::make('Active')
-                ->select([
-                    ''    => 'Any',
-                    'yes' => 'Yes',
-                    'no'  => 'No',
-                ]),
-            'tags' => Filter::make('Tags')
-                ->multiSelect(
+            MultiSelectFilter::make('Tags')
+                ->options(
                     Tag::query()
                         ->orderBy('name')
                         ->get()
                         ->keyBy('id')
                         ->map(fn($tag) => $tag->name)
                         ->toArray()
-                ),
-            'verified_from' => Filter::make('Verified From')
-                ->date(),
-            'verified_to' => Filter::make('Verified To')
-                ->date(),
+                )->filter(function(Builder $builder, array $values) {
+                    $builder->whereHas('tags', fn($query) => $query->whereIn('tags.id', $values));
+                })
+                ->setFilterPillValues([
+                    '3' => 'Tag 1',        
+                ]),
+            SelectFilter::make('E-mail Verified', 'email_verified_at')
+                ->setFilterPillTitle('Verified')
+                ->options([
+                    ''    => 'Any',
+                    'yes' => 'Yes',
+                    'no'  => 'No',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    if ($value === 'yes') {
+                        $builder->whereNotNull('email_verified_at');
+                    } elseif ($value === 'no') {
+                        $builder->whereNull('email_verified_at');
+                    }
+                }),
+            SelectFilter::make('Active')
+                ->setFilterPillTitle('User Status')
+                ->setFilterPillValues([
+                    '1' => 'Active',
+                    '0' => 'Inactive',
+                ])
+                ->options([
+                    '' => 'All',
+                    '1' => 'Yes',
+                    '0' => 'No',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    if ($value === '1') {
+                        $builder->where('active', true);
+                    } elseif ($value === '0') {
+                        $builder->where('active', false);
+                    }
+                }),
+            DateFilter::make('Verified From')
+                ->config([
+                    'min' => '2020-01-01',
+                    'max' => '2021-12-31',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->where('email_verified_at', '>=', $value);
+                }),
+            DateFilter::make('Verified To')
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->where('email_verified_at', '<=', $value);
+                }),
         ];
     }
 
-    public function query()
+    public function builder(): Builder
     {
-        return User::with('tags')
-           ->when($this->getFilter('verified'), function ($query, $verified) {
-               if ($verified === 'yes') {
-                   return $query->whereNotNull('verified');
-               }
+        return User::query()
+            ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('users.name', 'like', '%' . $name . '%'))
+            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('users.email', 'like', '%' . $email . '%'));
+    }
 
-               return $query->whereNull('verified');
-           })
-            ->when($this->getFilter('active'), fn($query, $active) => $query->where('active', $active === 'yes'))
-            ->when($this->getFilter('verified_from'), fn($query, $date) => $query->where('email_verified_at', '>=', $date))
-            ->when($this->getFilter('verified_to'), fn($query, $date) => $query->where('email_verified_at', '<=', $date))
-            ->when($this->getFilter('tags'), fn($query, $tags) => $query->whereHas('tags', fn($query) => $query->whereIn('tags.id', $tags)))
-            ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('name', 'like', '%' . $name . '%'))
-            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('email', 'like', '%' . $email . '%'));
+    public function bulkActions(): array
+    {
+        return [
+            'activate' => 'Activate',
+            'deactivate' => 'Deactivate',
+        ];
+    }
+
+    public function activate()
+    {
+        User::whereIn('id', $this->getSelected())->update(['active' => true]);
+
+        $this->clearSelected();
+    }
+
+    public function deactivate()
+    {
+        User::whereIn('id', $this->getSelected())->update(['active' => false]);
+
+        $this->clearSelected();
     }
 
     public function reorder($items): void
     {
         foreach ($items as $item) {
-            optional(User::find((int)$item['value']))->update(['sort' => (int)$item['order']]);
+            User::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
         }
-    }
-
-    public function activate(): void
-    {
-        if ($this->selectedRowsQuery->count() > 0) {
-            User::whereIn('id', $this->selectedKeys())->update(['active' => true]);
-        }
-
-        $this->selected = [];
-
-        $this->resetBulk();
-    }
-
-    public function deactivate(): void
-    {
-        if ($this->selectedRowsQuery->count() > 0) {
-            User::whereIn('id', $this->selectedKeys())->update(['active' => false]);
-        }
-
-        $this->resetBulk();
-    }
-
-    public function setTableRowClass($row): ?string
-    {
-        if ($row->active === false)  {
-            if (config('livewire-tables.theme') === 'tailwind') {
-                return '!bg-red-200';
-            } else if (config('livewire-tables.theme') === 'bootstrap-4') {
-                return 'bg-danger text-white';
-            } else if(config('livewire-tables.theme') === 'bootstrap-5') {
-                return 'bg-danger text-white';
-            }
-        }
-
-        return null;
-    }
-
-    public function getTableRowUrl(): string
-    {
-        return 'https://rappasoft.com';
-    }
-
-    public function getTableRowUrlTarget(): string
-    {
-        return '_blank';
     }
 }
