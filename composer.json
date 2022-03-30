@@ -12,7 +12,7 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "mediconesystems/livewire-datatables": "^0.6.8",
-        "rappasoft/laravel-livewire-tables": "*"
+        "rappasoft/laravel-livewire-tables": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -75,14 +75,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../Livewire Tables",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    "prefer-stable": true
 }
