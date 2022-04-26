@@ -50,7 +50,13 @@ class UsersTable extends DataTableComponent
 
                 return ['default' => true];
             })
-            ->setHideBulkActionsWhenEmptyEnabled();
+            ->setHideBulkActionsWhenEmptyEnabled()
+            ->setTableRowUrl(function($row) {
+                return 'https://google-'.$row->id.'.com';
+            })
+            ->setTableRowUrlTarget(function($row) {
+                return '_blank';
+            });
     }
 
     public function columns(): array
@@ -63,7 +69,8 @@ class UsersTable extends DataTableComponent
                     return [
                         'class' => 'underline text-blue-500',
                     ];
-                }),
+                })
+                ->deselected(),
             ImageColumn::make('Avatar')
                 ->location(function($row) {
                     return asset('img/logo-'.$row->id.'.png');
@@ -223,4 +230,9 @@ class UsersTable extends DataTableComponent
             User::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
         }
     }
+
+    // public function customView(): string
+    // {
+    //     return 'includes.custom';
+    // }
 }
