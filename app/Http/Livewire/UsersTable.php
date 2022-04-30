@@ -28,7 +28,6 @@ class UsersTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-            ->setHideConfigurableAreasWhenReorderingDisabled()
             ->setAdditionalSelects(['users.id as id'])
             ->setConfigurableAreas([
                 'toolbar-left-start' => 'includes.areas.toolbar-left-start'
