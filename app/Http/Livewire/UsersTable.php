@@ -13,10 +13,10 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class UsersTable extends DataTableComponent
 {
-
     public string $tableName = 'users1';
     public array $users1 = [];
     
@@ -28,6 +28,11 @@ class UsersTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
+            ->setHideConfigurableAreasWhenReorderingDisabled()
+            ->setAdditionalSelects(['users.id as id'])
+            ->setConfigurableAreas([
+                'toolbar-left-start' => 'includes.areas.toolbar-left-start'
+            ])
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
             ->setSecondaryHeaderTrAttributes(function($rows) {
@@ -84,14 +89,6 @@ class UsersTable extends DataTableComponent
                 ->sortable()
                 ->collapseOnMobile()
                 ->excludeFromColumnSelect(),
-            Column::make('ID', 'id')
-                ->sortable()
-                ->setSortingPillTitle('Key')
-                ->setSortingPillDirections('0-9', '9-0')
-                ->secondaryHeader(function($rows) {
-                    return $rows->sum('id');
-                })
-                ->html(),
             Column::make('Name')
                 ->sortable()
                 ->searchable()
@@ -121,19 +118,33 @@ class UsersTable extends DataTableComponent
                 ->searchable()
                 ->collapseOnTablet(),
             BooleanColumn::make('Active')
+                // ->setCallback(fn($value, $row) => dd($row))
                 ->sortable()
                 ->collapseOnMobile(),
             Column::make('Verified', 'email_verified_at')
                 ->sortable()
                 ->collapseOnTablet(),
             Column::make('Tags')
-                ->label(fn($row) => $row->tags->pluck('name')->implode(', '))
+                ->label(fn($row) => $row->tags->pluck('name')->implode(', ')),
+            Column::make('Actions')
+                ->label(
+                    fn($row, Column $column) => view('tables.cells.actions')->withUser($row)
+                )
+                ->unclickable(),
         ];
     }
 
     public function filters(): array
     {
         return [
+            TextFilter::make('Name')
+                ->config([
+                    'maxlength' => 5,
+                    'placeholder' => 'Search Name',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->where('users.name', 'like', '%'.$value.'%');
+                }),
             MultiSelectFilter::make('Tags')
                 ->options(
                     Tag::query()

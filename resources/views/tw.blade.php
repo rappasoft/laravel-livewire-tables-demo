@@ -32,6 +32,7 @@
     </div>
 
     <div class="pb-6 mx-auto space-y-10 max-w-7xl">
+       <livewire:other-component /> 
        <livewire:users-table />
     </div>
 
