@@ -59,5 +59,5 @@
         </div>
     </div>
 @elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-    <div>Hi</div>
+    <!--<div></div>-->
 @endif
