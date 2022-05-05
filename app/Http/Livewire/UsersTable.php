@@ -10,13 +10,17 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersTable extends DataTableComponent
 {
+    public $myParam = 'Default';
     public string $tableName = 'users1';
     public array $users1 = [];
     
@@ -28,9 +32,10 @@ class UsersTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
+            ->setDebugEnabled()
             ->setAdditionalSelects(['users.id as id'])
             ->setConfigurableAreas([
-                'toolbar-left-start' => 'includes.areas.toolbar-left-start'
+                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam]]
             ])
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
@@ -66,24 +71,15 @@ class UsersTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            LinkColumn::make('My Link')
-                ->title(fn($row) => 'Edit')
-                ->location(fn($row) => 'https://'.$row->id.'google.com')
-                ->attributes(function($row) {
-                    return [
-                        'class' => 'underline text-blue-500',
-                    ];
-                })
-                ->deselected(),
-            ImageColumn::make('Avatar')
-                ->location(function($row) {
-                    return asset('img/logo-'.$row->id.'.png');
-                })
-                ->attributes(function($row) {
-                    return [
-                        'class' => 'w-8 h-8 rounded-full',
-                    ];
-                }),
+            // ImageColumn::make('Avatar')
+            //     ->location(function($row) {
+            //         return asset('img/logo-'.$row->id.'.png');
+            //     })
+            //     ->attributes(function($row) {
+            //         return [
+            //             'class' => 'w-8 h-8 rounded-full',
+            //         ];
+            //     }),
             Column::make('Order', 'sort')
                 ->sortable()
                 ->collapseOnMobile()
@@ -117,7 +113,6 @@ class UsersTable extends DataTableComponent
                 ->searchable()
                 ->collapseOnTablet(),
             BooleanColumn::make('Active')
-                // ->setCallback(fn($value, $row) => dd($row))
                 ->sortable()
                 ->collapseOnMobile(),
             Column::make('Verified', 'email_verified_at')
@@ -125,11 +120,45 @@ class UsersTable extends DataTableComponent
                 ->collapseOnTablet(),
             Column::make('Tags')
                 ->label(fn($row) => $row->tags->pluck('name')->implode(', ')),
-            Column::make('Actions')
-                ->label(
-                    fn($row, Column $column) => view('tables.cells.actions')->withUser($row)
-                )
-                ->unclickable(),
+            // Column::make('Actions')
+            //     ->label(
+            //         fn($row, Column $column) => view('tables.cells.actions')->withUser($row)
+            //     )
+            //     ->unclickable(),
+            ButtonGroupColumn::make('Actions')
+                ->unclickable()
+                ->attributes(function($row) {
+                    return [
+                        'class' => 'space-x-2',
+                    ];
+                })
+                ->buttons([
+                    LinkColumn::make('My Link 1')
+                        ->title(fn($row) => 'Link 1')
+                        ->location(fn($row) => 'https://'.$row->id.'google1.com')
+                        ->attributes(function($row) {
+                            return [
+                                'target' => '_blank',
+                                'class' => 'underline text-blue-500',
+                            ];
+                        }),
+                    LinkColumn::make('My Link 2')
+                        ->title(fn($row) => 'Link 2')
+                        ->location(fn($row) => 'https://'.$row->id.'google2.com')
+                        ->attributes(function($row) {
+                            return [
+                                'class' => 'underline text-blue-500',
+                            ];
+                        }),
+                    LinkColumn::make('My Link 3')
+                        ->title(fn($row) => 'Link 3')
+                        ->location(fn($row) => 'https://'.$row->id.'google3.com')
+                        ->attributes(function($row) {
+                            return [
+                                'class' => 'underline text-blue-500',
+                            ];
+                        })
+                ]),
         ];
     }
 
@@ -217,7 +246,17 @@ class UsersTable extends DataTableComponent
         return [
             'activate' => 'Activate',
             'deactivate' => 'Deactivate',
+            'export' => 'Export',
         ];
+    }
+
+    public function export()
+    {
+        $users = $this->getSelected();
+
+        $this->clearSelected();
+
+        return Excel::download(new UsersExport($users), 'users.xlsx');
     }
 
     public function activate()
@@ -240,9 +279,4 @@ class UsersTable extends DataTableComponent
             User::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
         }
     }
-
-    // public function customView(): string
-    // {
-    //     return 'includes.custom';
-    // }
 }

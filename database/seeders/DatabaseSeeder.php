@@ -22,8 +22,6 @@ class DatabaseSeeder extends Seeder
 
          Tag::factory(10)->create();
          City::factory(20)->create();
-
-
          AddressGroup::factory(20)->create();
 
          User::factory(100)
@@ -34,7 +32,12 @@ class DatabaseSeeder extends Seeder
                 $user->address()->create([
                     'address_group_id' => AddressGroup::inRandomOrder()->first()->id,
                     'address' => $faker->address,
+                    'name' => $faker->randomElement(['home', 'work', 'other']),
                 ]);
              });
+
+        foreach(User::get() as $user) {
+            $user->update(['parent_id' => User::inRandomOrder()->first()->id]);
+        }
     }
 }

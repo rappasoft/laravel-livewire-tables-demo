@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'parent_id',
         'name',
         'email',
         'password',
@@ -44,6 +45,14 @@ class User extends Authenticatable
         'active' => 'boolean',
         'sort' => 'integer',
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function parent(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'parent_id');
+    }
 
     /**
      * @return BelongsToMany

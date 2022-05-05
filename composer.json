@@ -11,6 +11,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "^0.6.8",
         "rappasoft/laravel-livewire-tables": "^2.0"
     },
