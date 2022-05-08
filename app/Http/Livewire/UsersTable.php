@@ -23,11 +23,6 @@ class UsersTable extends DataTableComponent
     public $myParam = 'Default';
     public string $tableName = 'users1';
     public array $users1 = [];
-    
-    public $columnSearch = [
-        'name' => null,
-        'email' => null,
-    ];
 
     public function configure(): void
     {
@@ -35,7 +30,7 @@ class UsersTable extends DataTableComponent
             ->setDebugEnabled()
             ->setAdditionalSelects(['users.id as id'])
             ->setConfigurableAreas([
-                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam]]
+                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
             ])
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
@@ -87,19 +82,13 @@ class UsersTable extends DataTableComponent
             Column::make('Name')
                 ->sortable()
                 ->searchable()
-                ->secondaryHeader(function() {
-                    return view('tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
-                })
-                ->footer(function($rows) {
-                    return '<strong>Name Footer</strong>';
-                })
-                ->html(),
+                ->secondaryHeader($this->getFilterByKey('name'))
+                ->footer($this->getFilterByKey('name')),
             Column::make('E-mail', 'email')
                 ->sortable()
                 ->searchable()
-                ->secondaryHeader(function() {
-                    return view('tables.cells.input-search', ['field' => 'email', 'columnSearch' => $this->columnSearch]);
-                }),
+                ->secondaryHeader($this->getFilterByKey('e-mail'))
+                ->footer($this->getFilterByKey('e-mail')),
             Column::make('Address', 'address.address')
                 ->sortable()
                 ->searchable()
@@ -114,7 +103,9 @@ class UsersTable extends DataTableComponent
                 ->collapseOnTablet(),
             BooleanColumn::make('Active')
                 ->sortable()
-                ->collapseOnMobile(),
+                ->collapseOnMobile()
+                ->secondaryHeaderFilter('active')
+                ->footerFilter('active'),
             Column::make('Verified', 'email_verified_at')
                 ->sortable()
                 ->collapseOnTablet(),
@@ -167,12 +158,22 @@ class UsersTable extends DataTableComponent
         return [
             TextFilter::make('Name')
                 ->config([
-                    'maxlength' => 5,
+                    'maxlength' => 10,
                     'placeholder' => 'Search Name',
                 ])
                 ->filter(function(Builder $builder, string $value) {
                     $builder->where('users.name', 'like', '%'.$value.'%');
-                }),
+                })
+                ->hiddenFromMenus(),
+            TextFilter::make('E-mail')
+                ->config([
+                    'maxlength' => 10,
+                    'placeholder' => 'Search E-mail',
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->where('users.email', 'like', '%'.$value.'%');
+                })
+                ->hiddenFromMenus(),
             MultiSelectFilter::make('Tags')
                 ->options(
                     Tag::query()
@@ -218,7 +219,8 @@ class UsersTable extends DataTableComponent
                     } elseif ($value === '0') {
                         $builder->where('active', false);
                     }
-                }),
+                })
+                ->hiddenFromAll(),
             DateFilter::make('Verified From')
                 ->config([
                     'min' => '2020-01-01',
@@ -236,9 +238,7 @@ class UsersTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return User::query()
-            ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('users.name', 'like', '%' . $name . '%'))
-            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('users.email', 'like', '%' . $email . '%'));
+        return User::query();
     }
 
     public function bulkActions(): array
