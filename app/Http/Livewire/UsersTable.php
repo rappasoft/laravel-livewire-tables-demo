@@ -80,7 +80,9 @@ class UsersTable extends DataTableComponent
                 ->collapseOnMobile()
                 ->excludeFromColumnSelect(),
             Column::make('Name')
-                ->sortable()
+                ->sortable(function(Builder $query, string $direction) {
+                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+                })
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name')),
