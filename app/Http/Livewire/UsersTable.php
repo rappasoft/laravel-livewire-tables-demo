@@ -9,6 +9,7 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -16,6 +17,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use App\Exports\UsersExport;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UsersTable extends DataTableComponent
@@ -86,9 +88,14 @@ class UsersTable extends DataTableComponent
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name')),
-            Column::make('E-mail', 'email')
+            ComponentColumn::make('E-mail', 'email')
                 ->sortable()
                 ->searchable()
+                ->component('email')
+                ->attributes(fn ($value, $row, Column $column) => [
+                    'type' => Str::endsWith($value, 'example.org') ? 'success' : 'danger',
+                    'dismissible' => true,
+                ])
                 ->secondaryHeader($this->getFilterByKey('e-mail'))
                 ->footer($this->getFilterByKey('e-mail')),
             Column::make('Address', 'address.address')
@@ -188,7 +195,7 @@ class UsersTable extends DataTableComponent
                     $builder->whereHas('tags', fn($query) => $query->whereIn('tags.id', $values));
                 })
                 ->setFilterPillValues([
-                    '3' => 'Tag 1',        
+                    '3' => 'Tag 1',
                 ]),
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
