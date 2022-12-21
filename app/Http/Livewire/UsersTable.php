@@ -34,6 +34,7 @@ class UsersTable extends DataTableComponent
             ->setConfigurableAreas([
                 'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
             ])
+//            ->setPaginationMethod('simple')
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
             ->setSecondaryHeaderTrAttributes(function($rows) {
