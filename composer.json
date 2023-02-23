@@ -8,6 +8,7 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^10.0",
+        "laravel/pint": "^1.6",
         "maatwebsite/excel": "^3.1",
         "rappasoft/laravel-livewire-tables": "^2.0"
     },
@@ -59,7 +60,8 @@
         "reset": [
             "composer clear-all",
             "composer cache-all"
-        ]
+        ],
+        "pint": "./vendor/bin/pint"
     },
     "extra": {
         "laravel": {

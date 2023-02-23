@@ -6,9 +6,6 @@ use App\Models\AddressGroup;
 use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- *
- */
 class AddressGroupFactory extends Factory
 {
     /**
@@ -22,6 +19,7 @@ class AddressGroupFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition()

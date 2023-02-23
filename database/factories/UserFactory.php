@@ -8,8 +8,6 @@ use Illuminate\Support\Str;
 
 /**
  * Class UserFactory
- *
- * @package Database\Factories
  */
 class UserFactory extends Factory
 {
@@ -29,6 +27,7 @@ class UserFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition()

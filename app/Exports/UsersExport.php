@@ -9,7 +9,8 @@ class UsersExport implements FromCollection
 {
     public $users;
 
-    public function __construct($users) {
+    public function __construct($users)
+    {
         $this->users = $users;
     }
 
