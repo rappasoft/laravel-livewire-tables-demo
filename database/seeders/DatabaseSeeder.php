@@ -6,8 +6,8 @@ use App\Models\AddressGroup;
 use App\Models\City;
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Database\Seeder;
 use Faker\Factory;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Factory::create();
 
-         Tag::factory(10)->create();
-         City::factory(20)->create();
-         AddressGroup::factory(20)->create();
+        Tag::factory(10)->create();
+        City::factory(20)->create();
+        AddressGroup::factory(20)->create();
 
-         User::factory(100)
-             ->create()
-             ->each(function($user) use($faker) {
+        User::factory(100)
+            ->create()
+            ->each(function ($user) use ($faker) {
                 $user->tags()->save($id = Tag::inRandomOrder()->first());
                 $user->tags()->save(Tag::where('id', '<>', $id)->inRandomOrder()->first());
                 $user->address()->create([
@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
                     'address' => $faker->address,
                     'name' => $faker->randomElement(['home', 'work', 'other']),
                 ]);
-             });
+            });
 
-        foreach(User::get() as $user) {
+        foreach (User::get() as $user) {
             $user->update(['parent_id' => User::inRandomOrder()->first()->id]);
         }
     }

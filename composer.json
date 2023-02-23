@@ -5,24 +5,21 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.4|^8.0",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5",
+        "laravel/framework": "^10.0",
+        "laravel/pint": "^1.6",
         "maatwebsite/excel": "^3.1",
-        "mediconesystems/livewire-datatables": "^0.6.8",
         "rappasoft/laravel-livewire-tables": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
-        "facade/ignition": "^2.5",
+        "spatie/laravel-ignition": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3",
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
@@ -63,7 +60,8 @@
         "reset": [
             "composer clear-all",
             "composer cache-all"
-        ]
+        ],
+        "pint": "./vendor/bin/pint"
     },
     "extra": {
         "laravel": {

@@ -46,25 +46,16 @@ class User extends Authenticatable
         'sort' => 'integer',
     ];
 
-    /**
-     * @return HasOne
-     */
     public function parent(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'parent_id');
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
 
-    /**
-     * @return HasOne
-     */
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);

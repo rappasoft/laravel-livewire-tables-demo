@@ -5,9 +5,6 @@ namespace Database\Factories;
 use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- *
- */
 class CityFactory extends Factory
 {
     /**
@@ -21,6 +18,7 @@ class CityFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition()

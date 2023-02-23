@@ -2,26 +2,30 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\UsersExport;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
-use App\Exports\UsersExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UsersTable extends DataTableComponent
 {
     public $myParam = 'Default';
+
     public string $tableName = 'users1';
+
     public array $users1 = [];
 
     public function configure(): void
@@ -32,22 +36,23 @@ class UsersTable extends DataTableComponent
             ->setConfigurableAreas([
                 'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
             ])
+//            ->setPaginationMethod('simple')
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
-            ->setSecondaryHeaderTrAttributes(function($rows) {
+            ->setSecondaryHeaderTrAttributes(function ($rows) {
                 return ['class' => 'bg-gray-100'];
             })
-            ->setSecondaryHeaderTdAttributes(function(Column $column, $rows) {
+            ->setSecondaryHeaderTdAttributes(function (Column $column, $rows) {
                 if ($column->isField('id')) {
                     return ['class' => 'text-red-500'];
                 }
 
                 return ['default' => true];
             })
-            ->setFooterTrAttributes(function($rows) {
+            ->setFooterTrAttributes(function ($rows) {
                 return ['class' => 'bg-gray-100'];
             })
-            ->setFooterTdAttributes(function(Column $column, $rows) {
+            ->setFooterTdAttributes(function (Column $column, $rows) {
                 if ($column->isField('name')) {
                     return ['class' => 'text-green-500'];
                 }
@@ -55,10 +60,10 @@ class UsersTable extends DataTableComponent
                 return ['default' => true];
             })
             ->setHideBulkActionsWhenEmptyEnabled()
-            ->setTableRowUrl(function($row) {
+            ->setTableRowUrl(function ($row) {
                 return 'https://google-'.$row->id.'.com';
             })
-            ->setTableRowUrlTarget(function($row) {
+            ->setTableRowUrlTarget(function ($row) {
                 return '_blank';
             });
     }
@@ -80,13 +85,20 @@ class UsersTable extends DataTableComponent
                 ->collapseOnMobile()
                 ->excludeFromColumnSelect(),
             Column::make('Name')
-                ->sortable()
+                ->sortable(function (Builder $query, string $direction) {
+                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+                })
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name')),
-            Column::make('E-mail', 'email')
+            ComponentColumn::make('E-mail', 'email')
                 ->sortable()
                 ->searchable()
+                ->component('email')
+                ->attributes(fn ($value, $row, Column $column) => [
+                    'type' => Str::endsWith($value, 'example.org') ? 'success' : 'danger',
+                    'dismissible' => true,
+                ])
                 ->secondaryHeader($this->getFilterByKey('e-mail'))
                 ->footer($this->getFilterByKey('e-mail')),
             Column::make('Address', 'address.address')
@@ -110,7 +122,7 @@ class UsersTable extends DataTableComponent
                 ->sortable()
                 ->collapseOnTablet(),
             Column::make('Tags')
-                ->label(fn($row) => $row->tags->pluck('name')->implode(', ')),
+                ->label(fn ($row) => $row->tags->pluck('name')->implode(', ')),
             // Column::make('Actions')
             //     ->label(
             //         fn($row, Column $column) => view('tables.cells.actions')->withUser($row)
@@ -118,37 +130,37 @@ class UsersTable extends DataTableComponent
             //     ->unclickable(),
             ButtonGroupColumn::make('Actions')
                 ->unclickable()
-                ->attributes(function($row) {
+                ->attributes(function ($row) {
                     return [
                         'class' => 'space-x-2',
                     ];
                 })
                 ->buttons([
                     LinkColumn::make('My Link 1')
-                        ->title(fn($row) => 'Link 1')
-                        ->location(fn($row) => 'https://'.$row->id.'google1.com')
-                        ->attributes(function($row) {
+                        ->title(fn ($row) => 'Link 1')
+                        ->location(fn ($row) => 'https://'.$row->id.'google1.com')
+                        ->attributes(function ($row) {
                             return [
                                 'target' => '_blank',
                                 'class' => 'underline text-blue-500',
                             ];
                         }),
                     LinkColumn::make('My Link 2')
-                        ->title(fn($row) => 'Link 2')
-                        ->location(fn($row) => 'https://'.$row->id.'google2.com')
-                        ->attributes(function($row) {
+                        ->title(fn ($row) => 'Link 2')
+                        ->location(fn ($row) => 'https://'.$row->id.'google2.com')
+                        ->attributes(function ($row) {
                             return [
                                 'class' => 'underline text-blue-500',
                             ];
                         }),
                     LinkColumn::make('My Link 3')
-                        ->title(fn($row) => 'Link 3')
-                        ->location(fn($row) => 'https://'.$row->id.'google3.com')
-                        ->attributes(function($row) {
+                        ->title(fn ($row) => 'Link 3')
+                        ->location(fn ($row) => 'https://'.$row->id.'google3.com')
+                        ->attributes(function ($row) {
                             return [
                                 'class' => 'underline text-blue-500',
                             ];
-                        })
+                        }),
                 ]),
         ];
     }
@@ -161,7 +173,7 @@ class UsersTable extends DataTableComponent
                     'maxlength' => 10,
                     'placeholder' => 'Search Name',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('users.name', 'like', '%'.$value.'%');
                 })
                 ->hiddenFromMenus(),
@@ -170,7 +182,7 @@ class UsersTable extends DataTableComponent
                     'maxlength' => 10,
                     'placeholder' => 'Search E-mail',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('users.email', 'like', '%'.$value.'%');
                 })
                 ->hiddenFromMenus(),
@@ -180,22 +192,22 @@ class UsersTable extends DataTableComponent
                         ->orderBy('name')
                         ->get()
                         ->keyBy('id')
-                        ->map(fn($tag) => $tag->name)
+                        ->map(fn ($tag) => $tag->name)
                         ->toArray()
-                )->filter(function(Builder $builder, array $values) {
-                    $builder->whereHas('tags', fn($query) => $query->whereIn('tags.id', $values));
+                )->filter(function (Builder $builder, array $values) {
+                    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
                 })
                 ->setFilterPillValues([
-                    '3' => 'Tag 1',        
+                    '3' => 'Tag 1',
                 ]),
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
                 ->options([
-                    ''    => 'Any',
+                    '' => 'Any',
                     'yes' => 'Yes',
-                    'no'  => 'No',
+                    'no' => 'No',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     if ($value === 'yes') {
                         $builder->whereNotNull('email_verified_at');
                     } elseif ($value === 'no') {
@@ -213,7 +225,7 @@ class UsersTable extends DataTableComponent
                     '1' => 'Yes',
                     '0' => 'No',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     if ($value === '1') {
                         $builder->where('active', true);
                     } elseif ($value === '0') {
@@ -226,11 +238,11 @@ class UsersTable extends DataTableComponent
                     'min' => '2020-01-01',
                     'max' => '2021-12-31',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('email_verified_at', '>=', $value);
                 }),
             DateFilter::make('Verified To')
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('email_verified_at', '<=', $value);
                 }),
         ];
@@ -276,7 +288,7 @@ class UsersTable extends DataTableComponent
     public function reorder($items): void
     {
         foreach ($items as $item) {
-            User::find((int)$item['value'])->update(['sort' => (int)$item['order']]);
+            User::find((int) $item['value'])->update(['sort' => (int) $item['order']]);
         }
     }
 }
