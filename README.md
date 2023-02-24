@@ -6,3 +6,5 @@ Installation:
 
 - php artisan migrate
 - php artisan db:seed
+
+### Enjoying this project? [Buy me a beer 🍺](https://www.buymeacoffee.com/rappasoft)
