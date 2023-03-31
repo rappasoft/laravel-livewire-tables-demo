@@ -1,6 +1,6 @@
 @props(['displayStyle' => 'popover'])
 <div style="width: 100%; text-align: center;">
-<h4>Filter Demo</h4>
+    <h4>Filter Demo</h4>
     <div style="width:25%; display:inline-block; text-align:center;margin-top:10px;margin-bottom:10px;">
         
         @if($displayStyle == 'popover')

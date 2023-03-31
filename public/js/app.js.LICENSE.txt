@@ -1,3 +1,18 @@
+/*! Bundled license information:
+
+tabbable/dist/index.esm.js:
+  (*!
+  * tabbable 5.2.1
+  * @license MIT, https://github.com/focus-trap/tabbable/blob/master/LICENSE
+  *)
+
+focus-trap/dist/focus-trap.esm.js:
+  (*!
+  * focus-trap 6.6.1
+  * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
+  *)
+*/
+
 /**
  * @license
  * Lodash <https://lodash.com/>
@@ -5,4 +20,11 @@
  * Released under MIT license <https://lodash.com/license>
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/**!
+ * Sortable 1.15.0
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
  */
