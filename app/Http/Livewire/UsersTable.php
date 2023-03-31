@@ -241,8 +241,8 @@ class UsersTable extends DataTableComponent
             
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
-                ->setCustomFilterLabel('customfilterlabelblade')
-                ->setFilterPillBlade('customfilterpills')
+                ->setCustomFilterLabel('includes.customFilterLabel')
+                ->setFilterPillBlade('includes.customFilterPills')
                 ->options([
                     '' => 'Any',
                     'yes' => 'Yes',
