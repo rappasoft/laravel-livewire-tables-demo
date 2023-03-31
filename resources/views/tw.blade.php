@@ -5,17 +5,17 @@
     x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
     x-bind:class="{'dark': darkMode}"
 >
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tailwind 2 Tables</title>
+        <title>Tailwind 2 Tables</title>
 
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
-    <livewire:styles />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+        <livewire:styles />
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
-</head>
+        <script src="{{ mix('js/app.js') }}" defer></script>
+    </head>
 <body class="dark:bg-gray-900 dark:text-white">
     @include('includes.buttons', ['displayStyle' => 'popover'])
 
@@ -32,9 +32,14 @@
     </div>
 
     <div class="pb-6 mx-auto space-y-10 max-w-7xl">
-       <livewire:other-component /> 
-       <livewire:users-table myParam="Test" />
+        <div>
+            <livewire:other-component />
+        </div>
+        <div>
+            <livewire:users-table myParam="Test" />
+        </div>
     </div>
+
 
     <livewire:scripts />
 </body>
