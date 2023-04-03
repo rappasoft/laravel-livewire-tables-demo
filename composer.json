@@ -64,6 +64,23 @@
             "composer clear-all",
             "composer cache-all"
         ],
+        "setup-environment": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "composer update",
+            "@php artisan clear-compiled",
+            "@php artisan cache:clear",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan config:clear",
+            "composer dumpautoload -o",
+            "@php artisan key:generate --ansi",
+            "@php artisan migrate:fresh --seed",
+            "npm i",
+            "npm update",
+            "npm run production",
+            "php artisan optimize:clear",
+            "php artisan optimize"
+        ],
         "pint": "./vendor/bin/pint"
     },
     "extra": {
