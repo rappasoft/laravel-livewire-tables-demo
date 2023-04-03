@@ -23,7 +23,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
-        "roave/security-advisories": "dev-develop"
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
