@@ -3,21 +3,19 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors')
 
-
-
 module.exports = {
+    mode: 'jit',
     plugins: [
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
         require('@tailwindcss/line-clamp')
     ],
-    mode: 'jit',
     darkMode: 'class',
     purge: {
         content: [
             './vendor/laravel/jetstream/**/*.blade.php',
-            './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
+            './vendor/rappasoft/laravel-livewire-tables/resources/views/*.blade.php',
             './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
             './storage/framework/views/*.php',
             './resources/views/**/*.blade.php',
@@ -46,8 +44,6 @@ module.exports = {
 
         ],
     },
-
-
     theme: {
         extend: {
             fontFamily: {
@@ -55,7 +51,6 @@ module.exports = {
             },
         },
     },
-
     variants: {
         extend: {
             backgroundColor: ['responsive', 'dark', 'checked', 'disabled', 'hover', 'focus', 'active', 'even', 'odd'],
