@@ -250,7 +250,7 @@ class UsersTable extends DataTableComponent
             
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
-                ->setCustomFilterLabel('includes.customFilterLabel3')
+                ->setCustomFilterLabel('includes.customFilterLabel1')
                 ->setFilterPillBlade('includes.customFilterPills2')
                 ->options([
                     '' => 'Any',
