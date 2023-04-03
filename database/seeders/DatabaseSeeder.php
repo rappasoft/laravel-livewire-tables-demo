@@ -94,8 +94,6 @@ class DatabaseSeeder extends Seeder
                 {
                     Storage::put(self::$avatarPath.$user->id.'.jpg', Http::accept('image/jpeg')->get('https://i.pravatar.cc/100'), 'public');
                 }
-                
-
             });
     }
 }

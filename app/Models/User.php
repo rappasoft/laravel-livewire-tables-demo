@@ -24,7 +24,9 @@ class User extends Authenticatable
         'email',
         'password',
         'sort',
-        'created_at'
+        'created_at',
+        'updated_at',
+        'email_verified_at'
     ];
 
     /**
@@ -43,6 +45,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'active' => 'boolean',
         'sort' => 'integer',
