@@ -15,8 +15,8 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('address_group_id');
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('address_group_id')->nullable()->constrained('address_groups');
             $table->string('name');
             $table->string('address');
             $table->timestamps();

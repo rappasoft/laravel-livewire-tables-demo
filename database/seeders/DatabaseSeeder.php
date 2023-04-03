@@ -8,9 +8,62 @@ use App\Models\Tag;
 use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
+
+    /**
+     * Set how many Users you would like to generate 
+     * 
+     * Default is 103
+     * 
+     * @var int
+     */
+    private static int $userCount = 103;
+
+    /**
+     * Set how many Tags you would like to generate
+     * 
+     * Default is 22
+     * 
+     * @var int
+     */
+    private static int $tagCount = 22;
+
+    /**
+     * Set how many Cities you would like to generate 
+     * 
+     * Default is 28
+     * 
+     * @var int
+     */
+    private static int $cityCount = 28;
+
+    /**
+     * Set how many Address Groups you would like to generate
+     * 
+     * Default is 14
+     * 
+     *  @var int
+     */
+    private static int $addressGroupCount = 14;
+
+    /**
+     * Set the path to the Avatar Storage, relative to Storage() root
+     * 
+     * Default is public/avatars
+     * 
+     *  @var string
+     */
+    private static string $avatarPath = 'public/avatars/';
+
+    // Instantiate
+    private static $allAddressGroups;
+    private static $allTags;
+    private static array $addressTypeArray;
+
     /**
      * Seed the application's database.
      *
@@ -18,26 +71,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Here you may define the "Address Type" that is used in the table
+        self::$addressTypeArray = ['home', 'work', 'other'];
+        
+        // You should not need to  modify anything below this point!
         $faker = Factory::create();
-
-        Tag::factory(10)->create();
-        City::factory(20)->create();
-        AddressGroup::factory(20)->create();
-
-        User::factory(100)
+        self::$allTags = Tag::factory(self::$tagCount)->create();
+        City::factory(self::$cityCount)->create();
+        self::$allAddressGroups = AddressGroup::factory(self::$addressGroupCount)->create();
+        
+        User::factory(self::$userCount)
             ->create()
             ->each(function ($user) use ($faker) {
-                $user->tags()->save($id = Tag::inRandomOrder()->first());
-                $user->tags()->save(Tag::where('id', '<>', $id)->inRandomOrder()->first());
+                $assignedTagCount = rand(1,5);
+                $user->tags()->sync(self::$allTags->random($assignedTagCount)->pluck('id')->toArray());
                 $user->address()->create([
-                    'address_group_id' => AddressGroup::inRandomOrder()->first()->id,
+                    'address_group_id' => self::$allAddressGroups->random()->id,
                     'address' => $faker->address,
-                    'name' => $faker->randomElement(['home', 'work', 'other']),
+                    'name' => $faker->randomElement(self::$addressTypeArray),
                 ]);
-            });
+                if (Storage::missing(self::$avatarPath.$user->id.'.jpg'))
+                {
+                    Storage::put(self::$avatarPath.$user->id.'.jpg', Http::accept('image/jpeg')->get('https://i.pravatar.cc/100'), 'public');
+                }
+                
 
-        foreach (User::get() as $user) {
-            $user->update(['parent_id' => User::inRandomOrder()->first()->id]);
-        }
+            });
     }
 }

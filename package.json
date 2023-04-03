@@ -10,15 +10,20 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/aspect-ratio": "^0.2.1",
-        "@tailwindcss/forms": "^0.3.3",
-        "@tailwindcss/line-clamp": "^0.2.1",
+        "@tailwindcss/aspect-ratio": "^0.2.2",
+        "@tailwindcss/forms": "^0.3.4",
+        "@tailwindcss/line-clamp": "^0.2.2",
         "@tailwindcss/typography": "^0.4.1",
         "axios": "^0.21",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
-        "postcss-import": "^12.0.0",
-        "tailwindcss": "^2.2.10"
+        "laravel-mix": "^6.0.49",
+        "lodash": "^4.17.21",
+        "postcss": "^8.4.21",
+        "postcss-import": "^12.0.1",
+        "tailwindcss": "^2.2.19"
+    },
+    "dependencies": {
+        "@alpinejs/focus": "^3.12.0",
+        "@nextapps-be/livewire-sortablejs": "^0.2.0",
+        "alpinejs": "^3.12.0"
     }
 }

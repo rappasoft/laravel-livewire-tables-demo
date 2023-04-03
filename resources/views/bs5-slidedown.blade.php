@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -31,7 +32,7 @@
 </head>
 
 <body>
-    @include('includes.buttons', ['displayStyle' => 'popover'])
+@include('includes.buttons', ['displayStyle' => 'slide-down'])
 
     <div class="px-4 my-5 text-center">
     <img class="mx-auto mb-4 d-block" src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
@@ -40,7 +41,7 @@
     </div>
 
     <div class="container">
-        <livewire:users-table theme="bootstrap-5" />
+        <livewire:users-table theme="bootstrap-5" filterLayout="slide-down" />
     </div>
 
 

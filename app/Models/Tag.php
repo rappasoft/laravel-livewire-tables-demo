@@ -17,4 +17,9 @@ class Tag extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
