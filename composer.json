@@ -13,7 +13,7 @@
         "laravel/framework": "^10.0",
         "laravel/pint": "^1.6",
         "maatwebsite/excel": "^3.1",
-        "rappasoft/laravel-livewire-tables": "dev-864_TestBranch"
+        "rappasoft/laravel-livewire-tables": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
