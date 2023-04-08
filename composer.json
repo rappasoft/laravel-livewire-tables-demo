@@ -70,7 +70,9 @@
             "php artisan optimize",
             "@clear-all",
             "@php artisan storage:link",
-            "@php artisan key:generate --ansi",
+            "@php artisan key:generate --ansi"
+        ],
+        "update-jsreqs": [
             "npm i",
             "npm update",
             "npm run production"
@@ -88,11 +90,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables.git"
-        }
-    ]
+    "prefer-stable": true
 }
