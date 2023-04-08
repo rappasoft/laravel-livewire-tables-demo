@@ -13,7 +13,7 @@
         "laravel/framework": "^10.0",
         "laravel/pint": "^1.6",
         "maatwebsite/excel": "^3.1",
-        "rappasoft/laravel-livewire-tables": "dev-develop"
+        "rappasoft/laravel-livewire-tables": "dev-864_TestBranch"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -67,19 +67,13 @@
         "setup-environment": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "composer update",
-            "@php artisan clear-compiled",
-            "@php artisan cache:clear",
-            "@php artisan route:clear",
-            "@php artisan view:clear",
-            "@php artisan config:clear",
-            "composer dumpautoload -o",
+            "php artisan optimize",
+            "@clear-all",
+            "@php artisan storage:link",
             "@php artisan key:generate --ansi",
-            "@php artisan migrate:fresh --seed",
             "npm i",
             "npm update",
-            "npm run production",
-            "php artisan optimize:clear",
-            "php artisan optimize"
+            "npm run production"
         ],
         "pint": "./vendor/bin/pint"
     },
@@ -94,5 +88,11 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables.git"
+        }
+    ]
 }
