@@ -103,7 +103,8 @@ class UsersTable extends DataTableComponent
 
     public function columns(): array
     {
-        return [Column::make('Order', 'sort')
+        return [
+                Column::make('Order', 'sort')
                 ->sortable()
                 ->collapseOnMobile()
                 ->excludeFromColumnSelect(),

@@ -4,5 +4,11 @@ The repo is using a SQLite database, and has ready examples for Bootstrap 4 & 5,
 
 Installation:
 
+// To setup the link for the Avatars to display for the ImageColumn
+- php artisan storage:link
+
+// To create the database tables
 - php artisan migrate
+
+// To seed the tables with realistic (but fake) data
 - php artisan db:seed

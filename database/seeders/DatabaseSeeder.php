@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
      */
     private static string $avatarPath = 'public/avatars/';
 
-    // Instantiate
+    // Setup Statics for Use Below
     private static $allAddressGroups;
     private static $allTags;
     private static array $addressTypeArray;
