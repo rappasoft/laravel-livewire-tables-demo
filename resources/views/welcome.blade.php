@@ -11,11 +11,24 @@
         <h1 class="display-5 fw-bold mb-5"><a href="https://github.com/rappasoft/laravel-livewire-tables" target="_blank">Livewire Tables</a> Demo</h1>
 
         <div class="col-lg-6 mx-auto">
+            <h3><strong>Pop-Over Style Filters</strong></h3>
+
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                 <a href="{{ route('tw') }}" class="btn btn-primary btn-lg px-4 gap-3">Tailwind 2</a>
-                <a href="{{ route('bs5') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 5</a>
+                <a href="{{ route('tw3') }}" class="btn btn-primary btn-lg px-4 gap-3">Tailwind 3</a>
                 <a href="{{ route('bs4') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 4</a>
+                <a href="{{ route('bs5') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 5</a>
             </div>
+            <br /><br />
+            <h3><strong>Slide-Down Style Filters</strong></h3>
+
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{{ route('tw-slidedown') }}" class="btn btn-primary btn-lg px-4 gap-3">Tailwind 2</a>
+                <a href="{{ route('tw3-slidedown') }}" class="btn btn-primary btn-lg px-4 gap-3">Tailwind 3</a>
+                <a href="{{ route('bs4-slidedown') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 4</a>
+                <a href="{{ route('bs5-slidedown') }}" class="btn btn-primary btn-lg px-4 gap-3">Bootstrap 5</a>
+            </div>
+
         </div>
     </div>
 
