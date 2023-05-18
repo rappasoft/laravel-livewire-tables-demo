@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UsersTable extends DataTableComponent
 {
+    use testTrait;
+
     public $myParam = 'Default';
+
 
     public string $tableName = 'users2';
 
@@ -125,6 +128,12 @@ class UsersTable extends DataTableComponent
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name'))->excludeFromColumnSelect(),
+
+                Column::make('Name Label')
+                ->sortable(function (Builder $query, string $direction) {
+                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+                })
+                ->label(fn($row, Column $column) => $row->name),
 
             Column::make('Parent', 'parent_id')
                 ->format(fn($value, $row, Column $column) => ((!empty($row->parent)) ? $row->parent->name : '<strong>None</strong>'))->html(),
@@ -362,4 +371,6 @@ class UsersTable extends DataTableComponent
             User::find((int) $item['value'])->update(['sort' => (int) $item['order']]);
         }
     }
+
+
 }
