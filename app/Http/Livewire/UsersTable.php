@@ -113,6 +113,14 @@ class UsersTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->collapseOnTablet(),
+            Column::make('Parent', 'parent.name')
+                ->sortable()
+                ->searchable()
+                ->collapseOnTablet(),
+            Column::make('Parent of parent', 'parent.parent.name')
+                ->sortable()
+                ->searchable()
+                ->collapseOnTablet(),
             BooleanColumn::make('Active')
                 ->sortable()
                 ->collapseOnMobile()
