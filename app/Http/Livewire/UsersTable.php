@@ -42,12 +42,14 @@ class UsersTable extends DataTableComponent
     public function configure(): void
     {
         //$userExample->tags()->sync(Tag::inRandomOrder()->take(rand(1,3))->get()->pluck('tags.id')->toArray());
-        
+        //$user = User::findOrFail(1);
+        //$user->jsoncol = ['test' => 'test123', 'new' => ''];
+        //$user->save();
         //$this->userExample
         //(Tag::inRandomOrder()->take(rand(1,3))->get()->toArray());
         $this->setPrimaryKey('id')
             ->setDebugEnabled()
-            ->setAdditionalSelects(['users.id as id'])
+            ->setAdditionalSelects(['users.id as id', 'users.rule'])
             ->setFilterLayout($this->filterLayout)
             ->setConfigurableAreas([
                 'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
@@ -129,11 +131,11 @@ class UsersTable extends DataTableComponent
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name'))->excludeFromColumnSelect(),
 
-                Column::make('Name Label')
-                ->sortable(function (Builder $query, string $direction) {
-                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
-                })
-                ->label(fn($row, Column $column) => $row->name),
+            Column::make('Name Label')
+            ->sortable(function (Builder $query, string $direction) {
+                return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+            })
+            ->label(fn($row, Column $column) => $row->name),
 
             Column::make('Parent', 'parent_id')
                 ->format(fn($value, $row, Column $column) => ((!empty($row->parent)) ? $row->parent->name : '<strong>None</strong>'))->html(),
@@ -185,9 +187,14 @@ class UsersTable extends DataTableComponent
 
             Column::make('Tags')
                 ->label(fn ($row) => $row->tags->pluck('name')->implode(', ')),
-
-
-            
+            Column::make('Rules')
+            ->label(
+                    fn($row, Column $column) => (is_array($row->rule) ? (array_key_exists('comment', $row->rule) ? $row->rule['comment'] : 'ArrayExistsNoKey') : 'NotAnArray'),
+            ),
+            Column::make('jsoncol')
+            ->label(
+                fn($row, Column $column) => $row->jsoncol['test'] ?? ''
+            ),
             ButtonGroupColumn::make('Actions')
                 ->unclickable()
                 ->attributes(function ($row) {

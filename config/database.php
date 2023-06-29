@@ -55,6 +55,7 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
+            'sslmode' => 'VERIFY_CA',
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,

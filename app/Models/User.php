@@ -50,6 +50,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'active' => 'boolean',
         'sort' => 'integer',
+        'location' => 'json'
+    ];
+
+    protected $attributes = [
+        'location' => ['city' => '', 'country' => ''],
     ];
 
     public function parent(): HasOne
