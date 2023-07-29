@@ -14,3 +14,7 @@ yarn-error.log
 /.idea
 /.vscode
 composer.json.local
+package-lock.json
+composer.lock
+.phpunit.cache/test-results
+bootstrap/cache/*

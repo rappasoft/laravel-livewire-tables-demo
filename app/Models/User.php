@@ -53,9 +53,6 @@ class User extends Authenticatable
         'location' => 'json'
     ];
 
-    protected $attributes = [
-        'location' => ['city' => '', 'country' => ''],
-    ];
 
     public function parent(): HasOne
     {

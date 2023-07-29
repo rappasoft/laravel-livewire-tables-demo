@@ -1,7 +1,7 @@
 @aware(['displayStyle'])
-<div style="width: 100%; text-align: center;">
+<div style="display: inline-block; width: 45%; text-align: center;">
     <h3>News Table</h3>
-    <div style="width:25%; display:inline-block; text-align:center;margin-top:10px;margin-bottom:10px;">
+    <div style="width:45%; display:inline-block; text-align:center;margin-top:10px;margin-bottom:10px;">
         
         @if($displayStyle == 'popover')
         <h3><strong>Pop-Over Style Filters</strong></h3>
@@ -16,7 +16,7 @@
 
         </div>
     </div>
-    <div style="width:25%; display:inline-block; text-align:center;margin-top:10px;margin-bottom:10px;">
+    <div style="width:45%; display:inline-block; text-align:center;margin-top:10px;margin-bottom:10px;">
         @if($displayStyle == 'slide-down')
         <h3><strong>Slide-Down Style Filters</strong></h3>
         @else

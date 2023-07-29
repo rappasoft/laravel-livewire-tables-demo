@@ -85,12 +85,7 @@ class NewsTable extends DataTableComponent
                 return ['default' => true];
             })
             ->setHideBulkActionsWhenEmptyEnabled()
-            ->setTableRowUrl(function ($row) {
-                return 'https://google-'.$row->id.'.com';
-            })
-            ->setTableRowUrlTarget(function ($row) {
-                return '_blank';
-            })->setEagerLoadAllRelationsEnabled();
+            ->setEagerLoadAllRelationsEnabled();
 
     }
 
@@ -104,7 +99,7 @@ class NewsTable extends DataTableComponent
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
                 ->footer($this->getFilterByKey('name'))->excludeFromColumnSelect(),
-
+            Column::make('Description', 'description'),
             Column::make('User', 'user.name'),
 
         ];
@@ -136,7 +131,7 @@ class NewsTable extends DataTableComponent
 
         $this->clearSelected();
 
-        return Excel::download(new NewssExport($news), 'news.xlsx');
+        return Excel::download(new NewsExport($news), 'news.xlsx');
     }
 
     public function activate()

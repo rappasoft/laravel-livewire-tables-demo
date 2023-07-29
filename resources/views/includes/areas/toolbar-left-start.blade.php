@@ -58,6 +58,5 @@
             </div>
         </div>
     </div>
-@elseif ($theme === 'bootstrap-4' || $theme === 'bootstrap-5')
-    <!--<div></div>-->
+
 @endif

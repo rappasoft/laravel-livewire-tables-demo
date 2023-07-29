@@ -1,7 +1,10 @@
-require('./bootstrap');
-import Alpine from 'alpinejs';
+import './bootstrap';
+
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import Clipboard from '@ryangjchandler/alpine-clipboard'
 import focus from '@alpinejs/focus';
-import '@nextapps-be/livewire-sortablejs';
-window.Alpine = Alpine;
-window.Alpine.plugin(focus);
-window.Alpine.start();
+
+//import '../../vendor/rappasoft/laravel-livewire-tables-v3/resources/js/test'
+Alpine.plugin(Clipboard)
+Alpine.plugin(focus)
+Livewire.start()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-cloak x-data="{ darkMode: localStorage.getItem('darkTw3') === 'true' }" x-init="$watch('darkMode', val => localStorage.setItem('darkTw3', val))" x-bind:class="{ 'dark': darkMode }">
+<html lang="en" >
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1106,22 +1106,12 @@
         }
     </script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <livewire:styles />
+    @vite(['resources/js/app.js'])
 
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-    </style>
-    <livewire:styles />
-    @stack('styles')
 
 </head>
 
 <body class="dark:bg-gray-900 dark:text-white">
-@include('includes.buttons', ['displayStyle' => 'slide-down'])
 
     <div class="px-3 py-3 pt-5 pb-6 mx-auto text-center">
         <div
@@ -1151,16 +1141,11 @@
     </div>
 
     <div class="pb-6 mx-auto space-y-10 max-w-7xl">
-        <div>
-            <livewire:other-component />
-        </div>
-        <div>
-            <livewire:users-table myParam="Test" filterLayout="slide-down" />
-        </div>
+        {{ $slot }}
     </div>
+    @livewireScripts
 
-    <livewire:scripts />
-    @stack('scripts')
+    @livewireScriptConfig 
 
 </body>
 

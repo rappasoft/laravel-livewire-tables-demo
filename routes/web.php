@@ -49,9 +49,6 @@ Route::get('/bootstrap-5-slidedown', function () {
     return view('users.bs5', ['displayStyle' => 'slide-down']);
 })->name('bs5-slidedown');
 
-
-
-
 // News Table
 Route::get('/news/tailwind', function () {
     return view('news.tw');
@@ -90,35 +87,3 @@ Route::get('/news/bootstrap-5-slidedown', function () {
 
 
 
-
-
-
-// News Table Ends
-
-
-
-
-
-
-
-
-
-
-
-
-Route::get('/news-tw3', function () {
-    return view('news-tailwind');
-})->name('news-tw3');
-
-Route::get('/news-bs5', function () {
-    return view('news-bs5');
-})->name('news-bs5');
-
-
-Route::get('/news-no-bulk-tw3', function () {
-    return view('news-no-bulk-tailwind');
-})->name('news-no-bulk-tw3');
-
-Route::get('/news-no-bulk-bs5', function () {
-    return view('news-no-bulk-bs5');
-})->name('news-no-bulk-bs5');

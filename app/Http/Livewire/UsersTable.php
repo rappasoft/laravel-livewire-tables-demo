@@ -24,14 +24,14 @@ use Illuminate\Support\Facades\Storage;
 
 class UsersTable extends DataTableComponent
 {
-    use testTrait;
 
     public $myParam = 'Default';
-
 
     public string $tableName = 'users2';
 
     public array $users1 = [];
+    public array $users2 = [];
+
 
     public array $allTags = [];
 
@@ -39,8 +39,14 @@ class UsersTable extends DataTableComponent
 
     public array $fileList;
 
+    
     public function configure(): void
     {
+        $component = $this;
+
+        $componentQueryString = [];
+
+
         //$userExample->tags()->sync(Tag::inRandomOrder()->take(rand(1,3))->get()->pluck('tags.id')->toArray());
         //$user = User::findOrFail(1);
         //$user->jsoncol = ['test' => 'test123', 'new' => ''];
@@ -48,12 +54,13 @@ class UsersTable extends DataTableComponent
         //$this->userExample
         //(Tag::inRandomOrder()->take(rand(1,3))->get()->toArray());
         $this->setPrimaryKey('id')
-            ->setDebugEnabled()
-            ->setAdditionalSelects(['users.id as id', 'users.rule'])
+            ->setAdditionalSelects(['users.id as id'])
             ->setFilterLayout($this->filterLayout)
             ->setConfigurableAreas([
                 'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
             ])
+            ->setSearchLive()
+            ->setSingleSortingDisabled()
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
             ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
@@ -69,7 +76,7 @@ class UsersTable extends DataTableComponent
                 return ['class' => 'bg-gray-100'];
             })
             ->setSecondaryHeaderTdAttributes(function (Column $column, $rows) {
-                if ($column->isField('id') || $column->isField('address.address')) {
+                if ($column->isField('address.address')) {
                     return ['class' => 'text-red-500'];
                 }
                 else if ($column->isHidden())
@@ -89,13 +96,18 @@ class UsersTable extends DataTableComponent
 
                 return ['default' => true];
             })
-            ->setHideBulkActionsWhenEmptyEnabled()
             ->setTableRowUrl(function ($row) {
                 return 'https://google-'.$row->id.'.com';
             })
             ->setTableRowUrlTarget(function ($row) {
                 return '_blank';
-            })->setEagerLoadAllRelationsDisabled();
+            })
+            ->setTableAttributes([
+                'id' => 'my-id',
+                'class' => 'bg-red-500',
+            ])
+            ->setHideBulkActionsWhenEmptyEnabled()
+            ->setEagerLoadAllRelationsDisabled();
 
         if (empty($this->allTags))
         {
@@ -134,7 +146,7 @@ class UsersTable extends DataTableComponent
             Column::make('Name Label')
             ->sortable(function (Builder $query, string $direction) {
                 return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
-            })
+            })->unclickable()
             ->label(fn($row, Column $column) => $row->name),
 
             Column::make('Parent', 'parent_id')
@@ -307,7 +319,8 @@ class UsersTable extends DataTableComponent
                 DateFilter::make('Verified From')
                     ->config([
                         'min' => '2020-01-01',
-                        'max' => '2021-12-31',
+                        'max' => '2023-12-31',
+                        'format' => 'D m Y'
                     ])
                     ->filter(function (Builder $builder, string $value) {
                         $builder->whereDate('email_verified_at', '>=', $value);

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\AddressGroup;
 use App\Models\City;
+use App\Models\News;
 use App\Models\Tag;
 use App\Models\User;
 use Faker\Factory;
@@ -31,6 +32,8 @@ class DatabaseSeeder extends Seeder
      * @var int
      */
     private static int $tagCount = 22;
+
+    private static int $newsCount = 50;
 
     /**
      * Set how many Cities you would like to generate 
@@ -95,5 +98,8 @@ class DatabaseSeeder extends Seeder
                     Storage::put(self::$avatarPath.$user->id.'.jpg', Http::accept('image/jpeg')->get('https://i.pravatar.cc/100'), 'public');
                 }
             });
+
+            News::factory(self::$newsCount)->create();
+
     }
 }

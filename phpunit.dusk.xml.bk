@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false" backupStaticAttributes="false" bootstrap="vendor/autoload.php" colors="true" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false">
+
+      <php>
+        <env name="APP_KEY" value="1IAkQlj4R/ayOse4lpu36GmRHSDHBdWy4fjXa8jEYy0=" />
+        <env name="APP_URL" value="http://laravel.test" force="true" />        
+        <env name="DUSK_DRIVER_URL" value="selenium:4444" />     
+        <env name="DEBUGBAR_ENABLED" value="false" force="true" />        
+
+   </php>
+
+    <testsuites>
+        <testsuite name="Browser Test Suite">
+            <directory suffix="Test.php">./tests/Dusk/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

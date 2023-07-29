@@ -11,17 +11,19 @@
         "php": "^8.1",
         "laravel/framework": "^10.0",
         "maatwebsite/excel": "^3.1",
-        "rappasoft/laravel-livewire-tables": "dev-sortableLabelFixesNew"
+        "rappasoft/laravel-livewire-tables-v3": "dev-filterTidy"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.8",
+        "barryvdh/laravel-debugbar": "dev-develop",
         "fakerphp/faker": "^1.9.1",
         "guzzlehttp/guzzle": "^7.7",
+        "laravel/dusk": "^7.7",
         "laravel/pint": "^1.10",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit-selenium": "^1.3",
         "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -94,7 +96,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables.git"
+            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables-v3.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/LowerRockLabs/laravel-debugbar.git"
         }
     ]
 }

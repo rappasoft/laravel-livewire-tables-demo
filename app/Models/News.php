@@ -18,7 +18,8 @@ class News extends Model
      */
     protected $fillable = [
         'name',
-        'user_id'
+        'description',
+        'user_id',
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

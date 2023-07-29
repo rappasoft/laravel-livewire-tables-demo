@@ -32,7 +32,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
         return [
             'name' => $this->faker->name(),
             'active' => (bool) random_int(0, 1),
@@ -41,7 +40,7 @@ class UserFactory extends Factory
             'success_rate' => random_int(0, 100),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => md5(Str::random(10)),
-            'parent_id' => (self::$order > 3) ? (rand(2,self::$order)) : null,
+            'parent_id' => (self::$order > 3) ? (rand(2, self::$order)) : null,
             'sort' => self::$order++,
             'created_at' => $this->faker->dateTimeBetween('-13 months', '-10 days'),
             'updated_at' => $this->faker->dateTimeBetween('-13 days', '-1 day'),

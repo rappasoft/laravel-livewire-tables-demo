@@ -1,6 +1,11 @@
 @props(['displayStyle' => 'popover'])
 <!DOCTYPE html>
-<html lang="en" x-cloak x-data="{ darkMode: localStorage.getItem('darkTw3') === 'true' }" x-init="$watch('darkMode', val => localStorage.setItem('darkTw3', val))" x-bind:class="{ 'dark': darkMode }">
+<html lang="en" 
+    x-cloak
+    x-data="{darkMode: localStorage.getItem('dark') === 'true'}"
+    x-init="$watch('darkMode', val => localStorage.setItem('dark', val))"
+    x-bind:class="{'dark': darkMode}"
+>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1107,21 +1112,13 @@
         }
     </script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-    </style>
-    <livewire:styles />
+    @vite(['resources/js/app.js'])
     @stack('styles')
+
 
 </head>
 
 <body class="dark:bg-gray-900 dark:text-white">
-@include('includes.buttons', ['displayStyle' => $displayStyle ])
 
     <div class="px-3 py-3 pt-5 pb-6 mx-auto text-center">
         <div
@@ -1139,27 +1136,28 @@
         <p class="lead">Tailwind 3 Implementation - <a
                 href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" class="underline"
                 target="_blank">Gist</a></p>
+        @include('includes.buttons', ['displayStyle' => $displayStyle ])
+
     </div>
 
     <div class="mb-8 text-center">
         <button x-cloak x-on:click="darkMode = !darkMode;">
-            <span x-show="!darkMode"
-                class="w-8 h-8 p-2 ml-3 text-gray-700 transition bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200">Dark</span>
-            <span x-show="darkMode"
-                class="w-8 h-8 p-2 ml-3 text-gray-100 transition bg-gray-700 rounded-md cursor-pointer dark:hover:bg-gray-600">Light</span>
+            <span x-show="!darkMode" class="w-8 h-8 p-2 ml-3 text-gray-700 transition bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200">Dark</span>
+            <span x-show="darkMode" class="w-8 h-8 p-2 ml-3 text-gray-100 transition bg-gray-700 rounded-md cursor-pointer dark:hover:bg-gray-600">Light</span>
         </button>
     </div>
 
-    <div class="pb-6 mx-auto space-y-10 max-w-7xl">
+
+    <div class="pb-6 mx-auto space-y-10 w-full px-8">
         <div>
             <livewire:other-component />
         </div>
         <div>
-            <livewire:users-table myParam="Test" filterLayout="{{ $displayStyle }}"/>
+            <livewire:users-table myParam="Test" filterLayout="{{ $displayStyle ?? 'popover' }}" />
         </div>
     </div>
 
-    <livewire:scripts />
+    @livewireScriptConfig 
     @stack('scripts')
 
 </body>
