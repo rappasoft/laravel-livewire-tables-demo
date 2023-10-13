@@ -13,10 +13,6 @@ class NewPage extends Component
 
     public function mount()
     {
-        if (!isset($this->theme))
-        {
-            $this->theme ="tw3";
-        }
         $this->setTableTheme($this->theme);        
     }
 

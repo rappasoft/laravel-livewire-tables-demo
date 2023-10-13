@@ -140,7 +140,7 @@ class UsersTable extends DataTableComponent
             ->setEagerLoadAllRelationsDisabled()
             ->setPaginationMethod('cursor')
             ->setPerPageAccepted([10, 25, 50, 100])
-            ->setHideReorderColumnUnlessReorderingEnabled();
+            ->setHideReorderColumnUnlessReorderingDisabled();
 
 
     }
@@ -155,8 +155,7 @@ class UsersTable extends DataTableComponent
         return [
             Column::make('Order', 'sort')
             ->sortable()
-            ->excludeFromColumnSelect()
-            ->collapseOnTablet(),
+            ->excludeFromColumnSelect(),
 
             ImageColumn::make('Avatar')
             ->location(
@@ -185,11 +184,14 @@ class UsersTable extends DataTableComponent
             })
             ->sortable(function(Builder $query, string $direction) {
               return $query->orderBy('users.name', $direction);
-            }),
+            })
+            ->collapseOnTablet()
+            ,
             BooleanColumn::make('Has Parent', 'has_parent')
             ->setCallback(function (string $value, $row) {
                 return $row->has_parent;
-            }),
+            })
+            ->collapseOnMobile(),
 
             Column::make('Parent', 'parent.name'),
 
@@ -197,7 +199,8 @@ class UsersTable extends DataTableComponent
             ->sortable(function (Builder $query, string $direction) {
                 return $query->orderBy('success_rate', $direction); // Example, ->sortable() would work too.
             })
-            ->searchable(),
+            ->searchable()
+            ->collapseOnTablet(),
 
             Column::make('E-Mail', 'email')
             ->sortable(function (Builder $query, string $direction) {
@@ -213,6 +216,7 @@ class UsersTable extends DataTableComponent
             Column::make('Verified At', 'email_verified_at')
             ->sortable()
             ->searchable()
+            ->collapseOnTablet()
             ->format(
                 fn ($value, $row, Column $column) => Carbon::parse($value)->format('d M Y')
             ),
@@ -222,11 +226,13 @@ class UsersTable extends DataTableComponent
             ->searchable()
                         ->footer(function($rows) {
                 return 'Count: ' . $rows->count(). ' of ' . $this->paginationTotalItemCount;
-            }),
+            })
+            ->collapseAlways(),
 
             Column::make('Address Group', 'address.group.name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->collapseOnTablet(),
 
             Column::make('Group City', 'address.group.city.name')
                 ->sortable()
@@ -235,10 +241,6 @@ class UsersTable extends DataTableComponent
             BooleanColumn::make('Active')
                 ->sortable()
                 ->footerFilter('active'),
-
-            Column::make('Group City', 'address.group.city.name')
-                ->sortable()
-                ->searchable(),
 
             Column::make('Tags')
                 ->label(fn ($row) => $row->tags->pluck('name')->implode(', ')),

@@ -17,8 +17,9 @@ trait DemoTrait {
     public $selectedTable = 'news-table';
 
     #[Url(as: 'theme', keep: true)]
-    public string $theme = 'tw2';
+    public string $theme = 'tw3';
 
+    #[Url(as: 'tableTheme', keep: true)]
     public string $tableTheme = 'tailwind';
 
 
