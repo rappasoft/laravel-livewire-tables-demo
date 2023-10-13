@@ -19,7 +19,7 @@
         "vite": "^4.4.5"
     },
     "dependencies": {
-        "@alpinejs/focus": "^3.12.0",
+        "@alpinejs/focus": "^3.13.0",
         "@nextapps-be/livewire-sortablejs": "^0.2.0",
         "@rollup/plugin-commonjs": "^25.0.3",
         "@rollup/plugin-node-resolve": "^15.1.0",

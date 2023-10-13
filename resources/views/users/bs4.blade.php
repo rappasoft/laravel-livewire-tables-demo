@@ -34,7 +34,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="container w-100">
          <div>
             <livewire:other-component />
         </div>

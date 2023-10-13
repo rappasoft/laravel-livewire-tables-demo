@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Process;
 
     @include('includes.buttons.user')
     @include('includes.buttons.news')
+    @include('includes.buttons.pets')
 
 </div>

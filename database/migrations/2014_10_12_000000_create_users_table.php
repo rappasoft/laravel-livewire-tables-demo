@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->nullable()->constrained('users');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
             $table->boolean('active')->default(false);
             $table->integer('success_rate')->nullable();

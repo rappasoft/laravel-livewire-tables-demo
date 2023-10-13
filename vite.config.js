@@ -12,12 +12,7 @@ export default defineConfig({
             plugins: [
                 resolve(),
                 commonjs(),
-            ],
-            output: [{
-                manualChunks: {
-                    flatpickr: ['flatpickr']
-                }
-            }]
+            ]
         }
     },
     plugins: [

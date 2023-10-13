@@ -11,11 +11,13 @@
         "php": "^8.1",
         "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^10.0",
+        "larawatch/larawatch": "dev-main",
+        "livewire/livewire": "^3.0",
         "maatwebsite/excel": "^3.1",
-        "rappasoft/laravel-livewire-tables-v3": "dev-joedev"
+        "rappasoft/laravel-livewire-tables": "dev-v3-ColumnCollapseAlwaysBranch"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "dev-develop",
+        "barryvdh/laravel-debugbar": "dev-master",
         "fakerphp/faker": "^1.9.1",
         "guzzlehttp/guzzle": "^7.7",
         "laravel/dusk": "^7.7",
@@ -98,11 +100,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables-v3.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/LowerRockLabs/laravel-debugbar.git"
+            "url": "https://github.com/LowerRockLabs/laravel-livewire-tables.git"
         }
     ]
 }

@@ -26,3 +26,8 @@ config/clockwork.php
 composer.lock
 package-lock.json
 public/build/*
+public/vendor/*
+resources/lang/livewire-tables/*
+stubs/*
+resources/views/vendor/*
+composer.lock

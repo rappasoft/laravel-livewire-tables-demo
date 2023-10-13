@@ -9,8 +9,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <title>Tailwind 3 Tables</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
@@ -1114,6 +1112,8 @@
         }
     </script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+
     @vite(['resources/js/app.js'])
     @stack('styles')
         <style>
@@ -1139,7 +1139,6 @@
         <p class="lead">Tailwind 3 Implementation - <a
                 href="https://gist.github.com/rappasoft/948adf542307b8f620d53c7c7e735d3c" class="underline"
                 target="_blank">Gist</a></p>
-        @include('includes.buttons', ['displayStyle' => $displayStyle ])
 
     </div>
 
@@ -1158,12 +1157,11 @@
         <div>
             <livewire:users-table myParam="Test" filterLayout="{{ $displayStyle ?? 'popover' }}" />
         </div>
-        <div class="range-slider.grad">
-        TestTestTestTestTest
-        </div>
+
     </div>
     @livewireScriptConfig 
     @stack('scripts')
+
 </body>
 
 </html>

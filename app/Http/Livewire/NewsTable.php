@@ -10,20 +10,14 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
-use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
-use Illuminate\Support\Facades\Storage;
+use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, ImageColumn, LinkColumn};
+use Rappasoft\LaravelLivewireTables\Views\Filters\{DateFilter, DateRangeFilter, DateTimeFilter, MultiSelectDropdownFilter, MultiSelectFilter, NumberFilter, NumberRangeFilter, SelectFilter, TextFilter};
+use App\Traits\DemoTablesTrait;
 
 class NewsTable extends DataTableComponent
 {
     use testTrait;
+    use DemoTablesTrait;
 
     public $myParam = 'Default123';
 
@@ -48,12 +42,8 @@ class NewsTable extends DataTableComponent
             ->setDebugEnabled()
             ->setAdditionalSelects(['news.id as id'])
             ->setFilterLayout($this->filterLayout)
-            ->setConfigurableAreas([
-                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
-            ])
             ->setReorderEnabled()
-            ->setHideReorderColumnUnlessReorderingDisabled()
-            ->setReorderCurrentPageOnly(false)
+            ->setHideReorderColumnUnlessReorderingEnabled()
             ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
                 if ($column->getTitle() == 'Address') {
                     return ['class' => 'text-red-500 break-all', 
@@ -87,7 +77,6 @@ class NewsTable extends DataTableComponent
 
                 return ['default' => true];
             })
-            ->setSearchLazy()
             ->setQueryStringAlias('news-table')
             ->setHideBulkActionsWhenEmptyEnabled()
             ->setEagerLoadAllRelationsEnabled()
@@ -101,17 +90,26 @@ class NewsTable extends DataTableComponent
             Column::make('Order', 'id')
             ->sortable()
             ->collapseOnMobile()
+            ->deselected()
             ->excludeFromColumnSelect(),
-            Column::make('Name')
+            
+            Column::make('Name', 'name')
                 ->sortable(function (Builder $query, string $direction) {
-                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+                    return $query->orderBy('news.name', $direction); // Example, ->sortable() would work too.
                 })
                 ->searchable()
                 ->secondaryHeader($this->getFilterByKey('name'))
-                ->footer($this->getFilterByKey('name'))->excludeFromColumnSelect(),
+                ->footer($this->getFilterByKey('name')),
+
             Column::make('Description', 'description'),
             Column::make('User', 'user.name'),
-
+            Column::make('Topics')
+            ->sortable()
+            ->searchable()
+            ->collapseOnTablet()
+            ->label(
+                fn ($row, Column $column) => implode(',',$row->topics->pluck('title')->toArray() ?? [])
+            ),
         ];
     }
 

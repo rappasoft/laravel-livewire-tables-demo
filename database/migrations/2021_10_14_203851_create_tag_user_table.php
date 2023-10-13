@@ -15,8 +15,8 @@ class CreateTagUserTable extends Migration
     {
         Schema::create('tag_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tag_id')->nullable()->constrained('tags');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->unsignedBigInteger('tag_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

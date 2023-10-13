@@ -18,7 +18,7 @@ class Tag extends Model
         'name',
     ];
 
-    public function user(): BelongsToMany
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }

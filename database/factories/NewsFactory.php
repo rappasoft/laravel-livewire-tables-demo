@@ -14,6 +14,8 @@ class NewsFactory extends Factory
      */
     protected $model = News::class;
 
+    protected array $publishers = ['Publisher 1', 'Publisher 2', 'Publisher 3'];
+
     /**
      * Define the model's default state.
      *
@@ -24,9 +26,13 @@ class NewsFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->realText(rand(10,20)),
+            'name' => $this->faker->realText(rand(10, 20)),
             'description' => $this->faker->text(),
             'user_id' => random_int(1, 50),
+            'custom_data' => json_encode([
+                'publisher' => $this->publishers[rand(0, 2)],
+                'views' => intval(rand(10, 500)),
+            ]),
         ];
     }
 }

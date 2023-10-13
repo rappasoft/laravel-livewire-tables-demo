@@ -54,9 +54,9 @@ class User extends Authenticatable
     ];
 
 
-    public function parent(): HasOne
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id', 'id')->without('parent');
     }
 
     public function tags(): BelongsToMany
