@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "production": "vite build"
+        "production": "vite build",
+        "build": "vite build"
     },
     "devDependencies": {
         "@tailwindcss/aspect-ratio": "^0.2.2",
@@ -20,10 +21,13 @@
     "dependencies": {
         "@alpinejs/focus": "^3.12.0",
         "@nextapps-be/livewire-sortablejs": "^0.2.0",
+        "@rollup/plugin-commonjs": "^25.0.3",
+        "@rollup/plugin-node-resolve": "^15.1.0",
         "@ryangjchandler/alpine-clipboard": "^2.2.0",
         "alpinejs": "^3.12.0",
         "autoprefixer": "^10.4.14",
         "cssnano": "^6.0.1",
+        "flatpickr": "^4.6.13",
         "livewire-sortable": "^0.2.2"
     }
 }

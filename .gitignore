@@ -18,3 +18,11 @@ package-lock.json
 composer.lock
 .phpunit.cache/test-results
 bootstrap/cache/*
+build/phpstan/*
+build/phpstan/**/*
+phpstan.txt
+public/build/**
+config/clockwork.php
+composer.lock
+package-lock.json
+public/build/*

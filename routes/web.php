@@ -33,6 +33,11 @@ Route::get('/tailwind3-slidedown', function () {
     return view('users.tw3', ['displayStyle' => 'slide-down']);
 })->name('tw3-slidedown');
 
+Route::get('/tailwind3-slideover', function () {
+    return view('users.tw3', ['displayStyle' => 'slide-over']);
+})->name('tw3-slideover');
+
+
 Route::get('/bootstrap-4', function () {
     return view('users.bs4');
 })->name('bs4');
@@ -82,8 +87,43 @@ Route::get('/news/bootstrap-5-slidedown', function () {
     return view('news.bs5', ['displayStyle' => 'slide-down']);
 })->name('news-bs5-slidedown');
 
+$viewPrefix = 'both.';
+
+Route::prefix('both')->name('both.')->group(function () use ($viewPrefix) {
 
 
+Route::get('tailwind', function () use ($viewPrefix)  {
+    return view($viewPrefix . 'tw');
+})->name('tw');
 
+Route::get('tailwind-slidedown', function () use ($viewPrefix)  {
+    return view($viewPrefix . 'tw', ['displayStyle' => 'slide-down']);
+})->name('tw-slidedown');
+
+Route::get('tailwind3', function () use ($viewPrefix)  {
+    return view($viewPrefix . 'tw3');
+})->name('tw3');
+
+Route::get('tailwind3-slidedown', function () use ($viewPrefix)  {
+    return view($viewPrefix.'tw3', ['displayStyle' => 'slide-down']);
+})->name('tw3-slidedown');
+
+Route::get('bootstrap-4', function () use ($viewPrefix)  {
+    return view($viewPrefix.'bs4');
+})->name('bs4');
+
+Route::get('bootstrap-4-slidedown', function () use ($viewPrefix)  {
+    return view($viewPrefix.'bs4', ['displayStyle' => 'slide-down']);
+})->name('bs4-slidedown');
+
+Route::get('bootstrap-5', function () {
+    return view($viewPrefix.'bs5');
+})->name('bs5');
+
+Route::get('bootstrap-5-slidedown', function () use ($viewPrefix) {
+    return view($viewPrefix.'bs5', ['displayStyle' => 'slide-down']);
+})->name('bs5-slidedown');
+
+});
 
 

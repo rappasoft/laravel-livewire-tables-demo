@@ -40,13 +40,12 @@
         </div>
 
         <div class="container">
-        <div wire:key="otherComponent">
-            <livewire:other-component />
-        </div>
-        <div wire:key="newsTable">
-            <livewire:users-table theme="bootstrap-5" filterLayout="{{ $displayStyle }}"/>
-
-        </div>
+            <div>
+                <livewire:users-table theme="bootstrap-5" filterLayout="{{ $displayStyle }}"/>
+            </div>
+            <div>
+                <livewire:news-table theme="bootstrap-5" filterLayout="{{ $displayStyle }}"/>
+            </div>
 
         </div>
 

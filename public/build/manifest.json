@@ -1,11 +1,17 @@
 {
+  "_flatpickr-f29ca199.js": {
+    "file": "assets/flatpickr-f29ca199.js"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-5b67079d.css",
+    "file": "assets/app-7541a1bf.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-15acdae4.js",
+    "file": "assets/app-d2ff5fef.js",
+    "imports": [
+      "_flatpickr-f29ca199.js"
+    ],
     "isEntry": true,
     "src": "resources/js/app.js"
   }

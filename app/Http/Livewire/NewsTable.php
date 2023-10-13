@@ -25,12 +25,12 @@ class NewsTable extends DataTableComponent
 {
     use testTrait;
 
-    public $myParam = 'Default';
+    public $myParam = 'Default123';
 
 
-    public string $tableName = 'news';
+    public string $tableName = 'newstable';
 
-    public array $news = [];
+    public array $newstable = [];
 
     public string $filterLayout = 'popover';
 
@@ -38,6 +38,8 @@ class NewsTable extends DataTableComponent
 
     public function configure(): void
     {
+
+
         //$userExample->tags()->sync(Tag::inRandomOrder()->take(rand(1,3))->get()->pluck('tags.id')->toArray());
 
         //$this->userExample
@@ -50,7 +52,8 @@ class NewsTable extends DataTableComponent
                 'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
             ])
             ->setReorderEnabled()
-            ->setHideReorderColumnUnlessReorderingEnabled()
+            ->setHideReorderColumnUnlessReorderingDisabled()
+            ->setReorderCurrentPageOnly(false)
             ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
                 if ($column->getTitle() == 'Address') {
                     return ['class' => 'text-red-500 break-all', 
@@ -84,14 +87,21 @@ class NewsTable extends DataTableComponent
 
                 return ['default' => true];
             })
+            ->setSearchLazy()
+            ->setQueryStringAlias('news-table')
             ->setHideBulkActionsWhenEmptyEnabled()
-            ->setEagerLoadAllRelationsEnabled();
+            ->setEagerLoadAllRelationsEnabled()
+             ->setDefaultReorderSort('id', 'desc');
 
     }
 
     public function columns(): array
     {
         return [
+            Column::make('Order', 'id')
+            ->sortable()
+            ->collapseOnMobile()
+            ->excludeFromColumnSelect(),
             Column::make('Name')
                 ->sortable(function (Builder $query, string $direction) {
                     return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
@@ -108,6 +118,15 @@ class NewsTable extends DataTableComponent
     public function filters(): array
     {
         return [
+            TextFilter::make('Name')
+            ->config([
+                'maxlength' => 10,
+                'placeholder' => 'Search Name',
+            ])
+            ->filter(function (Builder $builder, string $value) {
+                $builder->where('name', 'like', '%'.$value.'%');
+            }),
+
         ];
     }
 

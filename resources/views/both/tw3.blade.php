@@ -9,8 +9,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <title>Tailwind 3 Tables</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
@@ -1118,7 +1116,13 @@
     @stack('styles')
         <style>
             [x-cloak] { display: none !important; }
+            .rappadragging {
+                opacity: 1.0;
+            }
         </style>
+    @rappasoftStyles
+    @rappasoftScripts
+
 </head>
 
 <body class="dark:bg-gray-900 dark:text-white">
@@ -1156,14 +1160,16 @@
             <livewire:other-component />
         </div>
         <div>
-            <livewire:users-table myParam="Test" filterLayout="{{ $displayStyle ?? 'popover' }}" />
+            <livewire:users-table :key="'specialKeyForUsersTable'" myParam="Test" filterLayout="{{ $displayStyle ?? 'popover' }}" />
         </div>
-        <div class="range-slider.grad">
-        TestTestTestTestTest
+        <div>
+            <livewire:news-table :key="'specialKeyForNewsTable'" myParam="Test" filterLayout="{{ $displayStyle ?? 'popover' }}" />
         </div>
     </div>
+
     @livewireScriptConfig 
     @stack('scripts')
+
 </body>
 
 </html>

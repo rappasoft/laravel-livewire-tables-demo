@@ -20,11 +20,14 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\NumberRangeFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
+
 use Illuminate\Support\Facades\Storage;
 
 class UsersTable extends DataTableComponent
 {
-
+    
     public $myParam = 'Default';
 
     public string $tableName = 'users2';
@@ -38,7 +41,14 @@ class UsersTable extends DataTableComponent
     public string $filterLayout = 'popover';
 
     public array $fileList;
+    
+    #[Reactive] 
+    public string $testWireable = 'tesat 123';
 
+    public function updatedTestWireable($value)
+    {
+        dd($value);
+    }
     
     public function configure(): void
     {
@@ -56,13 +66,12 @@ class UsersTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setAdditionalSelects(['users.id as id'])
             ->setFilterLayout($this->filterLayout)
-            ->setConfigurableAreas([
-                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
-            ])
             ->setSearchLive()
             ->setSingleSortingDisabled()
             ->setReorderEnabled()
+            ->setCurrentlyReorderingDisabled()
             ->setHideReorderColumnUnlessReorderingEnabled()
+            ->setReorderCurrentPageOnly(true)
             ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
                 if ($column->getTitle() == 'Address') {
                     return ['class' => 'text-red-500 break-all', 
@@ -103,19 +112,14 @@ class UsersTable extends DataTableComponent
                 return '_blank';
             })
             ->setTableAttributes([
-                'id' => 'my-id',
+                'id' => 'table-users2',
                 'class' => 'bg-red-500',
             ])
             ->setHideBulkActionsWhenEmptyEnabled()
-            ->setEagerLoadAllRelationsDisabled();
+            ->setEagerLoadAllRelationsDisabled()
+            ->setPerPageAccepted([10, 25, 50, 100]);
 
-        if (empty($this->allTags))
-        {
-            $this->allTags = Tag::select('id', 'name', 'created_at')
-            ->orderBy('name')
-            ->get()
-            ->pluck('name','id')->toArray();
-        }
+
     }
 
     public function columns(): array
@@ -140,8 +144,8 @@ class UsersTable extends DataTableComponent
                     return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
                 })
                 ->searchable()
-                ->secondaryHeader($this->getFilterByKey('name'))
-                ->footer($this->getFilterByKey('name'))->excludeFromColumnSelect(),
+                ->footer($this->getFilterByKey('name'))
+                ->excludeFromColumnSelect(),
 
             Column::make('Name Label')
             ->sortable(function (Builder $query, string $direction) {
@@ -152,7 +156,13 @@ class UsersTable extends DataTableComponent
             Column::make('Parent', 'parent_id')
                 ->format(fn($value, $row, Column $column) => ((!empty($row->parent)) ? $row->parent->name : '<strong>None</strong>'))->html(),
 
-    
+            Column::make('Success Rate')
+            ->sortable(function (Builder $query, string $direction) {
+                return $query->orderBy('success_rate', $direction); // Example, ->sortable() would work too.
+            })
+            ->searchable()
+            ->collapseOnTablet(),
+
             Column::make('E-Mail', 'email')
             ->sortable(function (Builder $query, string $direction) {
                 return $query->orderBy('email', $direction); // Example, ->sortable() would work too.
@@ -199,14 +209,8 @@ class UsersTable extends DataTableComponent
 
             Column::make('Tags')
                 ->label(fn ($row) => $row->tags->pluck('name')->implode(', ')),
-            Column::make('Rules')
-            ->label(
-                    fn($row, Column $column) => (is_array($row->rule) ? (array_key_exists('comment', $row->rule) ? $row->rule['comment'] : 'ArrayExistsNoKey') : 'NotAnArray'),
-            ),
-            Column::make('jsoncol')
-            ->label(
-                fn($row, Column $column) => $row->jsoncol['test'] ?? ''
-            ),
+
+
             ButtonGroupColumn::make('Actions')
                 ->unclickable()
                 ->attributes(function ($row) {
@@ -269,14 +273,44 @@ class UsersTable extends DataTableComponent
 
             MultiSelectFilter::make('Tags')
             ->options(
-                $this->allTags
+                (!empty($this->allTags) ? $this->allTags : $this->allTags = Tag::select('id', 'name', 'created_at')->orderBy('name')
+                ->get()
+                ->pluck('name','id')->toArray())
             )->filter(function (Builder $builder, array $values) {
                 $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
             })
             ->setFilterPillValues([
                 '3' => 'Tag 1',
             ]),
-            
+            NumberRangeFilter::make('Success Rate')
+            ->options(
+                [
+                    'min' => 0,
+                    'max' => 100,
+                ]
+            )
+            ->config([
+                'minRange' => 0,
+                'maxRange' => 100,
+                'suffix' => '%',
+            ])
+            ->filter(function (Builder $builder, array $values) {
+                $builder->where('users.success_rate', '>=', intval($values['min']))
+                ->where('users.success_rate', '<=', intval($values['max']));
+            }),
+
+            DateRangeFilter::make('EMail Verified Range')
+            ->config([
+                'ariaDateFormat' => 'F j, Y',
+                'dateFormat' => 'Y-m-d',
+                'earliestDate' => '2020-01-01',
+                'latestDate' => '2023-08-01',
+            ])
+            ->setFilterPillValues([0 => 'minDate', 1 => 'maxDate'])
+            ->filter(function (Builder $builder, array $dateRange) {
+                $builder->whereDate('email_verified_at', '>=', $dateRange['minDate'])->whereDate('email_verified_at', '<=', $dateRange['maxDate']);
+            }),
+
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
                 ->setCustomFilterLabel('includes.customFilterLabel1')

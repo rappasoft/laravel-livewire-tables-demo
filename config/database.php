@@ -55,13 +55,13 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-//            'sslmode' => 'VERIFY_CA',
+            'sslmode' => 'VERIFY_CA',
             'prefix_indexes' => true,
             'strict' => false,
             'engine' => null,
-  //          'options' => extension_loaded('pdo_mysql') ? array_filter([
-//                PDO::MYSQL_ATTR_SSL_KEY    => '/etc/ssl/certs/DigiCertGlobalRootG2.crt.pem',
-    //        ]) : [],
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_KEY    => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
         ],
 
         'pgsql' => [
