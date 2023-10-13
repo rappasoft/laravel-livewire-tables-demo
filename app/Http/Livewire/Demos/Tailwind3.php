@@ -12,14 +12,12 @@ class Tailwind3 extends Component
 
     public function mount()
     {
-        $this->theme = 'tw3';
-        $this->tableTheme = 'tailwind';
+        $this->originalTheme = 'tw3';
+        $this->setTableTheme('tw3');        
     }
 
     public function render()
     {
-        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme;
-
         return view('page.tablecomponent')->layout('layouts.tw3');
     
     }

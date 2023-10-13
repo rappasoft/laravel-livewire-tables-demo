@@ -43,5 +43,10 @@ class UserSeeder extends Seeder
                 $user->address()->save($this->addresses->random(1)->first());
             });
 
+        foreach (User::whereNull('parent_id')->get() as $topLevelUser)
+        {
+            $topLevelUser->has_parent = false;
+            $topLevelUser->save();
+        }
     }
 }

@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsTableNoBulk extends DataTableComponent
 {
-    use testTrait;
-
     public $myParam = 'Default';
 
 

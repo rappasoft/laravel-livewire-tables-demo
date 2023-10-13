@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
             $table->boolean('active')->default(false);
+            $table->boolean('has_parent')->default(true);
             $table->integer('success_rate')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

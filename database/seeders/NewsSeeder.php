@@ -21,5 +21,6 @@ class NewsSeeder extends Seeder
     {
 
         News::factory(self::$newsCount)->create();
+
     }
 }

@@ -23,8 +23,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleTable extends DataTableComponent
 {
-    use testTrait;
-
     public $myParam = 'Default123';
 
 

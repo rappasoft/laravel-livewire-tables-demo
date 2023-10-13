@@ -21,10 +21,12 @@ class DatabaseSeeder extends Seeder
             AddressGroupSeeder::class,
             AddressSeeder::class,
             TagSeeder::class,
+            TopicSeeder::class,
             UserSeeder::class,
             NewsSeeder::class,
             ArticleSeeder::class,
             UserPhotoSeeder::class,
+            NewsTopicSeeder::class,
         ]);
     }
 }

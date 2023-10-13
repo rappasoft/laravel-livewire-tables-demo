@@ -12,13 +12,12 @@ class Bootstrap5 extends Component
 
     public function mount()
     {
-        $this->theme = 'bs5';
-        $this->tableTheme = 'bootstrap-5';
+        $this->originalTheme = 'bs5';
+        $this->setTableTheme('bs5');        
     }
 
     public function render()
     {
-        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme;
 
         return view('page.tablecomponent')->layout('layouts.bs5');
     

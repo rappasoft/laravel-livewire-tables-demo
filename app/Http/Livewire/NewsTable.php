@@ -16,7 +16,6 @@ use App\Traits\DemoTablesTrait;
 
 class NewsTable extends DataTableComponent
 {
-    use testTrait;
     use DemoTablesTrait;
 
     public $myParam = 'Default123';

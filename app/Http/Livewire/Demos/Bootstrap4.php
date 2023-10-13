@@ -12,14 +12,12 @@ class Bootstrap4 extends Component
 
     public function mount()
     {
-        $this->theme = 'bs4';
-        $this->tableTheme = 'bootstrap-4';
+        $this->originalTheme = 'bs4';
+        $this->setTableTheme('bs4');        
     }
 
     public function render()
     {
-        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme;
-
         return view('page.tablecomponent')->layout('layouts.bs4');
     
     }

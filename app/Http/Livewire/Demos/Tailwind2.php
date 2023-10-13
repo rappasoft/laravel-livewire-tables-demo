@@ -12,15 +12,12 @@ class Tailwind2 extends Component
 
     public function mount()
     {
-        $this->theme = 'tw2';
-        $this->tableTheme = 'tailwind';
+        $this->originalTheme = 'tw2';
+        $this->setTableTheme('tw2');        
     }
 
     public function render()
     {
-        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme;
-
         return view('page.tablecomponent')->layout('layouts.tw2');
-    
     }
 }
