@@ -21,6 +21,7 @@ class News extends Model
         'name',
         'description',
         'user_id',
+        'sort_order',
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

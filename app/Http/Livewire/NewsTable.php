@@ -79,18 +79,23 @@ class NewsTable extends DataTableComponent
             ->setQueryStringAlias('news-table')
             ->setHideBulkActionsWhenEmptyEnabled()
             ->setEagerLoadAllRelationsEnabled()
-             ->setDefaultReorderSort('id', 'desc');
+            
+             ->setDefaultReorderSort('sort_order', 'desc');
 
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Order', 'id')
+            Column::make('ID', 'id')
             ->sortable()
             ->collapseOnMobile()
             ->deselected()
             ->excludeFromColumnSelect(),
+            
+            Column::make('sort_order', 'sort_order')
+            ->sortable()
+            ->collapseOnMobile(),
             
             Column::make('Name', 'name')
                 ->sortable(function (Builder $query, string $direction) {
@@ -165,5 +170,9 @@ class NewsTable extends DataTableComponent
     }
 
 
+    public function reorder(array $items): void
+    {
+        News::upsert($items, [$this->getPrimaryKey()], ['sort_order']);
+    }
 
 }

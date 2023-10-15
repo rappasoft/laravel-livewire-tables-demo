@@ -34,6 +34,8 @@ class UsersTable extends DataTableComponent
     public array $users1 = [];
     public array $users2 = [];
 
+    public bool $onlyOpen = false;
+
     #[Reactive] 
     public array $filterComponents2 = ['test_filter' => ''];
 
@@ -125,7 +127,7 @@ class UsersTable extends DataTableComponent
             })
             ->setTableAttributes([
                 'id' => 'table-users2',
-                'class' => 'bg-red-500',
+                'class' => 'bg-red-500 min-h-full',
             ])
            // ->setFilterPopoverAttributes([
                // //'class' => 'bg-red-500',
@@ -140,7 +142,10 @@ class UsersTable extends DataTableComponent
             ->setEagerLoadAllRelationsDisabled()
             ->setPaginationMethod('cursor')
             ->setPerPageAccepted([10, 25, 50, 100])
-            ->setHideReorderColumnUnlessReorderingDisabled();
+            ->setHideReorderColumnUnlessReorderingDisabled()
+            ->setConfigurableAreas([
+                'before-tools' => 'tables.user-before-tools'
+            ]);
 
 
     }
@@ -154,8 +159,7 @@ class UsersTable extends DataTableComponent
     {
         return [
             Column::make('Order', 'sort')
-            ->sortable()
-            ->excludeFromColumnSelect(),
+            ->sortable(),
 
             ImageColumn::make('Avatar')
             ->location(
@@ -177,16 +181,23 @@ class UsersTable extends DataTableComponent
 
             
 
-
-            Column::make('NameLabel')
+            Column::make('Test1')
             ->label(function ($row) {
-              return $row->name;
+                return $row->email;
+            })
+            ->sortable(function(Builder $query, string $direction) {
+                return $query->orderBy('users.name', $direction);
+            })
+            ->collapseOnTablet(),
+    
+            Column::make('Test2')
+            ->label(function ($row) {
+              return $row->success_rate;
             })
             ->sortable(function(Builder $query, string $direction) {
               return $query->orderBy('users.name', $direction);
             })
-            ->collapseOnTablet()
-            ,
+            ->collapseOnTablet(),
             BooleanColumn::make('Has Parent', 'has_parent')
             ->setCallback(function (string $value, $row) {
                 return $row->has_parent;
@@ -520,7 +531,7 @@ class UsersTable extends DataTableComponent
     {
         //User::upsert($items, [$this->getPrimaryKey()], ['sort']);
         foreach ($items as $item) {
-            User::find($item[$this->getPrimaryKey()])->update(['sort' => (int)$item[$this->getDefaultReorderColumn()]]);
+            User::find($item[$this->getPrimaryKey()])->update(['sort_order' => (int)$item[$this->getDefaultReorderColumn()]]);
         }
     }
 

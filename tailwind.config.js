@@ -40,7 +40,16 @@ module.exports = {
             'col-span-2',
             'col-span-3',
             'col-span-4',
-
+            'opacity-0',
+            'opacity-50',
+            'opacity-100',
+            'min-h-full',
+            'h-full',
+            'align-middle',
+            'w-full',
+            'h-screen',
+            'place-items-center',
+            'align-middle',
         ],
     },
     theme: {
