@@ -16,5 +16,13 @@ Installation:
 // Create the database tables
 - php artisan migrate
 
-// Seed the tables with realistic (but fake) data
+// Seed the tables with realistic (but fake) data, including fake user profile photos
 - php artisan db:seed
+
+// Retrieve the required node_modules for building
+- npm update
+
+// Run your build/dev process
+- npm run build
+OR
+- npm run dev
