@@ -31,3 +31,4 @@ resources/lang/livewire-tables/*
 stubs/*
 resources/views/vendor/*
 composer.lock
+composer.lock

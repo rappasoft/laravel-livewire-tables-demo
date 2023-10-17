@@ -26,8 +26,6 @@
         "@ryangjchandler/alpine-clipboard": "^2.2.0",
         "alpinejs": "^3.12.0",
         "autoprefixer": "^10.4.14",
-        "cssnano": "^6.0.1",
-        "flatpickr": "^4.6.13",
-        "livewire-sortable": "^0.2.2"
+        "cssnano": "^6.0.1"
     }
 }

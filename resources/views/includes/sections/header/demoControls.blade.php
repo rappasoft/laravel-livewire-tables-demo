@@ -22,6 +22,10 @@
             <div style="margin: 1em">
                 @include('includes.sections.header.controls.themeSwitcher')
             </div>
+            <div style="margin: 1em">
+                @include('includes.sections.header.controls.localeSwitcher')
+            </div>
+
         </div>
 
     </div>

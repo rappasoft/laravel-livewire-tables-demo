@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Livewire\Attributes\Url;
+use Illuminate\Support\Facades\App;
 
 trait DemoTrait {
  
@@ -22,6 +23,11 @@ trait DemoTrait {
     #[Url(as: 'tableTheme', keep: true)]
     public string $tableTheme = 'tailwind';
 
+    #[Url(as: 'chosenLocale', keep: true)]
+    public string $chosenLocale = 'en';
+
+    public array $availableLocales = [];
+
 
     public function updatedTheme(string $theme)
     {
@@ -29,25 +35,34 @@ trait DemoTrait {
 
     }
 
+    public function updatedChosenLocale($val)
+    {
+        $this->checkAndUpdateChosenLocale($val);
+
+
+    }
+
+    public function checkAndUpdateChosenLocale($val)
+    {
+        if (in_array($val, $this->availableLocales))
+        {
+            App::setLocale($val);
+        }
+
+    }
+
     public function setTableTheme(string $theme)
     {
         $this->theme = $theme;
+        $this->tableTheme = "tailwind";
 
-        if ($theme == "tw2")
-        {
-            $this->tableTheme = "tailwind";
-        }
-        else if ($theme == "bs4")
+        if ($theme == "bs4")
         {
             $this->tableTheme = "bootstrap-4";
         }
         else if ($theme == "bs5")
         {
             $this->tableTheme = "bootstrap-5";
-        }
-        else
-        {
-            $this->tableTheme = "tailwind";
         }
     }
 

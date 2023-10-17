@@ -143,6 +143,7 @@ class UsersTable extends DataTableComponent
             ->setPaginationMethod('cursor')
             ->setPerPageAccepted([10, 25, 50, 100])
             ->setHideReorderColumnUnlessReorderingDisabled()
+            ->setLoadingPlaceholderEnabled()
             ->setConfigurableAreas([
                 'before-tools' => 'tables.user-before-tools'
             ]);

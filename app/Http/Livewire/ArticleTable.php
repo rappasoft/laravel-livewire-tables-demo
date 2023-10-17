@@ -48,7 +48,6 @@ class ArticleTable extends DataTableComponent
             ->setFilterLayout($this->filterLayout)
             ->setReorderEnabled()
             ->setHideReorderColumnUnlessReorderingDisabled()
-            ->setReorderCurrentPageOnly(false)
             ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
                 if ($column->getTitle() == 'Title') {
                     return ['class' => 'text-red-500 break-all', 

@@ -6,26 +6,34 @@ return [
      */
     'theme' => 'tailwind',
 
-    'cache_assets' => true,
     /**
-     * Enable or Disable automatic injection of assets
+     * Filter Frontend Asset Options
      */
-    'inject_assets' => false,
 
     /**
-     * Enable or Disable automatic injection of assets
+     * Cache Rappasoft Frontend Assets
      */
-    'inject_third_party_assets' => false,
+    'cache_assets' => false,
 
     /**
-     * Enable or Disable inclusion of published third-party assets
+     * Enable or Disable automatic injection of core assets
      */
-    'published_third_party_assets' => false,
+    'inject_core_assets_enabled' => true,
 
     /**
-     * Enable or Disable remote third-party assets
+     * Enable or Disable automatic injection of third-party assets
      */
-    'remote_third_party_assets' => true,
+    'inject_third_party_assets_enabled' => true,
+
+    /**
+     * Enable Blade Directives (Not required if automatically injecting or using bundler approaches)
+     */
+    'enable_blade_directives ' => false,
+
+    /**
+     * Filter Default Configuration Options
+     *
+     * */
 
     /**
      * Configuration options for DateFilter
@@ -33,8 +41,7 @@ return [
     'dateFilter' => [
         'defaultConfig' => [
             'format' => 'Y-m-d',
-            'pillFormat' => 'd M Y',
-            // Used to display in the Filter Pills
+            'pillFormat' => 'd M Y', // Used to display in the Filter Pills
         ],
     ],
 
@@ -44,8 +51,7 @@ return [
     'dateTimeFilter' => [
         'defaultConfig' => [
             'format' => 'Y-m-d\TH:i',
-            'pillFormat' => 'd M Y - H:i',
-            // Used to display in the Filter Pills
+            'pillFormat' => 'd M Y - H:i', // Used to display in the Filter Pills
         ],
     ],
 
@@ -55,18 +61,12 @@ return [
     'dateRange' => [
         'defaultOptions' => [],
         'defaultConfig' => [
-            'allowInput' => true,
-            // Allow manual input of dates
-            'altFormat' => 'F j, Y',
-            // Date format that will be displayed once selected
-            'ariaDateFormat' => 'F j, Y',
-            // An aria-friendly date format
-            'dateFormat' => 'Y-m-d',
-            // Date format that will be received by the filter
-            'earliestDate' => null,
-            // The earliest acceptable date
-            'latestDate' => null,
-            // The latest acceptable date
+            'allowInput' => true,   // Allow manual input of dates
+            'altFormat' => 'F j, Y', // Date format that will be displayed once selected
+            'ariaDateFormat' => 'F j, Y', // An aria-friendly date format
+            'dateFormat' => 'Y-m-d', // Date format that will be received by the filter
+            'earliestDate' => null, // The earliest acceptable date
+            'latestDate' => null, // The latest acceptable date
         ],
     ],
 
@@ -75,18 +75,13 @@ return [
      */
     'numberRange' => [
         'defaultOptions' => [
-            'min' => 0,
-            // The default start value
-            'max' => 100,
-            // The default end value
+            'min' => 0, // The default start value
+            'max' => 100, // The default end value
         ],
         'defaultConfig' => [
-            'minRange' => 0,
-            // The minimum possible value
-            'maxRange' => 100,
-            // The maximum possible value
-            'suffix' => '',
-            // A suffix to append to the values when displayed
+            'minRange' => 0, // The minimum possible value
+            'maxRange' => 100, // The maximum possible value
+            'suffix' => '', // A suffix to append to the values when displayed
         ],
     ],
 

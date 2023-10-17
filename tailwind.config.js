@@ -18,7 +18,7 @@ module.exports = {
             './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
             './storage/framework/views/*.php',
             './resources/views/**/*.blade.php',
-            './app/Http/Livewire/UsersTable.php',
+            './app/Http/Livewire/*.php',
         ],
         safelist: [
             'w-80',
