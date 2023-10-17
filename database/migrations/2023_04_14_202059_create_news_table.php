@@ -17,6 +17,7 @@ class CreateNewsTable extends Migration
             $table->ulid('id');
             $table->string('name');
             $table->text('description');
+            $table->unsignedInteger('sort_order');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->json('custom_data')->nullable();
             $table->timestamps();

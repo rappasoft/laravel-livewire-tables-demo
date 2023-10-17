@@ -17,6 +17,11 @@ class NewsFactory extends Factory
     protected array $publishers = ['Publisher 1', 'Publisher 2', 'Publisher 3'];
 
     /**
+     * @var int
+     */
+    private static $sort_order = 1;
+
+    /**
      * Define the model's default state.
      *
      * @return array
@@ -29,6 +34,7 @@ class NewsFactory extends Factory
             'name' => $this->faker->realText(rand(10, 20)),
             'description' => $this->faker->text(),
             'user_id' => random_int(1, 50),
+            'sort_order' => self::$sort_order++,
             'custom_data' => json_encode([
                 'publisher' => $this->publishers[rand(0, 2)],
                 'views' => intval(rand(10, 500)),
