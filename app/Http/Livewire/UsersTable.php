@@ -5,50 +5,110 @@ namespace App\Http\Livewire;
 use App\Exports\UsersExport;
 use App\Models\Tag;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ComponentColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\ImageColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
-use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
+use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, ImageColumn, LinkColumn};
+use Rappasoft\LaravelLivewireTables\Views\Filters\{DateFilter, DateRangeFilter, DateTimeFilter, MultiSelectDropdownFilter, MultiSelectFilter, NumberFilter, NumberRangeFilter, SelectFilter, TextFilter};
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\TestFilterTrait;
+//use App\Http\Livewire\LivewireComponentFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\LivewireComponentFilter;
+use Livewire\Attributes\On; 
+use App\Traits\DemoTablesTrait;
+use Illuminate\Database\Eloquent\Collection;
 
 class UsersTable extends DataTableComponent
 {
+    use TestFilterTrait;
+    use DemoTablesTrait;
+
     public $myParam = 'Default';
 
-    public string $tableName = 'users1';
+    public string $tableName = 'users2';
 
     public array $users1 = [];
+    public array $users2 = [];
+
+    public bool $onlyOpen = false;
+
+    #[Reactive] 
+    public array $filterComponents2 = ['test_filter' => ''];
+
+    public array $allTags = [];
+
+    public string $filterLayout = 'popover';
+
+    public array $fileList;
+
+    public string $temp = '';
+
+    public bool $secondaryHeaderEnabled = false;
+
+    public User $userInstance;
+
+    #[Reactive] 
+    public string $testWireable = 'tesat 123';
+
+    public function updatedFilterComponents($val, $key)
+    {
+        return;
+    }
+
+    #[On('update-the-filter')] 
+    public function updateTheFilter()
+    {
+        return;
+    }
 
     public function configure(): void
     {
+        ///$component = $this;
+       //$this->userInstance = User::firstOrFail();
+        $componentQueryString = [];
+        //$userExample->tags()->sync(Tag::inRandomOrder()->take(rand(1,3))->get()->pluck('tags.id')->toArray());
+        //$user = User::findOrFail(1);
+        //$user->jsoncol = ['test' => 'test123', 'new' => ''];
+        //$user->save();
+        //$this->userExample
+        //(Tag::inRandomOrder()->take(rand(1,3))->get()->toArray());
+        //$this->setDebugEnabled();
+        
         $this->setPrimaryKey('id')
-            ->setDebugEnabled()
-            ->setAdditionalSelects(['users.id as id'])
-            ->setConfigurableAreas([
-                'toolbar-left-start' => ['includes.areas.toolbar-left-start', ['param1' => $this->myParam, 'param2' => ['param2' => 2]]],
-            ])
-//            ->setPaginationMethod('simple')
             ->setReorderEnabled()
-            ->setHideReorderColumnUnlessReorderingEnabled()
+            ->setHideBulkActionsWhenEmptyEnabled()
+
+            ->setAdditionalSelects(['users.id as id', 'users.parent_id as parent_id'])
+            ->setFilterLayout($this->filterLayout)
+            ->setSingleSortingDisabled()
+            ->setTdAttributes(function(Column $column, $row, $columnIndex, $rowIndex) {
+                if ($column->getTitle() == 'Address') {
+                    return ['class' => 'text-red-500 break-all', 
+                            'default' => false
+                    ];
+                }
+                else return ['default' => true];
+
+            })
             ->setSecondaryHeaderTrAttributes(function ($rows) {
                 return ['class' => 'bg-gray-100'];
             })
             ->setSecondaryHeaderTdAttributes(function (Column $column, $rows) {
-                if ($column->isField('id')) {
+                if ($column->isField('address.address')) {
                     return ['class' => 'text-red-500'];
                 }
-
-                return ['default' => true];
+                else if ($column->isHidden())
+                {
+                    return ['class' => 'invisible',
+                    'default' => false];
+                }
+                else return ['default' => true];
             })
+            ->setExcludeDeselectedColumnsFromQueryDisabled()
             ->setFooterTrAttributes(function ($rows) {
                 return ['class' => 'bg-gray-100'];
             })
@@ -59,75 +119,146 @@ class UsersTable extends DataTableComponent
 
                 return ['default' => true];
             })
-            ->setHideBulkActionsWhenEmptyEnabled()
             ->setTableRowUrl(function ($row) {
                 return 'https://google-'.$row->id.'.com';
             })
             ->setTableRowUrlTarget(function ($row) {
                 return '_blank';
-            });
-    }
+            })
+            ->setTableAttributes([
+                'id' => 'table-users2',
+                'class' => 'bg-red-500 min-h-full',
+            ])
+           // ->setFilterPopoverAttributes([
+               // //'class' => 'bg-red-500',
+               // 'style' => 'background-color: green;',
+             //   'default' => true
+          //  ])
+          //  ->setSearchFieldAttributes([
+          //      'style' => 'background-color: green;',
+          //      'default' => true
+          //  ])
+            ->setDefaultReorderSort('sort', 'asc')
+            ->setEagerLoadAllRelationsDisabled()
+            ->setPaginationMethod('cursor')
+            ->setPerPageAccepted([10, 25, 50, 100])
+            ->setHideReorderColumnUnlessReorderingDisabled()
+            ->setLoadingPlaceholderEnabled()
+            ->setConfigurableAreas([
+                'before-tools' => 'tables.user-before-tools'
+            ]);
 
+
+    }
+    public function prependColumns(): array
+    {
+       return [
+
+        ];
+    }
     public function columns(): array
     {
         return [
-            // ImageColumn::make('Avatar')
-            //     ->location(function($row) {
-            //         return asset('img/logo-'.$row->id.'.png');
-            //     })
-            //     ->attributes(function($row) {
-            //         return [
-            //             'class' => 'w-8 h-8 rounded-full',
-            //         ];
-            //     }),
             Column::make('Order', 'sort')
-                ->sortable()
-                ->collapseOnMobile()
-                ->excludeFromColumnSelect(),
+            ->sortable(),
+
+            ImageColumn::make('Avatar')
+            ->location(
+                fn($row) => 'storage/avatars/' . $row->id . '.jpg'
+            )
+            ->attributes(fn($row) => [
+                'class' => 'rounded-full',
+                'alt' => $row->name . ' Avatar',
+            ]),
+
             Column::make('Name')
                 ->sortable(function (Builder $query, string $direction) {
-                    return $query->orderBy('name', $direction); // Example, ->sortable() would work too.
+                    return $query->orderBy('users.name', $direction); // Example, ->sortable() would work too.
                 })
                 ->searchable()
-                ->secondaryHeader($this->getFilterByKey('name'))
+                ->excludeFromColumnSelect()
+                ->collapseOnMobile()
                 ->footer($this->getFilterByKey('name')),
-            ComponentColumn::make('E-mail', 'email')
-                ->sortable()
-                ->searchable()
-                ->component('email')
-                ->attributes(fn ($value, $row, Column $column) => [
-                    'type' => Str::endsWith($value, 'example.org') ? 'success' : 'danger',
-                    'dismissible' => true,
-                ])
-                ->secondaryHeader($this->getFilterByKey('e-mail'))
-                ->footer($this->getFilterByKey('e-mail')),
+
+            
+
+            Column::make('Test1')
+            ->label(function ($row) {
+                return $row->email;
+            })
+            ->sortable(function(Builder $query, string $direction) {
+                return $query->orderBy('users.name', $direction);
+            })
+            ->collapseOnTablet(),
+    
+            Column::make('Test2')
+            ->label(function ($row) {
+              return $row->success_rate;
+            })
+            ->sortable(function(Builder $query, string $direction) {
+              return $query->orderBy('users.name', $direction);
+            })
+            ->collapseOnTablet(),
+            BooleanColumn::make('Has Parent', 'has_parent')
+            ->setCallback(function (string $value, $row) {
+                return $row->has_parent;
+            })
+            ->collapseOnMobile(),
+
+            Column::make('Parent', 'parent.name'),
+
+            Column::make('Success Rate')
+            ->sortable(function (Builder $query, string $direction) {
+                return $query->orderBy('success_rate', $direction); // Example, ->sortable() would work too.
+            })
+            ->searchable()
+            ->collapseOnTablet(),
+
+            Column::make('E-Mail', 'email')
+            ->sortable(function (Builder $query, string $direction) {
+                return $query->orderBy('email', $direction); // Example, ->sortable() would work too.
+            })
+            ->searchable(
+                function (Builder $query, $searchTerm) {
+                    $query->orWhere('users.email', 'like', '%'.$searchTerm.'%');
+                } 
+            ),
+
+
+            Column::make('Verified At', 'email_verified_at')
+            ->sortable()
+            ->searchable()
+            ->collapseOnTablet()
+            ->format(
+                fn ($value, $row, Column $column) => Carbon::parse($value)->format('d M Y')
+            ),
+
             Column::make('Address', 'address.address')
-                ->sortable()
-                ->searchable()
-                ->collapseOnTablet(),
+            ->sortable()
+            ->searchable()
+                        ->footer(function($rows) {
+                return 'Count: ' . $rows->count(). ' of ' . $this->paginationTotalItemCount;
+            })
+            ->collapseAlways(),
+
             Column::make('Address Group', 'address.group.name')
                 ->sortable()
                 ->searchable()
                 ->collapseOnTablet(),
+
             Column::make('Group City', 'address.group.city.name')
                 ->sortable()
-                ->searchable()
-                ->collapseOnTablet(),
+                ->searchable(),
+
             BooleanColumn::make('Active')
                 ->sortable()
-                ->collapseOnMobile()
-                ->secondaryHeaderFilter('active')
                 ->footerFilter('active'),
-            Column::make('Verified', 'email_verified_at')
-                ->sortable()
-                ->collapseOnTablet(),
+
             Column::make('Tags')
                 ->label(fn ($row) => $row->tags->pluck('name')->implode(', ')),
-            // Column::make('Actions')
-            //     ->label(
-            //         fn($row, Column $column) => view('tables.cells.actions')->withUser($row)
-            //     )
-            //     ->unclickable(),
+
+
+
             ButtonGroupColumn::make('Actions')
                 ->unclickable()
                 ->attributes(function ($row) {
@@ -168,6 +299,17 @@ class UsersTable extends DataTableComponent
     public function filters(): array
     {
         return [
+
+            SelectFilter::make('UserFilter')
+            ->options(Cache::remember('allUsers', 3600, function () {
+                return User::select('name','id')
+                ->get()
+                ->pluck('name','id')->toArray();
+            })),
+
+            SelectFilter::make('TagFilter')
+            ->options([]),
+
             TextFilter::make('Name')
                 ->config([
                     'maxlength' => 10,
@@ -175,33 +317,67 @@ class UsersTable extends DataTableComponent
                 ])
                 ->filter(function (Builder $builder, string $value) {
                     $builder->where('users.name', 'like', '%'.$value.'%');
-                })
-                ->hiddenFromMenus(),
-            TextFilter::make('E-mail')
+                })->setFilterLabelAttributes(
+                    ['class' => 'text-xl', 'for' => 'test1231231', 'default' => true]
+                ),
+
+            TextFilter::make('Email')
                 ->config([
                     'maxlength' => 10,
-                    'placeholder' => 'Search E-mail',
+                    'placeholder' => 'Search Email',
                 ])
                 ->filter(function (Builder $builder, string $value) {
                     $builder->where('users.email', 'like', '%'.$value.'%');
                 })
                 ->hiddenFromMenus(),
-            MultiSelectFilter::make('Tags')
+                NumberRangeFilter::make('Success Rate')
                 ->options(
-                    Tag::query()
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn ($tag) => $tag->name)
-                        ->toArray()
-                )->filter(function (Builder $builder, array $values) {
-                    $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+                    [
+                        'min' => 0,
+                        'max' => 100,
+                    ]
+                )
+                ->config([
+                    'minRange' => 0,
+                    'maxRange' => 100,
+                    'suffix' => '%',
+                ])
+                ->filter(function (Builder $builder, array $values) {
+                    $builder->where('users.success_rate', '>=', intval($values['min']))
+                    ->where('users.success_rate', '<=', intval($values['max']));
+                }),
+            MultiSelectFilter::make('Tags')
+            ->options(
+                Cache::remember('allTags', 3600, function () {
+                    return Tag::select('id', 'name', 'created_at')->orderBy('name')
+                    ->get()
+                    ->pluck('name','id')->toArray();
                 })
-                ->setFilterPillValues([
-                    '3' => 'Tag 1',
-                ]),
+            )->filter(function (Builder $builder, array $values) {
+                $builder->whereHas('tags', fn ($query) => $query->whereIn('tags.id', $values));
+            })
+            ->setFirstOption("I don't care")
+            ->setFilterPillValues([
+                '3' => 'Tag 1',
+            ]),
+
+
+            DateRangeFilter::make('EMail Verified Range')
+            ->config([
+                'ariaDateFormat' => 'F j, Y',
+                'dateFormat' => 'Y-m-d',
+                'earliestDate' => '2020-01-01',
+                'latestDate' => '2023-08-01',
+            ])
+            ->setFilterPillValues([0 => 'minDate', 1 => 'maxDate'])
+            ->filter(function (Builder $builder, array $dateRange) {
+                $builder->whereDate('users.email_verified_at', '>=', $dateRange['minDate'])->whereDate('users.email_verified_at', '<=', $dateRange['maxDate']);
+            }),
+
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
+                ->setCustomFilterLabel('includes.customFilterLabel1')
+                ->setFilterPillBlade('includes.customFilterPills2')
                 ->options([
                     '' => 'Any',
                     'yes' => 'Yes',
@@ -209,48 +385,115 @@ class UsersTable extends DataTableComponent
                 ])
                 ->filter(function (Builder $builder, string $value) {
                     if ($value === 'yes') {
-                        $builder->whereNotNull('email_verified_at');
+                        $builder->whereNotNull('users.email_verified_at');
                     } elseif ($value === 'no') {
-                        $builder->whereNull('email_verified_at');
+                        $builder->whereNull('users.email_verified_at');
                     }
                 }),
-            SelectFilter::make('Active')
-                ->setFilterPillTitle('User Status')
-                ->setFilterPillValues([
-                    '1' => 'Active',
-                    '0' => 'Inactive',
-                ])
-                ->options([
-                    '' => 'All',
-                    '1' => 'Yes',
-                    '0' => 'No',
-                ])
-                ->filter(function (Builder $builder, string $value) {
-                    if ($value === '1') {
-                        $builder->where('active', true);
-                    } elseif ($value === '0') {
-                        $builder->where('active', false);
-                    }
-                })
-                ->hiddenFromAll(),
-            DateFilter::make('Verified From')
+                    
+                SelectFilter::make('Active')
+                    ->setFilterSlidedownRow(2)
+                    ->setFilterSlidedownColspan(2)
+                    ->setFilterPillTitle('User Status')
+                    ->setFilterPillValues([
+                        '1' => 'Active',
+                        '0' => 'Inactive',
+                    ])
+                    ->options([
+                        '' => 'All',
+                        '1' => 'Yes',
+                        '0' => 'No',
+                    ])
+                    ->filter(function (Builder $builder, string $value) {
+                        if ($value === '1') {
+                            $builder->where('users.active', true);
+                        } elseif ($value === '0') {
+                            $builder->where('users.active', false);
+                        }
+                    })
+                    ->hiddenFromAll(),
+            
+                DateFilter::make('Verified From')
+                    ->config([
+                        'min' => '2023-07-01',
+                        'max' => '2023-12-01',
+                        'pillFormat' => 'd-m-Y'
+                    ])
+                    ->filter(function (Builder $builder, string $value) {
+                        $builder->whereDate('users.email_verified_at', '>=', $value);
+                    })
+                    //->setFilterDefaultValue('2023-07-01')
+                    ->setFilterSlidedownRow(2)
+                    ->setFilterSlidedownColspan("2"),
+
+                DateTimeFilter::make('Verified To')
                 ->config([
-                    'min' => '2020-01-01',
-                    'max' => '2021-12-31',
+                    'pillFormat' => 'd-m-Y H:i'
+                ])
+                    ->filter(function (Builder $builder, string $value) {
+                        $builder->where('users.email_verified_at', '<=', $value);
+                    })->setFilterSlidedownRow(3)
+                    ->setFilterSlidedownColspan(2)
+                   // ->setFilterDefaultValue('2023-07-04T01:17')
+                    ->setFilterPillBlade('includes.customFilterPillBlade'),
+
+                TextFilter::make('Email5')
+                ->setFilterPillTitle('User Email')
+                ->setCustomFilterLabel('includes.customFilterLabel2')
+                ->config([
+                    'maxlength' => 10,
+                    'placeholder' => 'Search Email',
                 ])
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where('email_verified_at', '>=', $value);
-                }),
-            DateFilter::make('Verified To')
-                ->filter(function (Builder $builder, string $value) {
-                    $builder->where('email_verified_at', '<=', $value);
-                }),
+                    $builder->where('users.email', 'like', '%'.$value.'%');
+                })->setFilterSlidedownRow("2"),
+            ];
+    }
+
+    public function filters2(): array
+    {
+        return [
+
+            
+                DateFilter::make('Verified From')
+                    ->config([
+                        'min' => '2023-07-01',
+                        'max' => '2023-12-01',
+                        'pillFormat' => 'd-m-Y'
+                    ])
+                    ->filter(function (Builder $builder, string $value) {
+                        $builder->whereDate('users.email_verified_at', '>=', $value);
+                    })
+                    //->setFilterDefaultValue('2023-07-01')
+                    ->setFilterSlidedownRow(2)
+                    ->setFilterSlidedownColspan("2"),
+
+                    DateTimeFilter::make('Verified To')
+                    ->config([
+                        'pillFormat' => 'd-m-Y H:i'
+                    ])
+                        ->filter(function (Builder $builder, string $value) {
+                            $builder->where('users.email_verified_at', '<=', $value);
+                        })->setFilterSlidedownRow(3)
+                        ->setFilterSlidedownColspan(2)
+                       // ->setFilterDefaultValue('2023-07-04T01:17')
+                        ->setFilterPillBlade('includes.customFilterPillBlade'),
+                        
+                    TextFilter::make('User Namesss', 'user_name_filter')
+                    //->setFilterAttributes([
+                   //     'class' => 'bg-red-500',
+                   //     'default' => false,
+                   // ])
+                    ->filter(function (Builder $builder, string $value) {
+                        return $builder->where('users.name', '=', $value);
+                    }),
+        
         ];
     }
 
     public function builder(): Builder
     {
-        return User::query();
+        return User::with(['tags:id,name']);
     }
 
     public function bulkActions(): array
@@ -267,8 +510,8 @@ class UsersTable extends DataTableComponent
         $users = $this->getSelected();
 
         $this->clearSelected();
-
-        return Excel::download(new UsersExport($users), 'users.xlsx');
+        dd($users);
+                //return Excel::download(new UsersExport($users), 'users.xlsx');
     }
 
     public function activate()
@@ -285,10 +528,37 @@ class UsersTable extends DataTableComponent
         $this->clearSelected();
     }
 
-    public function reorder($items): void
+    public function reorder(array $items): void
     {
+        //User::upsert($items, [$this->getPrimaryKey()], ['sort']);
         foreach ($items as $item) {
-            User::find((int) $item['value'])->update(['sort' => (int) $item['order']]);
+            User::find($item[$this->getPrimaryKey()])->update(['sort_order' => (int)$item[$this->getDefaultReorderColumn()]]);
         }
     }
+
+
+    public function rendering()
+    {
+        if(method_exists(parent::class, 'rendering'))
+        {
+            parent::rendering();
+        }
+        if ($this->secondaryHeaderEnabled)
+        {
+            $this->getColumnBySlug('name')->secondaryHeaderFilter('name');
+            
+            $this->getColumnBySlug('e-mail')->secondaryHeader($this->getFilterByKey('email'));
+            $this->getColumnBySlug('active')->secondaryHeaderFilter('active');
+            
+
+        }
+
+
+    
+       // $this->updateFilterOptions();
+
+    }
+
+
+
 }

@@ -1,11 +1,16 @@
 /node_modules
 /public/hot
 /public/storage
+/public/build/**
+/public/vendor/*
 /storage/*.key
 /vendor
+./package-lock.json
+./composer.lock
 .env
 .env.backup
-.phpunit.result.cache
+.phpunit.result.cache/
+.phpunit.cache/*
 docker-compose.override.yml
 Homestead.json
 Homestead.yaml
@@ -14,3 +19,8 @@ yarn-error.log
 /.idea
 /.vscode
 composer.json.local
+/build/phpstan/**/*
+phpstan.txt
+stubs/*
+/resources/lang/livewire-tables/*
+/resources/views/vendor/*

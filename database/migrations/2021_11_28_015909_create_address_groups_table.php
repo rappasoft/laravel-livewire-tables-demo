@@ -15,7 +15,7 @@ class CreateAddressGroupsTable extends Migration
     {
         Schema::create('address_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id');
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('name');
             $table->timestamps();
         });

@@ -6,4 +6,11 @@
     <button class="p-2 border border-white rounded" wire:click="$emit('setFilter', 'active', '1')">Filter Active Yes</button>
     <button class="p-2 border border-white rounded" wire:click="$emit('setFilter', 'active', '0')">Filter Active No</button>
     <button class="p-2 border border-white rounded" wire:click="$emit('clearFilters')">Clear Filters</button>
+    <div>
+        This Components Search Value: <input type="text" class="text-black" wire:key="randomsearchthing" wire:model.live="search" />
+    </div>
+    <div>
+        Other wired element: <input type="text" class="text-black" wire:model.live="otherelement" />
+    </div>
+
 </div>

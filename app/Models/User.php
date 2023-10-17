@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -23,6 +24,9 @@ class User extends Authenticatable
         'email',
         'password',
         'sort',
+        'created_at',
+        'updated_at',
+        'email_verified_at'
     ];
 
     /**
@@ -41,14 +45,18 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'active' => 'boolean',
         'sort' => 'integer',
+        'location' => 'json'
     ];
 
-    public function parent(): HasOne
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id', 'id')->without('parent');
     }
 
     public function tags(): BelongsToMany
@@ -59,5 +67,10 @@ class User extends Authenticatable
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function addressgroup(): HasOneThrough
+    {
+        return $this->hasOneThrough(AddressGroup::class, Address::class);
     }
 }
