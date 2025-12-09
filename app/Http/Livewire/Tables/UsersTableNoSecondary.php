@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Tables;
 
 use App\Exports\UsersExport;
 use App\Models\Tag;
@@ -21,7 +21,7 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\LivewireComponentFilter;
 use Livewire\Attributes\On; 
 use App\Traits\DemoTablesTrait;
 
-class UsersTable extends DataTableComponent
+class UsersTableNoSecondary extends DataTableComponent
 {
     use TestFilterTrait;
     use DemoTablesTrait;

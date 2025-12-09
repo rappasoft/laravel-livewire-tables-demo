@@ -73,4 +73,14 @@ class User extends Authenticatable
     {
         return $this->hasOneThrough(AddressGroup::class, Address::class);
     }
+
+    public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function news(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }
