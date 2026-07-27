@@ -9,7 +9,7 @@ Route::get('/', function () {
 // Tailwind CSS Demo
 Route::get('/tailwind', App\Livewire\Demos\Tailwind4::class)->name('tailwind');
 
-// New Feature Demos (v4.0)
+// New Feature Demos
 Route::get('/summaries', App\Livewire\Demos\SummariesTable::class)->name('summaries');
 Route::get('/polling', App\Livewire\Demos\PollingTable::class)->name('polling');
 Route::get('/deferred', App\Livewire\Demos\DeferredLoadingTable::class)->name('deferred');

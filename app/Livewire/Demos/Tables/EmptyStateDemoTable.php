@@ -15,8 +15,8 @@ class EmptyStateDemoTable extends DataTableComponent
             ->setPerPageAccepted([10, 25, 50])
             ->setPerPage(10)
             ->setSearch('xyznonexistent123') // Pre-fill search with non-matching term
-            ->emptyStateHeading('No Users Found')
-            ->emptyStateDescription('We couldn\'t find any users matching your search criteria. Try adjusting your search or removing some filters to see more results.');
+            // v3 exposes a single empty-state string, so the heading and description are folded into one message.
+            ->setEmptyMessage('No Users Found - we couldn\'t find any users matching your search criteria. Try adjusting your search or removing some filters to see more results.');
     }
 
     public function columns(): array

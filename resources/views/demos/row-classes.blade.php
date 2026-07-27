@@ -8,20 +8,31 @@
         <pre class="p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
 {
     $this->setPrimaryKey('id')
-        ->recordClasses(function ($record) {
+        ->setTrAttributes(function ($row, $index) {
             // Apply different classes based on success rate
-            return match (true) {
-                $record->success_rate >= 80 => 'bg-green-50 dark:bg-green-900/20',
-                $record->success_rate >= 50 => 'bg-yellow-50 dark:bg-yellow-900/20',
-                $record->success_rate >= 25 => 'bg-orange-50 dark:bg-orange-900/20',
-                default => 'bg-red-50 dark:bg-red-900/20',
-            };
+            return [
+                'default' => true, // keep the package's built-in row classes
+                'class' => match (true) {
+                    $row->success_rate >= 80 => 'bg-green-50 dark:bg-green-900/20',
+                    $row->success_rate >= 50 => 'bg-yellow-50 dark:bg-yellow-900/20',
+                    $row->success_rate >= 25 => 'bg-orange-50 dark:bg-orange-900/20',
+                    default => 'bg-red-50 dark:bg-red-900/20',
+                },
+            ];
         });
-
-    // You can also use a simple string or array:
-    // ->recordClasses('hover:bg-blue-50')
-    // ->recordClasses(['border-l-4', 'border-blue-500'])
 }</code></pre>
+    </div>
+
+    <!-- v3 API note -->
+    <div class="mb-8 p-4 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20">
+        <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-1">Note on the v3 API</h4>
+        <p class="text-sm text-blue-700 dark:text-blue-300">
+            Row styling is done with <code class="font-mono">setTrAttributes(Closure $callback)</code>. The closure receives
+            <code class="font-mono">($row, $index)</code> and must return an <strong>array</strong> of attributes rather than a
+            class string. Set <code class="font-mono">'default' =&gt; true</code> to keep the package's built-in row classes
+            (striping and hover); omit it or set it to <code class="font-mono">false</code> to replace them entirely.
+            Passing a plain string or an array of classes is not supported.
+        </p>
     </div>
 
     <!-- Legend -->

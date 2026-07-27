@@ -15,7 +15,7 @@ trait DemoTrait {
     public $filterDemoKey = '';
 
     #[Url(as: 'selected-table', keep: true)]
-    public $selectedTable = 'news-table';
+    public $selectedTable = 'users-table';
 
     #[Url(as: 'theme', keep: true)]
     public string $theme = 'tw4';
@@ -44,6 +44,11 @@ trait DemoTrait {
 
     public function checkAndUpdateChosenLocale($val)
     {
+        if (empty($this->availableLocales))
+        {
+            $this->availableLocales = config('app.available_locales', []);
+        }
+
         if (in_array($val, $this->availableLocales))
         {
             App::setLocale($val);
@@ -73,6 +78,7 @@ trait DemoTrait {
 
     public function rendering()
     {
+        $this->checkAndUpdateChosenLocale($this->chosenLocale);
         $this->setFilterDemoKey();
     }
 }

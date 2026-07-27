@@ -1,4 +1,21 @@
 <div>
+    <!-- v3 Availability Note -->
+    <div class="mb-8 bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border border-amber-300 dark:border-amber-700">
+        <h3 class="font-semibold text-lg text-amber-900 dark:text-amber-100 mb-2">Not available in v3: <code>deferLoading()</code></h3>
+        <p class="text-sm text-amber-800 dark:text-amber-200">
+            This version of Laravel Livewire Tables has no component-level deferred/lazy load method.
+            What it does offer is the <strong>Loading Placeholder</strong>
+            (<code>setLoadingPlaceholderEnabled()</code>, <code>setLoadingPlaceholderStatus()</code>,
+            <code>setLoadingPlaceholderContent()</code>, <code>setLoadingPlaceholderBlade()</code>),
+            which shows a placeholder <em>during</em> requests but does not defer the initial load.
+        </p>
+        <p class="text-sm text-amber-800 dark:text-amber-200 mt-2">
+            For true deferral, use Livewire's own lazy loading on the wrapping component &mdash;
+            <code>&lt;livewire:demos.tables.deferred-demo-table lazy /&gt;</code> or the
+            <code>#[Lazy]</code> attribute &mdash; not a package method. The demo below uses the loading placeholder.
+        </p>
+    </div>
+
     <!-- Code Example -->
     <div class="mb-8 bg-slate-800 rounded-xl overflow-hidden">
         <div class="flex items-center justify-between px-4 py-2 bg-slate-700/50">
@@ -8,16 +25,14 @@
         <pre class="p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
 {
     $this->setPrimaryKey('id')
-        ->deferLoading();  // Enable deferred/lazy loading
+        ->setLoadingPlaceholderEnabled();  // Show a placeholder during requests
 
-    // The table will show a loading placeholder
-    // while the data is being fetched asynchronously.
-    
-    // Great for:
-    // - Tables with complex queries
-    // - Tables with many joins
-    // - Heavy data processing
-    // - Improving perceived performance
+    // NOTE: deferLoading() does not exist in this version.
+    // The placeholder is shown while a request is in flight,
+    // it does NOT defer the initial load.
+
+    // To actually defer the initial load, use Livewire:
+    //   &lt;livewire:demos.tables.deferred-demo-table lazy /&gt;
 }</code></pre>
     </div>
 

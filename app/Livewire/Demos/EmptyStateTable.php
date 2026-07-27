@@ -11,9 +11,9 @@ class EmptyStateTable extends Component
         return view('demos.empty-state')
             ->layout('layouts.feature-demo', [
                 'title' => 'Custom Empty State',
-                'badge' => 'New in v4.0',
+                'badge' => 'New',
                 'description' => 'Customize what users see when the table has no records to display.',
-                'code' => "\$this->emptyStateHeading('No results')",
+                'code' => "\$this->setEmptyMessage('No results')",
                 'gradient' => 'from-orange-500 to-amber-600',
             ]);
     }

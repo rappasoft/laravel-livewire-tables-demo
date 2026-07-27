@@ -8,14 +8,23 @@
         <pre class="p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
 {
     $this->setPrimaryKey('id')
-        ->poll('10s');   // Refresh every 10 seconds
+        ->setRefreshTime(10000);   // Refresh every 10 seconds (milliseconds)
 
-    // Other supported formats:
-    // ->poll('30s')    // 30 seconds
-    // ->poll('1m')     // 1 minute
-    // ->poll('5m')     // 5 minutes
-    // ->poll(5000)     // 5000 milliseconds (legacy)
+    // Other refresh modes (set only ONE of these):
+    // ->setRefreshTime(30000)          // 30 seconds
+    // ->setRefreshTime(60000)          // 1 minute
+    // ->setRefreshVisible()            // only while the tab is visible
+    // ->setRefreshKeepAlive()          // keep the session alive
+    // ->setRefreshMethod('myMethod')   // call a component method
 }</code></pre>
+    </div>
+
+    <!-- v3 note -->
+    <div class="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+        <strong>Note:</strong> in v3 the refresh interval is set with <code>setRefreshTime()</code> in <em>milliseconds</em>.
+        Human-readable intervals such as <code>'10s'</code> or <code>'1m'</code> are not available, and only one of
+        <code>setRefreshTime()</code>, <code>setRefreshVisible()</code>, <code>setRefreshKeepAlive()</code> or
+        <code>setRefreshMethod()</code> can be active at a time &mdash; they all write the same underlying setting.
     </div>
 
     <!-- Status Indicator -->

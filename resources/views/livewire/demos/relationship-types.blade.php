@@ -1,10 +1,20 @@
 <div>
-    @section('table')
+    <div class="mb-8">
         <livewire:demos.tables.relationship-types-demo-table />
-    @endsection
+    </div>
 
-    @section('code-examples')
     <div class="space-y-8">
+        <!-- v3 availability note -->
+        <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-amber-300 mb-3">Not available in v3</h3>
+            <ul class="space-y-2 text-slate-300 text-sm list-disc pl-5">
+                <li><code class="text-amber-400">heading()</code> / <code class="text-amber-400">description()</code> &mdash; no table-level heading API. The heading above is rendered by the page layout; for markup inside the table wrapper use <code class="text-amber-400">setConfigurableArea('before-toolbar', 'view.path')</code>.</li>
+                <li><code class="text-amber-400">displayField()</code>, <code class="text-amber-400">separator()</code>, <code class="text-amber-400">limit()</code> and <code class="text-amber-400">formatRelations()</code> on a plain <code class="text-amber-400">Column</code> &mdash; use <code class="text-amber-400">ArrayColumn</code> with <code class="text-amber-400">data()</code> + <code class="text-amber-400">outputFormat()</code> (limit by calling <code class="text-amber-400">take()</code> inside <code class="text-amber-400">data()</code>), or a <code class="text-amber-400">label()</code> column.</li>
+                <li><code class="text-amber-400">relationshipSeparator()</code> &mdash; <code class="text-amber-400">separator()</code> exists, but only on <code class="text-amber-400">ArrayColumn</code>.</li>
+                <li><strong>hasOneThrough / hasManyThrough</strong> columns &mdash; v3 only builds joins for hasOne, belongsTo and morphOne, so "through" relations cannot be used with dot notation. The Address Group column below walks the nested <code class="text-amber-400">address.group</code> relation instead.</li>
+            </ul>
+        </div>
+
         <!-- Overview -->
         <div>
             <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
@@ -87,14 +97,14 @@ public function builder(): Builder
                 Display collections from hasMany relationships:
             </p>
             <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User hasMany Articles
-Column::make('Articles', 'articles')
-    ->displayField('title')  // Show article titles
-    ->separator(', ')
-    ->limit(3),              // Show first 3, then "... and X more"
+ArrayColumn::make('Articles', 'id')
+    ->data(fn($value, $row) => $row->articles->take(3)) // limit here
+    ->outputFormat(fn($index, $value) => e($value->title))
+    ->separator(', '),
 
-// Or with custom formatter
-Column::make('Article Count', 'articles')
-    ->formatRelations(fn($articles) => $articles->count() . ' articles'),
+// Or with a custom formatter, via a label column
+Column::make('Article Count')
+    ->label(fn($row) => $row->articles->count() . ' articles'),
 
 public function builder(): Builder
 {
@@ -112,10 +122,10 @@ public function builder(): Builder
                 Display many-to-many relationship collections:
             </p>
             <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User belongsToMany Tags
-Column::make('Tags', 'tags')
-    ->displayField('name')
-    ->separator(', ')
-    ->format(fn($value) => /* Custom HTML formatting */),
+ArrayColumn::make('Tags', 'id')
+    ->data(fn($value, $row) => $row->tags)
+    ->outputFormat(fn($index, $value) => '&lt;span class="badge"&gt;' . e($value->name) . '&lt;/span&gt;')
+    ->separator(' '),
 
 public function builder(): Builder
 {
@@ -127,18 +137,18 @@ public function builder(): Builder
         <div>
             <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
                 <span class="w-6 h-6 bg-indigo-500/20 rounded flex items-center justify-center mr-2 text-indigo-400 text-sm">6</span>
-                hasOneThrough / hasManyThrough
+                hasOneThrough / hasManyThrough (not supported)
             </h3>
             <p class="text-slate-400 mb-4">
-                Access "through" relationships:
+                v3 cannot join "through" relationships, so walk the intermediate relations with dot notation instead:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User → Address → AddressGroup
-Column::make('Address Group', 'addressgroup.name')
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User → Address → AddressGroup (via the nested relations)
+Column::make('Address Group', 'address.group.name')
     ->sortable(),
 
 public function builder(): Builder
 {
-    return User::query()->with('addressgroup');
+    return User::query()->with('address.group');
 }</code></pre>
         </div>
 
@@ -151,15 +161,14 @@ public function builder(): Builder
             <p class="text-slate-400 mb-4">
                 Customize how collections are displayed:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">Column::make('Articles', 'articles')
-    ->displayField('title')      // Field to extract from each item
-    ->separator(' | ')            // Custom separator
-    ->limit(5)                    // Limit displayed items
-    ->formatRelations(fn($items) => // Custom formatter
-        '<div>' . $items->map(fn($item) => 
-            '<span class="badge">' . $item->title . '</span>'
-        )->implode('') . '</div>'
-    ),</code></pre>
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">ArrayColumn::make('Articles', 'id')
+    ->data(fn($value, $row) => $row->articles->take(5)) // limit displayed items
+    ->outputFormat(fn($index, $value) => // per-item formatter
+        '&lt;span class="badge"&gt;' . e($value->title) . '&lt;/span&gt;'
+    )
+    ->separator(' | ')             // Custom separator
+    ->emptyValue('None')           // Shown when the collection is empty
+    ->flexRow(['class' => 'gap-1']), // Optional wrapper</code></pre>
         </div>
 
         <!-- Eager Loading -->
@@ -223,7 +232,6 @@ public function builder(): Builder
             </ul>
         </div>
     </div>
-    @endsection
 </div>
 
 

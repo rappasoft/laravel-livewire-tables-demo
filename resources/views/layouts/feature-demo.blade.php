@@ -10,8 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Feature Demo' }} - Laravel Livewire Tables</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite(['resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         [x-cloak] { display: none !important; }
         .gradient-border {
@@ -108,7 +107,7 @@
     <footer class="border-t border-slate-200 dark:border-slate-700 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between text-sm text-slate-500 dark:text-slate-400">
-                <p>Laravel Livewire Tables v4.0</p>
+                <p>Laravel Livewire Tables v3</p>
                 <div class="flex items-center space-x-4 mt-2 md:mt-0">
                     <a href="https://rappasoft.com/docs/laravel-livewire-tables" target="_blank" class="hover:text-indigo-600 dark:hover:text-indigo-400">Documentation</a>
                     <a href="https://github.com/rappasoft/laravel-livewire-tables" target="_blank" class="hover:text-indigo-600 dark:hover:text-indigo-400">GitHub</a>

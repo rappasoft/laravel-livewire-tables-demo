@@ -17,9 +17,9 @@ class RelationshipsTable extends Component
         return view('livewire.demos.relationships')
             ->layout('layouts.feature-demo', [
                 'title' => 'Relationship Aggregates',
-                'badge' => 'New in v4.0',
+                'badge' => 'New',
                 'description' => 'Display counts, sums, averages, and more from related models directly in your table columns.',
-                'code' => "Column::make('Posts', 'posts_count')->counts('posts')",
+                'code' => "CountColumn::make('Posts')->setDataSource('posts')",
                 'gradient' => 'from-cyan-500 to-teal-600',
             ]);
     }

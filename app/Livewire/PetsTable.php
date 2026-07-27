@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use App\Models\{Breed,Pet,Species};
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, ImageColumn, LinkColumn};
+use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ColorColumn, ComponentColumn, IconColumn, ImageColumn, LinkColumn};
 use Rappasoft\LaravelLivewireTables\Views\Filters\{DateFilter, DateRangeFilter, DateTimeFilter, MultiSelectDropdownFilter, MultiSelectFilter, NumberFilter, NumberRangeFilter, SelectFilter, TextFilter};
 use App\Traits\DemoTablesTrait;
 
@@ -38,6 +38,22 @@ class PetsTable extends DataTableComponent
                 ->searchable(),
 
             Column::make('Age'),
+
+            IconColumn::make('Icon')
+                ->setIcon(fn ($row) => 'heroicon-o-heart')
+                ->attributes(fn ($row) => [
+                    'class' => 'w-5 h-5',
+                    'stroke' => '#'.substr(md5($row->name ?? 'pet'), 0, 6),
+                ]),
+
+            ColorColumn::make('Color')
+                ->color(fn ($row) => '#'.substr(md5(($row->species_id ?? 0).'-'.($row->name ?? 'pet')), 0, 6)),
+
+            ComponentColumn::make('Age Badge', 'age')
+                ->component('badge')
+                ->attributes(fn ($value, $row, Column $column) => [
+                    'title' => ($row->name ?? 'Pet').' is '.$value,
+                ]),
 
             Column::make('Breed', 'breed.name')
                 ->secondaryHeaderFilter('breed')

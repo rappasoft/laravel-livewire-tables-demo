@@ -3,4 +3,5 @@
     <option value='fr'>French</option>
     <option value='es'>Spanish</option>
     <option value='it'>Italian</option>
+    <option value='fa'>Farsi</option>
 </select>

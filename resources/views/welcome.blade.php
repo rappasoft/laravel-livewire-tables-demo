@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laravel Livewire Tables Demo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: 'Space Grotesk', sans-serif; }
         .theme-card {
@@ -28,7 +28,7 @@
         <div class="text-center mb-16">
             <div class="inline-flex items-center px-4 py-2 bg-indigo-500/20 rounded-full text-indigo-300 text-sm mb-6">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                v4.0.0 - Latest Release
+                Laravel Livewire Tables v3 - Latest Release
             </div>
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
                 Livewire Tables
@@ -82,10 +82,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <div>
-                        <p class="text-yellow-200 text-sm font-semibold mb-1">Bootstrap & Tailwind 3 Support Removed in v4.0</p>
+                        <p class="text-yellow-200 text-sm font-semibold mb-1">Theme Support in Laravel Livewire Tables v3</p>
                         <p class="text-yellow-300/80 text-sm">
-                            As of v4.0, Bootstrap 4, Bootstrap 5, and Tailwind CSS 3 are no longer supported. The package now exclusively uses Tailwind CSS 4 for a simpler, more maintainable codebase.
-                            <a href="https://rappasoft.com/docs/laravel-livewire-tables/v4/upgrade-guide" class="underline hover:text-yellow-200">View migration guide →</a>
+                            Laravel Livewire Tables v3 ships Tailwind CSS, Bootstrap 4, and Bootstrap 5 themes, selected through the package config. This demo uses the Tailwind theme, styled with Tailwind CSS 4.
+                            <a href="https://rappasoft.com/docs/laravel-livewire-tables/v3/upgrade-guide" class="underline hover:text-yellow-200">Read the upgrade guide →</a>
                         </p>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     <div class="mb-4 md:mb-0">
                         <div class="flex items-center mb-2">
                             <span class="text-3xl mr-3">🚀</span>
-                            <h3 class="text-2xl font-bold text-white">New in v4.0</h3>
+                            <h3 class="text-2xl font-bold text-white">Feature Showcase</h3>
                         </div>
                         <p class="text-slate-300">
                             Column Summaries, Enhanced Polling, Row Grouping, Deferred Loading, Global Settings & more!
@@ -310,7 +310,7 @@
         <!-- Footer -->
         <div class="text-center text-slate-500 text-sm">
             <p class="mb-2">Built with ❤️ by <a href="https://rappasoft.com" class="text-indigo-400 hover:underline">Rappasoft</a></p>
-            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3/4</p>
+            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3</p>
         </div>
     </div>
 </body>

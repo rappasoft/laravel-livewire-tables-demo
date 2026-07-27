@@ -10,10 +10,10 @@ class DeferredLoadingTable extends Component
     {
         return view('demos.deferred')
             ->layout('layouts.feature-demo', [
-                'title' => 'Deferred Loading',
-                'badge' => 'New in v4.0',
-                'description' => 'Improve initial page load times by loading table data asynchronously after the page renders.',
-                'code' => "\$this->deferLoading()",
+                'title' => 'Loading Placeholder',
+                'badge' => 'v3',
+                'description' => 'Show a placeholder while the table is fetching data. True deferred loading is handled by Livewire itself, not by the package.',
+                'code' => "\$this->setLoadingPlaceholderEnabled()",
                 'gradient' => 'from-blue-500 to-cyan-600',
             ]);
     }

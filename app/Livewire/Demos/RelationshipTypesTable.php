@@ -16,9 +16,9 @@ class RelationshipTypesTable extends Component
         return view('livewire.demos.relationship-types')
             ->layout('layouts.feature-demo', [
                 'title' => 'Relationship Types',
-                'badge' => 'New in v4.0',
-                'description' => 'Display data from all relationship types: hasOne, belongsTo, hasMany, belongsToMany, and nested relationships.',
-                'code' => "Column::make('Articles', 'articles')->displayField('title')",
+                'badge' => 'v3',
+                'description' => 'Display data from relationship types: hasOne, belongsTo, hasMany, belongsToMany, and nested relationships.',
+                'code' => "ArrayColumn::make('Articles', 'id')->data(...)->outputFormat(...)",
                 'gradient' => 'from-indigo-500 to-purple-600',
             ]);
     }

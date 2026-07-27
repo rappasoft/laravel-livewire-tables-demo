@@ -3,3 +3,7 @@
 /* Tailwind v4 auto-detection skips .gitignore'd paths, so vendor/ is never scanned
    and none of the package's table classes make it into the build. */
 @source '../../vendor/rappasoft/laravel-livewire-tables/resources/views';
+
+/* The package's v3 views were written against @tailwindcss/forms (form-select,
+   input resets) — without it, inputs/selects render with native browser styling. */
+@plugin '@tailwindcss/forms';

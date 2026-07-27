@@ -108,13 +108,17 @@ class DemoPagesTest extends TestCase
     #[Test]
     public function grouping_page_loads_successfully()
     {
-        $this->markTestSkipped('Grouping feature has a package bug - $row is int instead of object');
+        $response = $this->get('/grouping');
+
+        $response->assertStatus(200);
+        $response->assertSeeLivewire(GroupingTable::class);
     }
 
     #[Test]
     public function grouping_component_mounts_correctly()
     {
-        $this->markTestSkipped('Grouping feature has a package bug - $row is int instead of object');
+        Livewire::test(GroupingTable::class)
+            ->assertStatus(200);
     }
 
     #[Test]
@@ -168,13 +172,17 @@ class DemoPagesTest extends TestCase
     #[Test]
     public function relationship_types_page_loads_successfully()
     {
-        $this->markTestSkipped('Relationship types demo uses unsupported separator() method');
+        $response = $this->get('/relationship-types');
+
+        $response->assertStatus(200);
+        $response->assertSeeLivewire(RelationshipTypesTable::class);
     }
 
     #[Test]
     public function relationship_types_component_mounts_correctly()
     {
-        $this->markTestSkipped('Relationship types demo uses unsupported separator() method');
+        Livewire::test(RelationshipTypesTable::class)
+            ->assertStatus(200);
     }
 
     #[Test]

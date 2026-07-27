@@ -47,7 +47,7 @@ class User extends Authenticatable
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'immutable_datetime',
         'active' => 'boolean',
         'sort' => 'integer',
         'location' => 'json'
@@ -71,7 +71,16 @@ class User extends Authenticatable
 
     public function addressgroup(): HasOneThrough
     {
-        return $this->hasOneThrough(AddressGroup::class, Address::class);
+        // Schema: addresses.user_id -> users.id, addresses.address_group_id -> address_groups.id
+        // (the through model belongsTo the target), so the keys must be given explicitly.
+        return $this->hasOneThrough(
+            AddressGroup::class,
+            Address::class,
+            'user_id',          // FK on addresses referencing users
+            'id',               // key on address_groups joined against
+            'id',               // local key on users
+            'address_group_id'  // key on addresses referencing address_groups
+        );
     }
 
     public function articles(): \Illuminate\Database\Eloquent\Relations\HasMany

@@ -1,10 +1,24 @@
 <div>
-    @section('table')
+    <div class="mb-8">
         <livewire:demos.tables.relationships-demo-table />
-    @endsection
+    </div>
 
-    @section('code-examples')
-    <div class="space-y-8">
+    <div class="mb-8 rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
+        <strong class="block text-amber-100 mb-1">Note for v3</strong>
+        This package version does not provide the v4 helpers <code>heading()</code>, <code>description()</code>,
+        <code>counts()</code>, <code>displayField()</code>, <code>relationshipSeparator()</code>,
+        <code>limit()</code> or <code>formatRelations()</code>. The demo above uses the v3 equivalents:
+        <code>CountColumn::setDataSource()</code> for counts, <code>ArrayColumn</code> with
+        <code>data()</code>/<code>outputFormat()</code>/<code>separator()</code> for relationship collections, and
+        <code>label()->html()</code> for computed cells. Aggregate helpers for
+        <code>sum</code>/<code>avg</code> exist as <code>SumColumn</code>/<code>AvgColumn</code>
+        (demoed above as "Published Sum" and "Publish Rate");
+        there is no <code>min</code>/<code>max</code> aggregate column, and scoped counts must be added
+        with <code>withCount()</code> in <code>builder()</code>. The page heading/description are rendered by
+        this view rather than by the table component.
+    </div>
+
+    <div class="space-y-8 bg-slate-900 rounded-xl p-6">
         <!-- Overview -->
         <div>
             <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
@@ -43,21 +57,28 @@ Column::make('City', 'address.group.city.name')
                 Counting Relationships
             </h3>
             <p class="text-slate-400 mb-4">
-                Use <code class="text-purple-400">counts()</code> to display the number of related records:
+                Use <code class="text-purple-400">CountColumn</code> to display the number of related records:
             </p>
             <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Count all related records
-Column::make('Articles', 'articles_count')
-    ->counts('articles')
+CountColumn::make('Articles')
+    ->setDataSource('articles')
     ->sortable(),
 
-// Count with scope (only published articles)
-Column::make('Published', 'articles_count')
-    ->counts(['articles' => fn($q) => $q->where('is_published', true)])
-    ->sortable(),
+// Scoped counts have no column-level API in v3 -
+// add them in builder() and render with label()
+public function builder(): Builder
+{
+    return User::query()->withCount([
+        'articles as published_articles_count' => fn($q) => $q->where('is_published', true),
+    ]);
+}
+
+Column::make('Published')
+    ->label(fn($row) => $row->published_articles_count . ' published'),
 
 // Count belongsToMany relationship
-Column::make('Tags', 'tags_count')
-    ->counts('tags')
+CountColumn::make('Tags')
+    ->setDataSource('tags')
     ->sortable(),</code></pre>
         </div>
 
@@ -70,17 +91,17 @@ Column::make('Tags', 'tags_count')
             <p class="text-slate-400 mb-4">
                 Show collections from hasMany or belongsToMany relationships:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Display article titles
-Column::make('Articles', 'articles')
-    ->displayField('title')
-    ->separator(' | ')
-    ->limit(3),
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Display article titles (limit is applied inside data())
+ArrayColumn::make('Articles')
+    ->data(fn($value, $row) => $row->articles->take(3))
+    ->outputFormat(fn($index, $value) => e($value->title))
+    ->separator(' | '),
 
 // Display tags with custom formatting
-Column::make('Tags', 'tags')
-    ->displayField('name')
-    ->separator(', ')
-    ->format(fn($value) => /* custom HTML */),</code></pre>
+ArrayColumn::make('Tags')
+    ->data(fn($value, $row) => $row->tags)
+    ->outputFormat(fn($index, $value) => '&lt;span&gt;' . e($value->name) . '&lt;/span&gt;')
+    ->flexRow(['class' => 'flex-wrap gap-1']),</code></pre>
         </div>
 
         <!-- Sum Example -->
@@ -90,18 +111,19 @@ Column::make('Tags', 'tags')
                 Sum Aggregate
             </h3>
             <p class="text-slate-400 mb-4">
-                Use <code class="text-purple-400">sum()</code> to total a column from related records:
+                Use <code class="text-purple-400">SumColumn</code> to total a column from related records.
+                The package auto-registers <code class="text-purple-400">withSum()</code> on the builder for you.
+                In the demo above, the "Published Sum" column sums the boolean <code>is_published</code>
+                flag on the articles relation &mdash; the sum of a 0/1 column is the number of published articles:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Total revenue from orders
-Column::make('Revenue', 'orders_sum_total')
-    ->sum('orders', 'total')
-    ->format(fn($value) => '$' . number_format($value ?? 0, 2))
-    ->sortable(),
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Sum a column on a relation (exposed on the row as articles_sum_is_published)
+SumColumn::make('Published Sum')
+    ->setDataSource('articles', 'is_published')
+    ->sortable()
+    ->footer(fn($rows) => 'Total: ' . ($rows->sum('articles_sum_is_published') ?? 0)),
 
-// With scope (only paid orders)
-Column::make('Paid Revenue', 'orders_sum_total')
-    ->sum(['orders' => fn($q) => $q->where('paid', true)], 'total')
-    ->format(fn($value) => '$' . number_format($value ?? 0, 2)),</code></pre>
+// Scoped sums are not available on the column in v3 -
+// use withSum() in builder() and render with label()</code></pre>
         </div>
 
         <!-- Avg Example -->
@@ -111,18 +133,17 @@ Column::make('Paid Revenue', 'orders_sum_total')
                 Average Aggregate
             </h3>
             <p class="text-slate-400 mb-4">
-                Use <code class="text-purple-400">avg()</code> to calculate the average:
+                Use <code class="text-purple-400">AvgColumn</code> to calculate the average
+                (<code class="text-purple-400">withAvg()</code> is auto-registered on the builder).
+                The "Publish Rate" column above averages the boolean <code>is_published</code> flag and
+                overrides the default output with <code class="text-purple-400">label()</code> to render a percentage:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Average rating from reviews
-Column::make('Avg Rating', 'reviews_avg_rating')
-    ->avg('reviews', 'rating')
-    ->format(fn($value) => number_format($value ?? 0, 1) . ' / 5')
-    ->sortable(),
-
-// Average order value
-Column::make('AOV', 'orders_avg_total')
-    ->avg('orders', 'total')
-    ->format(fn($value) => '$' . number_format($value ?? 0, 2)),</code></pre>
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Average a column on a relation (exposed as articles_avg_is_published)
+AvgColumn::make('Publish Rate')
+    ->setDataSource('articles', 'is_published')
+    ->sortable()
+    // Optional: label() overrides the raw average with custom formatting
+    ->label(fn($row) => round(($row->articles_avg_is_published ?? 0) * 100) . '%'),</code></pre>
         </div>
 
         <!-- Min/Max Example -->
@@ -132,26 +153,22 @@ Column::make('AOV', 'orders_avg_total')
                 Min/Max Aggregates
             </h3>
             <p class="text-slate-400 mb-4">
-                Use <code class="text-purple-400">min()</code> and <code class="text-purple-400">max()</code> for extremes:
+                <strong class="text-amber-300">Not available in v3.</strong> There is no min/max aggregate column -
+                only <code class="text-purple-400">CountColumn</code>, <code class="text-purple-400">SumColumn</code>
+                and <code class="text-purple-400">AvgColumn</code>. Use Eloquent in <code class="text-purple-400">builder()</code> instead:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// First order date
-Column::make('First Order', 'orders_min_created_at')
-    ->min('orders', 'created_at')
-    ->format(fn($value) => $value?->format('M j, Y') ?? 'Never'),
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">public function builder(): Builder
+{
+    return User::query()
+        ->withMin('orders', 'created_at')
+        ->withMax('orders', 'created_at');
+}
 
-// Latest order
-Column::make('Last Order', 'orders_max_created_at')
-    ->max('orders', 'created_at')
-    ->format(fn($value) => $value?->diffForHumans() ?? 'Never'),
+Column::make('First Order')
+    ->label(fn($row) => $row->orders_min_created_at ?? 'Never'),
 
-// Lowest/Highest price
-Column::make('Lowest Price', 'products_min_price')
-    ->min('products', 'price')
-    ->format(fn($value) => '$' . number_format($value ?? 0, 2)),
-
-Column::make('Highest Price', 'products_max_price')
-    ->max('products', 'price')
-    ->format(fn($value) => '$' . number_format($value ?? 0, 2)),</code></pre>
+Column::make('Last Order')
+    ->label(fn($row) => $row->orders_max_created_at ?? 'Never'),</code></pre>
         </div>
 
         <!-- Naming Convention -->
@@ -173,11 +190,10 @@ Column::make('Highest Price', 'products_max_price')
                         </tr>
                     </thead>
                     <tbody class="text-slate-300">
-                        <tr><td class="py-1"><code class="text-purple-400">counts()</code></td><td>{relationship}_count</td><td><code>posts_count</code></td></tr>
-                        <tr><td class="py-1"><code class="text-purple-400">sum()</code></td><td>{relationship}_sum_{column}</td><td><code>orders_sum_total</code></td></tr>
-                        <tr><td class="py-1"><code class="text-purple-400">avg()</code></td><td>{relationship}_avg_{column}</td><td><code>reviews_avg_rating</code></td></tr>
-                        <tr><td class="py-1"><code class="text-purple-400">min()</code></td><td>{relationship}_min_{column}</td><td><code>orders_min_created_at</code></td></tr>
-                        <tr><td class="py-1"><code class="text-purple-400">max()</code></td><td>{relationship}_max_{column}</td><td><code>orders_max_created_at</code></td></tr>
+                        <tr><td class="py-1"><code class="text-purple-400">CountColumn</code></td><td>{relationship}_count</td><td><code>posts_count</code></td></tr>
+                        <tr><td class="py-1"><code class="text-purple-400">SumColumn</code></td><td>{relationship}_sum_{column}</td><td><code>orders_sum_total</code></td></tr>
+                        <tr><td class="py-1"><code class="text-purple-400">AvgColumn</code></td><td>{relationship}_avg_{column}</td><td><code>reviews_avg_rating</code></td></tr>
+                        <tr><td class="py-1 text-slate-500">min / max</td><td class="text-slate-500">not available in v3</td><td class="text-slate-500">use withMin()/withMax()</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -214,7 +230,6 @@ Column::make('Highest Price', 'products_max_price')
             </ul>
         </div>
     </div>
-    @endsection
 </div>
 
 

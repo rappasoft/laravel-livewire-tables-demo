@@ -21,7 +21,7 @@ class SummariesTable extends Component
         return view('demos.summaries')
             ->layout('layouts.feature-demo', [
                 'title' => 'Column Summaries',
-                'badge' => 'New in v4.0',
+                'badge' => 'New',
                 'description' => 'Display aggregate values like sum, average, count, min, and max at the bottom of your table columns.',
                 'code' => "Column::make('Age')->summary('avg')",
                 'gradient' => 'from-purple-500 to-indigo-600',

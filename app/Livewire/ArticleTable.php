@@ -2,12 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Exports\ArticleExport;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
@@ -162,17 +160,7 @@ class ArticleTable extends DataTableComponent
         return [
             'publish' => 'Publish',
             'unpublish' => 'Unpublish',
-            'export' => 'Export',
         ];
-    }
-
-    public function export()
-    {
-        $articles = $this->getSelected();
-
-        $this->clearSelected();
-
-        return Excel::download(new ArticleExport($articles), 'articles.xlsx');
     }
 
     public function publish()

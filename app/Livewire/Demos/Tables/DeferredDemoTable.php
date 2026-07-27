@@ -14,7 +14,8 @@ class DeferredDemoTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setPerPageAccepted([10, 25, 50])
             ->setPerPage(10)
-            ->deferLoading()
+            // deferLoading() does not exist in v3 — the closest feature is the loading placeholder,
+            // which is shown during requests rather than deferring the initial load.
             ->setLoadingPlaceholderEnabled();
     }
 

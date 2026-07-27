@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             UserPhotoSeeder::class,
             NewsTopicSeeder::class,
+            PetSeeder::class,
         ]);
     }
 }

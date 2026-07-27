@@ -1,4 +1,15 @@
 <div>
+    <!-- v3 Availability Note -->
+    <div class="mb-8 rounded-xl p-6 border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20">
+        <h3 class="font-semibold text-lg text-amber-900 dark:text-amber-100 mb-2">Not available in v3</h3>
+        <p class="text-amber-800 dark:text-amber-200">
+            Row grouping is a v4-only feature. Version 3 has no grouping subsystem at all &mdash; there is no
+            <code>groupBy()</code>, no <code>groupsExpanded()</code>/<code>groupsCollapsed()</code>, and no group
+            headers or per-group row counts. The live demo below therefore renders a plain table with a default
+            sort on the column that would have been the grouping column, so related rows still appear together.
+        </p>
+    </div>
+
     <!-- Code Example -->
     <div class="mb-8 bg-slate-800 rounded-xl overflow-hidden">
         <div class="flex items-center justify-between px-4 py-2 bg-slate-700/50">
@@ -8,8 +19,8 @@
         <pre class="p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
 {
     $this->setPrimaryKey('id')
-        ->groupBy('active')        // Group rows by the 'active' column
-        ->groupsExpanded();        // Start with all groups expanded
+        // groupBy() / groupsExpanded() do not exist in v3.
+        ->setDefaultSort('active', 'desc');   // Closest v3 equivalent
 }
 
 public function columns(): array
@@ -68,11 +79,12 @@ public function columns(): array
 
     <!-- Explanation -->
     <div class="mb-8 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl p-6 border border-yellow-200 dark:border-yellow-800">
-        <h3 class="font-semibold text-lg text-yellow-900 dark:text-yellow-100 mb-4">True Row Grouping</h3>
+        <h3 class="font-semibold text-lg text-yellow-900 dark:text-yellow-100 mb-4">True Row Grouping (v4 only)</h3>
         <div class="space-y-4">
             <p class="text-yellow-800 dark:text-yellow-200">
-                Unlike simple sorting, row grouping creates visual group headers that organize rows by a common value. 
-                Each group shows a header with the group label and row count. Click the header to expand or collapse the group.
+                In v4, row grouping creates visual group headers that organize rows by a common value.
+                Each group shows a header with the group label and row count, and the header can be clicked to expand or
+                collapse the group. None of this exists in v3 &mdash; the feature cards above describe v4 behaviour only.
             </p>
             <div class="bg-white dark:bg-slate-800 rounded-lg p-4 border border-yellow-200 dark:border-yellow-700">
                 <div class="flex items-center space-x-2 text-sm">
@@ -89,7 +101,7 @@ public function columns(): array
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
         <div class="p-4 border-b border-slate-200 dark:border-slate-700">
             <h3 class="font-semibold text-lg">Live Demo</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400">Users grouped by Active status - click group headers to expand/collapse</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Users sorted by Active status (v3 has no group headers to expand/collapse)</p>
         </div>
         <div class="p-4">
             <livewire:demos.tables.grouping-demo-table />

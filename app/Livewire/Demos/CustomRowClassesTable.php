@@ -11,9 +11,9 @@ class CustomRowClassesTable extends Component
         return view('demos.row-classes')
             ->layout('layouts.feature-demo', [
                 'title' => 'Dynamic Row Styling',
-                'badge' => 'New in v4.0',
+                'badge' => 'New',
                 'description' => 'Apply conditional CSS classes to table rows based on record data for visual data highlighting.',
-                'code' => "\$this->recordClasses(fn(\$row) => ...)",
+                'code' => "\$this->setTrAttributes(fn(\$row, \$index) => ['default' => true, 'class' => ...])",
                 'gradient' => 'from-pink-500 to-rose-600',
             ]);
     }

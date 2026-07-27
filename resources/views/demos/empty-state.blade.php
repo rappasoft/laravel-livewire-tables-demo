@@ -8,15 +8,8 @@
         <pre class="p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
 {
     $this->setPrimaryKey('id')
-        // Simple text customization
-        ->emptyStateHeading('No Users Found')
-        ->emptyStateDescription('Try adjusting your search or filters.');
-
-    // Or use a custom view
-    // ->emptyState(view('custom.empty-state'))
-
-    // Pass data to custom view
-    // ->emptyState(view('custom.empty-state', ['icon' => 'search']))
+        // A single message is shown when there are no results
+        ->setEmptyMessage('No Users Found - try adjusting your search or filters.');
 }</code></pre>
     </div>
 
@@ -38,23 +31,26 @@
         </div>
     </div>
 
+    <!-- Not available in v3 -->
+    <div class="mb-8 bg-slate-50 dark:bg-slate-800/60 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-1">Not available in v3</h3>
+        <p class="text-slate-600 dark:text-slate-300">
+            v3 has exactly one empty-state string, set with <code class="font-mono">setEmptyMessage()</code>. There is no separate
+            <code class="font-mono">emptyStateDescription()</code>, no <code class="font-mono">emptyState(View)</code> and no
+            <code class="font-mono">hideWhenEmpty()</code>. The message is escaped when rendered, so HTML is not supported -
+            richer markup requires publishing and overriding the package's empty-state view.
+        </p>
+    </div>
+
     <!-- Available Methods -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div class="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">emptyStateHeading(string)</code>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Set the main title for the empty state</p>
+            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">setEmptyMessage(string)</code>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Set the message shown when there are no results</p>
         </div>
         <div class="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">emptyStateDescription(string)</code>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Set the description text below the heading</p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">emptyState(View)</code>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Use a completely custom Blade view</p>
-        </div>
-        <div class="bg-white dark:bg-slate-800 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
-            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">hideWhenEmpty()</code>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Hide the entire table when empty</p>
+            <code class="text-orange-600 dark:text-orange-400 text-sm font-mono">getEmptyMessage()</code>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Read the currently configured empty message</p>
         </div>
     </div>
 
@@ -62,7 +58,7 @@
     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
         <div class="p-4 border-b border-slate-200 dark:border-slate-700">
             <h3 class="font-semibold text-lg">Live Demo - Custom Empty State</h3>
-            <p class="text-sm text-slate-500 dark:text-slate-400">Notice the custom heading and description. Clear the search to see data.</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Notice the custom empty message. Clear the search to see data.</p>
         </div>
         <div class="p-4">
             <livewire:demos.tables.empty-state-demo-table />

@@ -2,12 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Exports\NewsExport;
 use App\Models\News;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, ImageColumn, LinkColumn};
@@ -142,17 +140,7 @@ class NewsTable extends DataTableComponent
         return [
             'activate' => 'Activate',
             'deactivate' => 'Deactivate',
-            'export' => 'Export',
         ];
-    }
-
-    public function export()
-    {
-        $news = $this->getSelected();
-
-        $this->clearSelected();
-
-        return Excel::download(new NewsExport($news), 'news.xlsx');
     }
 
     public function activate()

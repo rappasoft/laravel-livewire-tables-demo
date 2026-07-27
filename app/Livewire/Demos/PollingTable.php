@@ -10,10 +10,10 @@ class PollingTable extends Component
     {
         return view('demos.polling')
             ->layout('layouts.feature-demo', [
-                'title' => 'Enhanced Polling',
-                'badge' => 'New in v4.0',
-                'description' => 'Auto-refresh your tables with human-readable time intervals like 10s, 30s, 1m, or 5m.',
-                'code' => "\$this->poll('10s')",
+                'title' => 'Refreshing / Polling',
+                'badge' => 'v3',
+                'description' => 'Auto-refresh your tables on an interval given in milliseconds, or only while the tab is visible / kept alive.',
+                'code' => '$this->setRefreshTime(10000)',
                 'gradient' => 'from-green-500 to-emerald-600',
             ]);
     }

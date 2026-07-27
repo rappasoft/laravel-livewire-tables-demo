@@ -14,7 +14,7 @@ class PollingDemoTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setPerPageAccepted([10, 25, 50])
             ->setPerPage(10)
-            ->poll('10s');
+            ->setRefreshTime(10000); // 10 seconds, in milliseconds
     }
 
     public function columns(): array

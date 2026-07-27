@@ -2,23 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Exports\UsersExport;
 use App\Models\Tag;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, ImageColumn, LinkColumn};
-use Rappasoft\LaravelLivewireTables\Views\Filters\{DateFilter, DateRangeFilter, DateTimeFilter, MultiSelectDropdownFilter, MultiSelectFilter, NumberFilter, NumberRangeFilter, SelectFilter, TextFilter};
+use Rappasoft\LaravelLivewireTables\Views\Columns\{BooleanColumn, ButtonGroupColumn, ComponentColumn, DateColumn, ImageColumn, LinkColumn};
+use Rappasoft\LaravelLivewireTables\Views\Filters\{BooleanFilter, DateFilter, DateRangeFilter, DateTimeFilter, MultiSelectDropdownFilter, MultiSelectFilter, NumberFilter, NumberRangeFilter, SelectFilter, TextFilter};
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\TestFilterTrait;
-//use App\Livewire\LivewireComponentFilter;
-use Rappasoft\LaravelLivewireTables\Views\Filters\LivewireComponentFilter;
-use Livewire\Attributes\On; 
+use Livewire\Attributes\On;
 use App\Traits\DemoTablesTrait;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -54,7 +50,7 @@ class UsersTable extends DataTableComponent
     #[Reactive] 
     public string $testWireable = 'tesat 123';
 
-    public function updatedFilterComponents($val, $key)
+    public function updatedFilterComponents(string|array|null $value, string $filterName): void
     {
         return;
     }
@@ -81,6 +77,7 @@ class UsersTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setReorderEnabled()
             ->setHideBulkActionsWhenEmptyEnabled()
+            ->setBulkActionConfirms(['deactivate'])
 
             ->setAdditionalSelects(['users.id as id', 'users.parent_id as parent_id'])
             ->setFilterLayout($this->filterLayout)
@@ -225,13 +222,11 @@ class UsersTable extends DataTableComponent
             ),
 
 
-            Column::make('Verified At', 'email_verified_at')
-            ->sortable()
-            ->searchable()
-            ->collapseOnTablet()
-            ->format(
-                fn ($value, $row, Column $column) => Carbon::parse($value)->format('d M Y')
-            ),
+            // email_verified_at is cast immutable_datetime — renders via the
+            // DateTimeInterface branch fixed in v3.8.0 (no inputFormat needed)
+            DateColumn::make('Verified At', 'email_verified_at')
+            ->outputFormat('d M Y')
+            ->sortable(),
 
             Column::make('Address', 'address.address')
             ->sortable()
@@ -376,7 +371,6 @@ class UsersTable extends DataTableComponent
 
             SelectFilter::make('E-mail Verified', 'email_verified_at')
                 ->setFilterPillTitle('Verified')
-                ->setCustomFilterLabel('includes.customFilterLabel1')
                 ->setFilterPillBlade('includes.customFilterPills2')
                 ->options([
                     '' => 'Any',
@@ -391,24 +385,17 @@ class UsersTable extends DataTableComponent
                     }
                 }),
                     
-                SelectFilter::make('Active')
+                BooleanFilter::make('Active')
                     ->setFilterSlidedownRow(2)
                     ->setFilterSlidedownColspan(2)
                     ->setFilterPillTitle('User Status')
                     ->setFilterPillValues([
-                        '1' => 'Active',
-                        '0' => 'Inactive',
+                        true => 'Active',
+                        false => 'Inactive',
                     ])
-                    ->options([
-                        '' => 'All',
-                        '1' => 'Yes',
-                        '0' => 'No',
-                    ])
-                    ->filter(function (Builder $builder, string $value) {
-                        if ($value === '1') {
+                    ->filter(function (Builder $builder, bool $value) {
+                        if ($value) {
                             $builder->where('users.active', true);
-                        } elseif ($value === '0') {
-                            $builder->where('users.active', false);
                         }
                     })
                     ->hiddenFromAll(),
@@ -439,7 +426,6 @@ class UsersTable extends DataTableComponent
 
                 TextFilter::make('Email5')
                 ->setFilterPillTitle('User Email')
-                ->setCustomFilterLabel('includes.customFilterLabel2')
                 ->config([
                     'maxlength' => 10,
                     'placeholder' => 'Search Email',

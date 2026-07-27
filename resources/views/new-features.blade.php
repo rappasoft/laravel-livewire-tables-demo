@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Features - Laravel Livewire Tables v4.0</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Features - Laravel Livewire Tables v3</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -25,7 +25,7 @@
 <body class="bg-slate-900 min-h-screen">
     <!-- Background Pattern -->
     <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-900 to-slate-900 -z-10"></div>
-    
+
     <div class="container mx-auto px-4 py-12">
         <!-- Header -->
         <div class="text-center mb-16">
@@ -37,20 +37,21 @@
             </a>
             <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-purple-300 text-sm mb-6 ml-4">
                 <span class="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse"></span>
-                Version 4.0
+                Laravel Livewire Tables v3
             </div>
             <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
-                New Features
+                Features
             </h1>
             <p class="text-xl text-slate-400 max-w-2xl mx-auto">
-                Powerful new capabilities inspired by Filament Tables, with the flexibility of a standalone package.
+                A dynamic, responsive datatable component for Laravel and Livewire 3 &mdash; searching, sorting,
+                filtering, bulk actions, and more. Every snippet below is real v3 API, and each card links to a live demo.
             </p>
         </div>
 
         <!-- Feature Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-            
-            <!-- Summaries -->
+
+            <!-- Column Footers -->
             <a href="/summaries" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-400/50">
                     <div class="flex items-center mb-4">
@@ -60,15 +61,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">Column Summaries</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">Column Footers</h2>
                     <p class="text-slate-400 mb-4">
-                        Display aggregate values like sum, average, count, min, and max at the bottom of columns.
+                        Add a footer row with computed values &mdash; averages, totals, counts &mdash; per column via a callback over the visible rows.
                     </p>
-                    <code class="text-sm text-purple-400 bg-purple-500/10 px-2 py-1 rounded">->summary('avg')</code>
+                    <code class="text-sm text-purple-400 bg-purple-500/10 px-2 py-1 rounded">->footer(fn($rows) => ...)</code>
                 </div>
             </a>
 
-            <!-- Polling -->
+            <!-- Auto Refresh -->
             <a href="/polling" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-sm rounded-2xl border border-green-500/20 hover:border-green-400/50">
                     <div class="flex items-center mb-4">
@@ -78,15 +79,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-green-300 transition-colors">Enhanced Polling</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-green-300 transition-colors">Auto Refresh</h2>
                     <p class="text-slate-400 mb-4">
-                        Auto-refresh tables with human-readable intervals like '10s', '1m', or '5m'.
+                        Refresh the table on an interval in milliseconds. Combine with setRefreshVisible() or setRefreshKeepAlive() to control when polling runs.
                     </p>
-                    <code class="text-sm text-green-400 bg-green-500/10 px-2 py-1 rounded">->poll('10s')</code>
+                    <code class="text-sm text-green-400 bg-green-500/10 px-2 py-1 rounded">->setRefreshTime(10000)</code>
                 </div>
             </a>
 
-            <!-- Deferred Loading -->
+            <!-- Loading Placeholder -->
             <a href="/deferred" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-sm rounded-2xl border border-blue-500/20 hover:border-blue-400/50">
                     <div class="flex items-center mb-4">
@@ -96,15 +97,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">Deferred Loading</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">Loading Placeholder</h2>
                     <p class="text-slate-400 mb-4">
-                        Improve initial page load times by fetching table data asynchronously.
+                        Show a placeholder row while the table fetches data. Customize the text with setLoadingPlaceholderContent().
                     </p>
-                    <code class="text-sm text-blue-400 bg-blue-500/10 px-2 py-1 rounded">->deferLoading()</code>
+                    <code class="text-sm text-blue-400 bg-blue-500/10 px-2 py-1 rounded">->setLoadingPlaceholderEnabled()</code>
                 </div>
             </a>
 
-            <!-- Row Grouping -->
+            <!-- Default Sorting -->
             <a href="/grouping" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-sm rounded-2xl border border-yellow-500/20 hover:border-yellow-400/50">
                     <div class="flex items-center mb-4">
@@ -114,15 +115,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">Row Grouping</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-300 transition-colors">Sorting &amp; Defaults</h2>
                     <p class="text-slate-400 mb-4">
-                        Group table rows by column values with collapsible sections.
+                        Make any column sortable and keep related records together with a default sort applied before user interaction.
                     </p>
-                    <code class="text-sm text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded">->groupBy('status')</code>
+                    <code class="text-sm text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded">->setDefaultSort('active', 'desc')</code>
                 </div>
             </a>
 
-            <!-- Dynamic Row Styling -->
+            <!-- Row & Cell Styling -->
             <a href="/row-classes" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-pink-500/10 to-rose-500/10 backdrop-blur-sm rounded-2xl border border-pink-500/20 hover:border-pink-400/50">
                     <div class="flex items-center mb-4">
@@ -132,15 +133,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-pink-300 transition-colors">Dynamic Row Styling</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-pink-300 transition-colors">Row &amp; Cell Styling</h2>
                     <p class="text-slate-400 mb-4">
-                        Apply conditional CSS classes to rows based on record data.
+                        Apply conditional classes and attributes to rows and cells based on record data, with setTdAttributes() for individual cells.
                     </p>
-                    <code class="text-sm text-pink-400 bg-pink-500/10 px-2 py-1 rounded">->recordClasses(fn($row) => ...)</code>
+                    <code class="text-sm text-pink-400 bg-pink-500/10 px-2 py-1 rounded">->setTrAttributes(fn($row) => ...)</code>
                 </div>
             </a>
 
-            <!-- Custom Empty State -->
+            <!-- Custom Empty Message -->
             <a href="/empty-state" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-orange-500/10 to-amber-500/10 backdrop-blur-sm rounded-2xl border border-orange-500/20 hover:border-orange-400/50">
                     <div class="flex items-center mb-4">
@@ -150,15 +151,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-orange-300 transition-colors">Custom Empty State</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-orange-300 transition-colors">Custom Empty Message</h2>
                     <p class="text-slate-400 mb-4">
-                        Customize the message shown when tables have no records.
+                        Customize the message shown when the table has no records, or hide the table entirely with setShouldBeHidden().
                     </p>
-                    <code class="text-sm text-orange-400 bg-orange-500/10 px-2 py-1 rounded">->emptyStateHeading('...')</code>
+                    <code class="text-sm text-orange-400 bg-orange-500/10 px-2 py-1 rounded">->setEmptyMessage('No results')</code>
                 </div>
             </a>
 
-            <!-- Relationship Aggregates -->
+            <!-- Aggregate Columns -->
             <a href="/relationships" class="feature-card group">
                 <div class="h-full p-6 bg-gradient-to-br from-cyan-500/10 to-teal-500/10 backdrop-blur-sm rounded-2xl border border-cyan-500/20 hover:border-cyan-400/50">
                     <div class="flex items-center mb-4">
@@ -168,17 +169,53 @@
                             </svg>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Relationship Aggregates</h2>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Aggregate Columns</h2>
                     <p class="text-slate-400 mb-4">
-                        Display counts, sums, averages from related models directly in columns.
+                        Display relationship aggregates with CountColumn, SumColumn, and AvgColumn &mdash; sortable out of the box.
                     </p>
-                    <code class="text-sm text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">->counts('posts')</code>
+                    <code class="text-sm text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">CountColumn::make('Posts')->setDataSource('posts')</code>
+                </div>
+            </a>
+
+            <!-- ArrayColumn -->
+            <a href="/relationship-types" class="feature-card group">
+                <div class="h-full p-6 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl border border-purple-500/20 hover:border-purple-400/50">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/25">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">ArrayColumn</h2>
+                    <p class="text-slate-400 mb-4">
+                        Render many related records inside a single cell, with a custom separator, wrappers, and per-item output format.
+                    </p>
+                    <code class="text-sm text-purple-400 bg-purple-500/10 px-2 py-1 rounded">ArrayColumn::make('Tags')->data(fn($v, $row) => ...)</code>
+                </div>
+            </a>
+
+            <!-- Full Showcase -->
+            <a href="/tailwind" class="feature-card group">
+                <div class="h-full p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur-sm rounded-2xl border border-green-500/20 hover:border-green-400/50">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-500/25">
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="text-xl font-bold text-white mb-2 group-hover:text-green-300 transition-colors">Filters, Bulk Actions &amp; More</h2>
+                    <p class="text-slate-400 mb-4">
+                        The full showcase: a dozen filter types, bulk actions with confirmation, column selection, and reordering in one table.
+                    </p>
+                    <code class="text-sm text-green-400 bg-green-500/10 px-2 py-1 rounded">->setBulkActions(['export' => 'Export'])</code>
                 </div>
             </a>
 
         </div>
 
-        <!-- Global Settings Section -->
+        <!-- Component Configuration Section -->
         <div class="max-w-4xl mx-auto mb-16">
             <div class="p-8 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-sm rounded-2xl border border-cyan-500/20">
                 <div class="flex items-center mb-6">
@@ -189,22 +226,22 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">Global Settings</h3>
-                        <p class="text-slate-400">Configure defaults for all tables in your application</p>
+                        <h3 class="text-xl font-bold text-white">Component Configuration</h3>
+                        <p class="text-slate-400">Every table extends DataTableComponent and is configured in one place</p>
                     </div>
                 </div>
-                <pre class="bg-slate-800/50 rounded-xl p-4 text-sm text-slate-300 overflow-x-auto"><code>// In AppServiceProvider::boot()
-use Rappasoft\LaravelLivewireTables\DataTableComponent;
-
-DataTableComponent::configureUsing(function ($component) {
-    $component->setPerPageAccepted([10, 25, 50, 100]);
-    $component->setLoadingPlaceholderEnabled();
-    $component->setSearchDebounce(500);
-});</code></pre>
+                <pre class="bg-slate-800/50 rounded-xl p-4 text-sm text-slate-300 overflow-x-auto"><code>public function configure(): void
+{
+    $this->setPrimaryKey('id')
+        ->setPerPageAccepted([10, 25, 50, 100])
+        ->setSearchDebounce(500)
+        ->setLoadingPlaceholderEnabled()
+        ->setEmptyMessage('No results found');
+}</code></pre>
             </div>
         </div>
 
-        <!-- Other Fixes & Additions -->
+        <!-- More v3 Features -->
         <div class="max-w-4xl mx-auto mb-16">
             <div class="p-8 bg-gradient-to-br from-slate-700/30 to-slate-800/30 backdrop-blur-sm rounded-2xl border border-slate-600/30">
                 <div class="flex items-center mb-6">
@@ -214,8 +251,8 @@ DataTableComponent::configureUsing(function ($component) {
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">Other Fixes & Additions</h3>
-                        <p class="text-slate-400">Additional improvements included in v4.0</p>
+                        <h3 class="text-xl font-bold text-white">More v3 Features</h3>
+                        <p class="text-slate-400">Everything the package ships with today</p>
                     </div>
                 </div>
                 <ul class="space-y-3 text-slate-300">
@@ -223,61 +260,61 @@ DataTableComponent::configureUsing(function ($component) {
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Table Header & Description</strong> — Add headings and descriptions to your tables with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->heading()</code> and <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->description()</code></span>
+                        <span><strong class="text-white">A Dozen Filter Types</strong> &mdash; Text, Select, MultiSelect, MultiSelectDropdown, Number, NumberRange, Date, DateTime, DateRange, Boolean, and custom Livewire component filters</span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">PHP 8.1+ Enums</strong> — Type-safe enums for <code class="text-purple-400 bg-purple-500/10 px-1 rounded">SortDirection</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">FilterLayout</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">PaginationMethod</code>, and more</span>
+                        <span><strong class="text-white">Search Modifiers</strong> &mdash; Tune search behavior with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setSearchDefer()</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setSearchLazy()</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setSearchBlur()</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setSearchThrottle(500)</code>, or <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setSearchDebounce(500)</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">PostgreSQL ILIKE</strong> — Automatic case-insensitive search for PostgreSQL databases</span>
+                        <span><strong class="text-white">Drag-and-Drop Reordering</strong> &mdash; Let users reorder rows with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setReorderEnabled()</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Exact Match Searching</strong> — Privacy-sensitive columns can use exact matches with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->exactSearchable()</code></span>
+                        <span><strong class="text-white">Bulk Actions</strong> &mdash; Select rows and run actions on them, with per-action confirmation via <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setBulkActionConfirms([...])</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Disable Bulk Actions Per Row</strong> — Conditionally disable checkboxes with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setBulkActionRowDisabled(fn($row) => ...)</code></span>
+                        <span><strong class="text-white">Column Selection</strong> &mdash; Users choose visible columns, remembered per user with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setRememberColumnSelectionEnabled()</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Dynamic Checkbox Attributes</strong> — Per-row attributes for accessibility with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setBulkActionsTdCheckboxAttributes()</code></span>
+                        <span><strong class="text-white">Secondary Header &amp; Footer Rows</strong> &mdash; Per-column <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->secondaryHeader()</code> and <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->footer()</code> callbacks, or reuse the header as a footer with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setUseHeaderAsFooterEnabled()</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Hide Table When Empty</strong> — Clean up the UI with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->hideWhenEmpty()</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setHideTableWhenEmpty()</code>, <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setHideToolbarWhenEmpty()</code></span>
+                        <span><strong class="text-white">Responsive Column Collapse</strong> &mdash; Tuck columns behind an expandable row with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->collapseOnMobile()</code> or <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->collapseAlways()</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Livewire v4 Support</strong> — Full compatibility with Livewire 4 alongside Livewire 3</span>
+                        <span><strong class="text-white">Filter Pills &amp; Layouts</strong> &mdash; Show applied filters as pills, and switch between slide-down and popover layouts with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setFilterLayoutSlideDown()</code> or <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setFilterLayoutPopover()</code></span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Filter Button Styling</strong> — Customize filter button appearance with <code class="text-purple-400 bg-purple-500/10 px-1 rounded">->setFilterButtonAttributes()</code></span>
+                        <span><strong class="text-white">18 Column Types</strong> &mdash; Boolean, Date, Image, Icon, Color, Link, WireLink, ButtonGroup, Component, LivewireComponent, ViewComponent, Increment, Array, and aggregate columns</span>
                     </li>
                     <li class="flex items-start">
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Improved Localization</strong> — All 22 locale files updated with missing translation keys</span>
+                        <span><strong class="text-white">Livewire 3 Support</strong> &mdash; Built for Livewire 3.x on Laravel 10 and above, with Tailwind and Bootstrap themes</span>
                     </li>
                 </ul>
             </div>
@@ -286,7 +323,7 @@ DataTableComponent::configureUsing(function ($component) {
         <!-- Footer -->
         <div class="text-center text-slate-500 text-sm">
             <p class="mb-2">Built with ❤️ by <a href="https://rappasoft.com" class="text-indigo-400 hover:underline">Rappasoft</a></p>
-            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3/4</p>
+            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3</p>
         </div>
     </div>
 </body>

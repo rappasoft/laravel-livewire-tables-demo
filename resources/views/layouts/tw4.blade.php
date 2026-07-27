@@ -36,7 +36,7 @@
         <div class="mx-auto px-4 md:px-8 flex justify-between items-center flex-wrap gap-4">
             <div>
                 <h2 class="text-2xl font-bold mb-1">Livewire Tables Demo</h2>
-                <p class="text-indigo-100 text-sm">Laravel Livewire Tables v4.0</p>
+                <p class="text-indigo-100 text-sm">Laravel Livewire Tables v3</p>
             </div>
             <div class="flex gap-2">
                 <a href="/" class="px-4 py-2 bg-white/90 hover:bg-white text-indigo-600 rounded-lg transition-colors font-medium text-sm flex items-center gap-2">

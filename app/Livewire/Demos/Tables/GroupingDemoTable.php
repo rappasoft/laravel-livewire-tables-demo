@@ -15,8 +15,9 @@ class GroupingDemoTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setPerPageAccepted([25, 50, 100])
             ->setPerPage(25)
-            ->groupBy('active')
-            ->groupsExpanded();
+            // Row grouping (groupBy()/groupsExpanded()) is not available in v3.
+            // Closest equivalent: sort by the column you would have grouped on.
+            ->setDefaultSort('active', 'desc');
     }
 
     public function columns(): array
