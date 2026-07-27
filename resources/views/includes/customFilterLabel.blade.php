@@ -5,7 +5,7 @@
 @endphp
 <label for="{{ $component->getTableName() }}-filter-{{ $filter->getKey() }}" 
     @class([
-        'block text-sm font-medium leading-5 text-gray-700 dark:text-white' => $theme === 'tailwind',
+        'block text-sm font-medium leading-5 text-slate-700 dark:text-white' => $theme === 'tailwind',
         'd-block text-small' => $theme === 'bootstrap-4' && $component->isFilterLayoutSlideDown(),
         'mb-2 text-small' => $theme === 'bootstrap-4' && $component->isFilterLayoutPopover(),
         'd-block text-small' => $theme === 'bootstrap-5' && $component->isFilterLayoutSlideDown(),

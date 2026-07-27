@@ -18,7 +18,7 @@
                     <button
                         x-on:click="open = !open"
                         type="button"
-                        class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600"
+                        class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md shadow-sm hover:bg-slate-50 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-slate-700 dark:text-white dark:border-slate-600 dark:hover:bg-slate-600"
                         aria-haspopup="true"
                         x-bind:aria-expanded="open"
                         aria-expanded="true"
@@ -43,12 +43,12 @@
                 x-transition:leave-end="transform opacity-0 scale-95"
                 class="absolute right-0 z-50 w-full mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg md:w-48 ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
-                <div class="bg-white rounded-md shadow-xs dark:bg-gray-700 dark:text-white">
+                <div class="bg-white rounded-md shadow-xs dark:bg-slate-700 dark:text-white">
                     <div class="py-1" role="menu" aria-orientation="vertical">
                         <button
                             wire:key="my-dropdown-my-action-{{ $component->getTableName() }}"
                             type="button"
-                            class="flex items-center block w-full px-4 py-2 space-x-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 dark:text-white dark:hover:bg-gray-600"
+                            class="flex items-center block w-full px-4 py-2 space-x-2 text-sm leading-5 text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:bg-slate-100 focus:text-slate-900 dark:text-white dark:hover:bg-slate-600"
                             role="menuitem"
                         >
                             <span>Dummy Action ({{ $param1 }})</span>

@@ -1,168 +1,59 @@
-# Laravel Livewire Tables Demo
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-A comprehensive demo application showcasing all features of the [rappasoft/laravel-livewire-tables](https://github.com/rappasoft/laravel-livewire-tables) package.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## 🚀 Live Demo
+## About Laravel
 
-Visit [tables.rappasoft.com](https://tables.rappasoft.com) to see the demo in action.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Requirements
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-- PHP 8.1+
-- Laravel 10, 11, or 12
-- Livewire 3.x
-- Node.js & NPM (for assets)
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Installation
+## Learning Laravel
 
-```bash
-# Clone the repository
-git clone https://github.com/rappasoft/laravel-livewire-tables-demo.git
-cd laravel-livewire-tables-demo
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-# Install dependencies
-composer install
-npm install && npm run build
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-# Configure environment
-cp .env.example .env
-php artisan key:generate
+## Laravel Sponsors
 
-# Run migrations with seeders
-php artisan migrate --seed
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-# Start the server
-php artisan serve
-```
+### Premium Partners
 
-## Available Demos
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
-### Theme Demos
+## Contributing
 
-| Route | Description |
-|-------|-------------|
-| `/` | Home page with theme selector |
-| `/tw3` | Tailwind CSS 3 demo |
-| `/tw2` | Tailwind CSS 2 demo |
-| `/bs5` | Bootstrap 5 demo |
-| `/bs4` | Bootstrap 4 demo |
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-### New Features (v4.0)
+## Code of Conduct
 
-| Route | Feature | Description |
-|-------|---------|-------------|
-| `/new-features` | Feature Index | Overview of all new features |
-| `/summaries` | Column Summaries | Display sum, avg, count, min, max in column footers |
-| `/polling` | Enhanced Polling | Auto-refresh with human-readable intervals |
-| `/deferred` | Deferred Loading | Async data loading for better performance |
-| `/grouping` | Row Grouping | Group rows by column with collapsible sections |
-| `/row-classes` | Dynamic Row Styling | Apply conditional CSS classes to rows |
-| `/empty-state` | Custom Empty State | Customize the "no results" message |
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## New Features Overview
+## Security Vulnerabilities
 
-### Column Summaries
-
-Display aggregate values at the bottom of columns:
-
-```php
-Column::make('Sales', 'sales')
-    ->summary('sum'),    // sum, avg, count, min, max
-
-// Or with a custom callback
-Column::make('Custom')
-    ->summary(fn($rows) => 'Total: $' . number_format($rows->sum('sales'))),
-```
-
-### Enhanced Polling
-
-Auto-refresh tables with human-readable intervals:
-
-```php
-$this->poll('10s');   // 10 seconds
-$this->poll('1m');    // 1 minute
-$this->poll('5m');    // 5 minutes
-```
-
-### Deferred Loading
-
-Improve initial page load by fetching data asynchronously:
-
-```php
-$this->deferLoading();
-```
-
-### Row Grouping
-
-Group rows by column values with collapsible sections:
-
-```php
-$this->groupBy('status')
-    ->groupsCollapsed();  // or ->groupsExpanded()
-```
-
-### Dynamic Row Styling
-
-Apply conditional CSS classes based on record data:
-
-```php
-$this->recordClasses(function ($record) {
-    return match (true) {
-        $record->success_rate >= 80 => 'bg-green-100',
-        $record->success_rate >= 50 => 'bg-yellow-100',
-        default => 'bg-red-100',
-    };
-});
-```
-
-### Custom Empty State
-
-Customize what users see when there are no records:
-
-```php
-$this->emptyStateHeading('No Results Found')
-    ->emptyStateDescription('Try adjusting your search criteria.');
-```
-
-### Global Settings
-
-Configure defaults for all tables in your application:
-
-```php
-// In AppServiceProvider::boot()
-DataTableComponent::configureUsing(function ($component) {
-    $component->setPerPageAccepted([10, 25, 50, 100]);
-    $component->setLoadingPlaceholderEnabled();
-    $component->setSearchDebounce(500);
-});
-```
-
-## Local Development
-
-For local development with the main package:
-
-1. Update `composer.json` to use a path repository:
-
-```json
-{
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-livewire-tables"
-        }
-    ],
-    "require": {
-        "rappasoft/laravel-livewire-tables": "dev-development"
-    }
-}
-```
-
-2. Run `composer update rappasoft/laravel-livewire-tables`
-
-## Documentation
-
-Full documentation is available at [rappasoft.com/docs/laravel-livewire-tables](https://rappasoft.com/docs/laravel-livewire-tables).
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

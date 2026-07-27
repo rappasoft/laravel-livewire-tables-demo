@@ -9,20 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Feature Demo' }} - Laravel Livewire Tables</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                },
-            },
-        }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     @vite(['resources/js/app.js'])
     <style>
         [x-cloak] { display: none !important; }
@@ -113,19 +101,7 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Table Section -->
-            <div class="lg:col-span-2">
-                @yield('table')
-            </div>
-            
-            <!-- Code Examples Section -->
-            <div class="lg:col-span-1">
-                <div class="sticky top-20">
-                    @yield('code-examples')
-                </div>
-            </div>
-        </div>
+        {{ $slot }}
     </main>
 
     <!-- Footer -->
@@ -141,7 +117,7 @@
         </div>
     </footer>
 
-    @livewireScriptConfig
+    @livewireScripts
     @stack('scripts')
 </body>
 </html>

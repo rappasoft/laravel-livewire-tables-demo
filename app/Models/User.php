@@ -83,4 +83,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(News::class);
     }
+
+    /**
+     * Reset the factory order counter
+     */
+    public static function resetOrder(): void
+    {
+        \Database\Factories\UserFactory::resetOrder();
+    }
 }

@@ -34,7 +34,7 @@
                 Livewire Tables
                 <span class="gradient-text">Demo</span>
             </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
                 A powerful, feature-rich datatable component for Laravel Livewire. 
                 Choose your theme and explore the possibilities.
             </p>
@@ -54,61 +54,41 @@
 
         <!-- Theme Selector -->
         <div class="max-w-4xl mx-auto mb-16">
-            <h2 class="text-2xl font-semibold text-white text-center mb-8">Choose Your Theme</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Tailwind -->
-                <a href="/tw3" class="theme-card block p-6 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-sm rounded-xl border border-cyan-500/30 hover:border-cyan-400">
+            <h2 class="text-2xl font-semibold text-white text-center mb-8">Explore the Demo</h2>
+            <div class="max-w-2xl mx-auto">
+                <!-- Tailwind 4 -->
+                <a href="/tailwind" class="theme-card block p-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-purple-400 relative">
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-cyan-500/30 rounded-lg flex items-center justify-center mr-4">
-                            <svg class="w-7 h-7 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+                        <div class="w-16 h-16 bg-purple-500/30 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-10 h-10 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"/>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-semibold text-white">Tailwind CSS</h3>
-                            <p class="text-cyan-300 text-sm">Modern & Flexible</p>
+                            <h3 class="text-2xl font-semibold text-white">Tailwind CSS v4</h3>
+                            <p class="text-purple-300">Lightning CSS engine with improved performance</p>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-sm">
-                        Clean, utility-first styling with dark mode support and modern design patterns.
+                    <p class="text-slate-400">
+                        Experience the latest version with modern CSS features, enhanced performance, and all the power of Laravel Livewire Tables.
                     </p>
                 </a>
+            </div>
 
-                <!-- Bootstrap 5 -->
-                <a href="/bs5" class="theme-card block p-6 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-purple-400">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-500/30 rounded-lg flex items-center justify-center mr-4">
-                            <svg class="w-7 h-7 text-purple-400" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572zm.324 1.206H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663zM24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268zm-7.927 2.817c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/>
-                            </svg>
-                        </div>
-<div>
-                            <h3 class="text-xl font-semibold text-white">Bootstrap 5</h3>
-                            <p class="text-purple-300 text-sm">Popular & Stable</p>
-                        </div>
+            <!-- Version Support Notice -->
+            <div class="mt-8 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-yellow-400 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <p class="text-yellow-200 text-sm font-semibold mb-1">Bootstrap & Tailwind 3 Support Removed in v4.0</p>
+                        <p class="text-yellow-300/80 text-sm">
+                            As of v4.0, Bootstrap 4, Bootstrap 5, and Tailwind CSS 3 are no longer supported. The package now exclusively uses Tailwind CSS 4 for a simpler, more maintainable codebase.
+                            <a href="https://rappasoft.com/docs/laravel-livewire-tables/v4/upgrade-guide" class="underline hover:text-yellow-200">View migration guide →</a>
+                        </p>
                     </div>
-                    <p class="text-gray-400 text-sm">
-                        Industry-standard framework with comprehensive components and excellent browser support.
-                    </p>
-                </a>
-
-                <!-- Bootstrap 4 -->
-                <a href="/bs4" class="theme-card block p-6 bg-gradient-to-br from-orange-500/20 to-red-500/20 backdrop-blur-sm rounded-xl border border-orange-500/30 hover:border-orange-400">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-orange-500/30 rounded-lg flex items-center justify-center mr-4">
-                            <svg class="w-7 h-7 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572zm.324 1.206H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663zM24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268zm-7.927 2.817c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/>
-                            </svg>
-                        </div>
-    <div>
-                            <h3 class="text-xl font-semibold text-white">Bootstrap 4</h3>
-                            <p class="text-orange-300 text-sm">Legacy Support</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        For projects still using Bootstrap 4. Full feature parity with newer versions.
-                    </p>
-                </a>
+                </div>
             </div>
         </div>
 
@@ -121,7 +101,7 @@
                             <span class="text-3xl mr-3">🚀</span>
                             <h3 class="text-2xl font-bold text-white">New in v4.0</h3>
                         </div>
-                        <p class="text-gray-300">
+                        <p class="text-slate-300">
                             Column Summaries, Enhanced Polling, Row Grouping, Deferred Loading, Global Settings & more!
                         </p>
                     </div>
@@ -140,19 +120,19 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="text-center p-6 bg-white/5 rounded-xl">
                     <div class="text-3xl font-bold text-white mb-1">2M+</div>
-                    <div class="text-gray-400 text-sm">Downloads</div>
+                    <div class="text-slate-400 text-sm">Downloads</div>
                 </div>
                 <div class="text-center p-6 bg-white/5 rounded-xl">
                     <div class="text-3xl font-bold text-white mb-1">1.5K+</div>
-                    <div class="text-gray-400 text-sm">GitHub Stars</div>
+                    <div class="text-slate-400 text-sm">GitHub Stars</div>
                 </div>
                 <div class="text-center p-6 bg-white/5 rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-1">3</div>
-                    <div class="text-gray-400 text-sm">Theme Options</div>
+                    <div class="text-3xl font-bold text-white mb-1">v4</div>
+                    <div class="text-slate-400 text-sm">Tailwind CSS</div>
                 </div>
                 <div class="text-center p-6 bg-white/5 rounded-xl">
                     <div class="text-3xl font-bold text-white mb-1">1571</div>
-                    <div class="text-gray-400 text-sm">Tests Passing</div>
+                    <div class="text-slate-400 text-sm">Tests Passing</div>
                 </div>
             </div>
         </div>
@@ -168,7 +148,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">No JavaScript Required</h3>
-                    <p class="text-gray-400 text-sm">Fully server-rendered with Livewire. No complex JS build steps needed.</p>
+                    <p class="text-slate-400 text-sm">Fully server-rendered with Livewire. No complex JS build steps needed.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -177,7 +157,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Standalone Package</h3>
-                    <p class="text-gray-400 text-sm">Works with any Laravel project. No Filament or admin panel required.</p>
+                    <p class="text-slate-400 text-sm">Works with any Laravel project. No Filament or admin panel required.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -186,7 +166,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Highly Customizable</h3>
-                    <p class="text-gray-400 text-sm">Extensive configuration options for columns, filters, sorting, and styling.</p>
+                    <p class="text-slate-400 text-sm">Extensive configuration options for columns, filters, sorting, and styling.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -195,7 +175,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Advanced Filters</h3>
-                    <p class="text-gray-400 text-sm">Text, select, multi-select, date, date range, number range, and custom filters.</p>
+                    <p class="text-slate-400 text-sm">Text, select, multi-select, date, date range, number range, and custom filters.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -204,7 +184,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Bulk Actions</h3>
-                    <p class="text-gray-400 text-sm">Select multiple rows and perform batch operations with confirmation dialogs.</p>
+                    <p class="text-slate-400 text-sm">Select multiple rows and perform batch operations with confirmation dialogs.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -213,7 +193,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Auto Refresh</h3>
-                    <p class="text-gray-400 text-sm">Configurable polling intervals with human-readable syntax like poll('30s').</p>
+                    <p class="text-slate-400 text-sm">Configurable polling intervals with human-readable syntax like poll('30s').</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -222,7 +202,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Comprehensive Relationships</h3>
-                    <p class="text-gray-400 text-sm">Display hasMany, belongsToMany, nested relationships with collections, sorting, and searching.</p>
+                    <p class="text-slate-400 text-sm">Display hasMany, belongsToMany, nested relationships with collections, sorting, and searching.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-teal-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -231,7 +211,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Column Summaries</h3>
-                    <p class="text-gray-400 text-sm">Calculate sums, averages, counts, min, max in table footers with custom callbacks.</p>
+                    <p class="text-slate-400 text-sm">Calculate sums, averages, counts, min, max in table footers with custom callbacks.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-rose-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -240,7 +220,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Row Grouping</h3>
-                    <p class="text-gray-400 text-sm">Group rows by column values with collapsible sections and visual indicators.</p>
+                    <p class="text-slate-400 text-sm">Group rows by column values with collapsible sections and visual indicators.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -249,7 +229,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Dynamic Row Styling</h3>
-                    <p class="text-gray-400 text-sm">Apply custom CSS classes to rows based on data conditions for visual feedback.</p>
+                    <p class="text-slate-400 text-sm">Apply custom CSS classes to rows based on data conditions for visual feedback.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -258,7 +238,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Deferred Loading</h3>
-                    <p class="text-gray-400 text-sm">Improve initial page load by deferring table data until after page render.</p>
+                    <p class="text-slate-400 text-sm">Improve initial page load by deferring table data until after page render.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -267,7 +247,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Global Settings</h3>
-                    <p class="text-gray-400 text-sm">Configure default settings across all tables in your application from one place.</p>
+                    <p class="text-slate-400 text-sm">Configure default settings across all tables in your application from one place.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-sky-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -276,7 +256,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Export Data</h3>
-                    <p class="text-gray-400 text-sm">Export filtered table data to CSV, Excel, and PDF formats with custom formatters.</p>
+                    <p class="text-slate-400 text-sm">Export filtered table data to CSV, Excel, and PDF formats with custom formatters.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-lime-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -285,7 +265,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Smart Search</h3>
-                    <p class="text-gray-400 text-sm">Search across multiple columns with exact match options and PostgreSQL ILIKE support.</p>
+                    <p class="text-slate-400 text-sm">Search across multiple columns with exact match options and PostgreSQL ILIKE support.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -294,7 +274,7 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Column Reordering</h3>
-                    <p class="text-gray-400 text-sm">Drag and drop column reordering with persistent state storage for user preferences.</p>
+                    <p class="text-slate-400 text-sm">Drag and drop column reordering with persistent state storage for user preferences.</p>
                 </div>
                 <div class="p-6 bg-white/5 rounded-xl">
                     <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mb-4">
@@ -303,13 +283,32 @@
                         </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">Custom Empty States</h3>
-                    <p class="text-gray-400 text-sm">Define custom views, headings, and descriptions when tables have no data to display.</p>
+                    <p class="text-slate-400 text-sm">Define custom views, headings, and descriptions when tables have no data to display.</p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-xl">
+                    <div class="w-10 h-10 bg-fuchsia-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Column Visibility</h3>
+                    <p class="text-slate-400 text-sm">Allow users to show/hide columns with persistent preferences and exclude columns from visibility control.</p>
+                </div>
+                <div class="p-6 bg-white/5 rounded-xl">
+                    <div class="w-10 h-10 bg-slate-500/20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Developer Friendly</h3>
+                    <p class="text-slate-400 text-sm">Extensive documentation, active community support, and regular updates with new features and improvements.</p>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="text-center text-gray-500 text-sm">
+        <div class="text-center text-slate-500 text-sm">
             <p class="mb-2">Built with ❤️ by <a href="https://rappasoft.com" class="text-indigo-400 hover:underline">Rappasoft</a></p>
             <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3/4</p>
         </div>

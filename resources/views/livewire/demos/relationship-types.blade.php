@@ -11,7 +11,7 @@
                 <span class="w-6 h-6 bg-cyan-500/20 rounded flex items-center justify-center mr-2 text-cyan-400 text-sm">✨</span>
                 Overview
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Livewire Tables supports all Laravel relationship types, allowing you to display and interact with related model data directly in your table columns. This includes hasOne, belongsTo, hasMany, belongsToMany, hasManyThrough, hasOneThrough, and nested relationships.
             </p>
         </div>
@@ -22,10 +22,10 @@
                 <span class="w-6 h-6 bg-blue-500/20 rounded flex items-center justify-center mr-2 text-blue-400 text-sm">1</span>
                 hasOne Relationship
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Display data from a single related model using dot notation:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User hasOne Address
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User hasOne Address
 Column::make('Address', 'address.address')
     ->sortable()
     ->searchable(),
@@ -43,10 +43,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-green-500/20 rounded flex items-center justify-center mr-2 text-green-400 text-sm">2</span>
                 belongsTo Relationship
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Access parent model data:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User belongsTo Parent (self-referencing)
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User belongsTo Parent (self-referencing)
 Column::make('Parent', 'parent.name')
     ->sortable()
     ->searchable(),
@@ -63,10 +63,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-purple-500/20 rounded flex items-center justify-center mr-2 text-purple-400 text-sm">3</span>
                 Nested Relationships
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Navigate through multiple relationship levels:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User → Address → Group → City
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User → Address → Group → City
 Column::make('City', 'address.group.city.name')
     ->sortable()
     ->searchable(),
@@ -83,10 +83,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-yellow-500/20 rounded flex items-center justify-center mr-2 text-yellow-400 text-sm">4</span>
                 hasMany Relationship
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Display collections from hasMany relationships:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User hasMany Articles
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User hasMany Articles
 Column::make('Articles', 'articles')
     ->displayField('title')  // Show article titles
     ->separator(', ')
@@ -108,10 +108,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-pink-500/20 rounded flex items-center justify-center mr-2 text-pink-400 text-sm">5</span>
                 belongsToMany Relationship
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Display many-to-many relationship collections:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User belongsToMany Tags
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User belongsToMany Tags
 Column::make('Tags', 'tags')
     ->displayField('name')
     ->separator(', ')
@@ -129,10 +129,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-indigo-500/20 rounded flex items-center justify-center mr-2 text-indigo-400 text-sm">6</span>
                 hasOneThrough / hasManyThrough
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Access "through" relationships:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// User → Address → AddressGroup
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// User → Address → AddressGroup
 Column::make('Address Group', 'addressgroup.name')
     ->sortable(),
 
@@ -148,10 +148,10 @@ public function builder(): Builder
                 <span class="w-6 h-6 bg-teal-500/20 rounded flex items-center justify-center mr-2 text-teal-400 text-sm">7</span>
                 Collection Display Options
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Customize how collections are displayed:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">Column::make('Articles', 'articles')
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">Column::make('Articles', 'articles')
     ->displayField('title')      // Field to extract from each item
     ->separator(' | ')            // Custom separator
     ->limit(5)                    // Limit displayed items
@@ -165,10 +165,10 @@ public function builder(): Builder
         <!-- Eager Loading -->
         <div class="bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-xl p-6 border border-orange-500/20">
             <h3 class="text-lg font-semibold text-white mb-4">⚠️ Important: Eager Loading</h3>
-            <p class="text-gray-300 mb-4">
+            <p class="text-slate-300 mb-4">
                 Always eager load relationships to avoid N+1 query problems:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto mb-4"><code class="text-gray-300">// ✅ Correct - eager load all relationships
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto mb-4"><code class="text-slate-300">// ✅ Correct - eager load all relationships
 public function builder(): Builder
 {
     return User::query()
@@ -187,7 +187,7 @@ public function builder(): Builder
 {
     return User::query(); // Missing ->with()
 }</code></pre>
-            <p class="text-gray-300 text-sm">
+            <p class="text-slate-300 text-sm">
                 <strong>Tip:</strong> Enable <code class="text-orange-400">throw_exception_on_unloaded_relationships</code> in config to catch N+1 issues during development.
             </p>
         </div>
@@ -195,7 +195,7 @@ public function builder(): Builder
         <!-- Benefits -->
         <div class="bg-gradient-to-r from-cyan-500/10 to-teal-500/10 rounded-xl p-6 border border-cyan-500/20">
             <h3 class="text-lg font-semibold text-white mb-4">Key Benefits</h3>
-            <ul class="space-y-2 text-gray-300">
+            <ul class="space-y-2 text-slate-300">
                 <li class="flex items-start">
                     <svg class="w-5 h-5 text-cyan-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -225,4 +225,7 @@ public function builder(): Builder
     </div>
     @endsection
 </div>
+
+
+
 

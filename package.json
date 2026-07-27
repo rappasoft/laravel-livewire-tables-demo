@@ -1,32 +1,17 @@
 {
+    "$schema": "https://www.schemastore.org/package.json",
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev": "vite",
-        "production": "vite build",
-        "build": "vite build"
+        "build": "vite build",
+        "dev": "vite"
     },
     "devDependencies": {
-        "@tailwindcss/aspect-ratio": "^0.2.2",
-        "@tailwindcss/forms": "^0.3.4",
-        "@tailwindcss/line-clamp": "^0.2.2",
-        "@tailwindcss/typography": "^0.4.1",
-        "axios": "^0.21",
-        "laravel-vite-plugin": "^0.7.8",
-        "lodash": "^4.17.21",
-        "postcss": "^8.4.21",
-        "postcss-import": "^12.0.1",
-        "tailwindcss": "^2.2.19",
-        "vite": "^4.4.5"
-    },
-    "dependencies": {
-        "@alpinejs/focus": "^3.13.0",
-        "@nextapps-be/livewire-sortablejs": "^0.2.0",
-        "@rollup/plugin-commonjs": "^25.0.3",
-        "@rollup/plugin-node-resolve": "^15.1.0",
-        "@ryangjchandler/alpine-clipboard": "^2.2.0",
-        "alpinejs": "^3.12.0",
-        "autoprefixer": "^10.4.14",
-        "cssnano": "^6.0.1",
-        "playwright": "^1.57.0"
+        "@tailwindcss/vite": "^4.1.17",
+        "axios": "^1.11.0",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^7.0.7"
     }
 }

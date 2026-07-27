@@ -11,7 +11,7 @@
                 <span class="w-6 h-6 bg-cyan-500/20 rounded flex items-center justify-center mr-2 text-cyan-400 text-sm">✨</span>
                 Overview
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Relationship aggregates allow you to display data from related models using Eloquent's built-in aggregate methods. 
                 This is similar to Filament Tables' relationship support and works seamlessly with existing Laravel relationships.
             </p>
@@ -23,10 +23,10 @@
                 <span class="w-6 h-6 bg-blue-500/20 rounded flex items-center justify-center mr-2 text-blue-400 text-sm">1</span>
                 Basic Relationships (hasOne/BelongsTo)
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Use dot notation to access related model data. The table automatically joins the necessary tables:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// Display address from related Address model
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Display address from related Address model
 Column::make('Address', 'address.address')
     ->sortable()
     ->searchable(),
@@ -42,10 +42,10 @@ Column::make('City', 'address.group.city.name')
                 <span class="w-6 h-6 bg-green-500/20 rounded flex items-center justify-center mr-2 text-green-400 text-sm">2</span>
                 Counting Relationships
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Use <code class="text-purple-400">counts()</code> to display the number of related records:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// Count all related records
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Count all related records
 Column::make('Articles', 'articles_count')
     ->counts('articles')
     ->sortable(),
@@ -67,10 +67,10 @@ Column::make('Tags', 'tags_count')
                 <span class="w-6 h-6 bg-yellow-500/20 rounded flex items-center justify-center mr-2 text-yellow-400 text-sm">3</span>
                 Displaying Relationship Collections
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Show collections from hasMany or belongsToMany relationships:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// Display article titles
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Display article titles
 Column::make('Articles', 'articles')
     ->displayField('title')
     ->separator(' | ')
@@ -89,10 +89,10 @@ Column::make('Tags', 'tags')
                 <span class="w-6 h-6 bg-yellow-500/20 rounded flex items-center justify-center mr-2 text-yellow-400 text-sm">4</span>
                 Sum Aggregate
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Use <code class="text-purple-400">sum()</code> to total a column from related records:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// Total revenue from orders
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Total revenue from orders
 Column::make('Revenue', 'orders_sum_total')
     ->sum('orders', 'total')
     ->format(fn($value) => '$' . number_format($value ?? 0, 2))
@@ -110,10 +110,10 @@ Column::make('Paid Revenue', 'orders_sum_total')
                 <span class="w-6 h-6 bg-pink-500/20 rounded flex items-center justify-center mr-2 text-pink-400 text-sm">5</span>
                 Average Aggregate
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Use <code class="text-purple-400">avg()</code> to calculate the average:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// Average rating from reviews
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// Average rating from reviews
 Column::make('Avg Rating', 'reviews_avg_rating')
     ->avg('reviews', 'rating')
     ->format(fn($value) => number_format($value ?? 0, 1) . ' / 5')
@@ -131,10 +131,10 @@ Column::make('AOV', 'orders_avg_total')
                 <span class="w-6 h-6 bg-indigo-500/20 rounded flex items-center justify-center mr-2 text-indigo-400 text-sm">6</span>
                 Min/Max Aggregates
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Use <code class="text-purple-400">min()</code> and <code class="text-purple-400">max()</code> for extremes:
             </p>
-            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-gray-300">// First order date
+            <pre class="bg-slate-800/50 rounded-lg p-4 text-sm overflow-x-auto"><code class="text-slate-300">// First order date
 Column::make('First Order', 'orders_min_created_at')
     ->min('orders', 'created_at')
     ->format(fn($value) => $value?->format('M j, Y') ?? 'Never'),
@@ -160,19 +160,19 @@ Column::make('Highest Price', 'products_max_price')
                 <span class="w-6 h-6 bg-purple-500/20 rounded flex items-center justify-center mr-2 text-purple-400 text-sm">7</span>
                 Column Naming Convention
             </h3>
-            <p class="text-gray-400 mb-4">
+            <p class="text-slate-400 mb-4">
                 Column names must follow Laravel's naming convention:
             </p>
             <div class="bg-slate-800/50 rounded-lg p-4 overflow-x-auto">
                 <table class="w-full text-sm">
                     <thead>
-                        <tr class="text-left text-gray-400">
+                        <tr class="text-left text-slate-400">
                             <th class="pb-2">Method</th>
                             <th class="pb-2">Pattern</th>
                             <th class="pb-2">Example</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-300">
+                    <tbody class="text-slate-300">
                         <tr><td class="py-1"><code class="text-purple-400">counts()</code></td><td>{relationship}_count</td><td><code>posts_count</code></td></tr>
                         <tr><td class="py-1"><code class="text-purple-400">sum()</code></td><td>{relationship}_sum_{column}</td><td><code>orders_sum_total</code></td></tr>
                         <tr><td class="py-1"><code class="text-purple-400">avg()</code></td><td>{relationship}_avg_{column}</td><td><code>reviews_avg_rating</code></td></tr>
@@ -186,7 +186,7 @@ Column::make('Highest Price', 'products_max_price')
         <!-- Benefits -->
         <div class="bg-gradient-to-r from-cyan-500/10 to-teal-500/10 rounded-xl p-6 border border-cyan-500/20">
             <h3 class="text-lg font-semibold text-white mb-4">Key Benefits</h3>
-            <ul class="space-y-2 text-gray-300">
+            <ul class="space-y-2 text-slate-300">
                 <li class="flex items-start">
                     <svg class="w-5 h-5 text-cyan-400 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -216,4 +216,7 @@ Column::make('Highest Price', 'products_max_price')
     </div>
     @endsection
 </div>
+
+
+
 

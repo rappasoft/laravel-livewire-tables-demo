@@ -28,6 +28,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // Reset the factory order counter
+        \App\Models\User::resetOrder();
 
         $this->tags = Tag::all();
 
@@ -35,13 +37,25 @@ class UserSeeder extends Seeder
 
         $this->addresses = Address::select('id')->get();
 
-        User::factory(self::$userCount)
+        $users = User::factory(self::$userCount)
             ->create()
             ->each(function ($user) use ($faker) {
                 $assignedTagCount = rand(1,5);
                 $user->tags()->sync($this->tags->random($assignedTagCount)->pluck('id')->toArray());
                 $user->address()->save($this->addresses->random(1)->first());
             });
+
+        // Assign parent_id to some users after all users are created
+        $allUserIds = $users->pluck('id')->toArray();
+        $users->skip(3)->each(function ($user) use ($allUserIds) {
+            if (rand(0, 1)) { // 50% chance of having a parent
+                $possibleParents = array_filter($allUserIds, fn($id) => $id < $user->id);
+                if (!empty($possibleParents)) {
+                    $user->parent_id = $possibleParents[array_rand($possibleParents)];
+                    $user->save();
+                }
+            }
+        });
 
         foreach (User::whereNull('parent_id')->get() as $topLevelUser)
         {

@@ -1,40 +1,25 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-    build: {
-        rollupOptions: {
-            plugins: [
-                resolve(),
-                commonjs(),
-            ]
-        }
-    },
     plugins: [
         laravel({
-            input: [
-                'resources/js/app.js',
-                'resources/css/app.css',
-            ],
+            input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
-            postcss: [
-                tailwindcss(),
-                autoprefixer(),
-                cssnano({
-                    preset: 'default',
-                }),
-            ],
-        })
+        }),
+        tailwindcss(),
     ],
-    resolve: {
-        alias: {
-            '@': '/resources/js'
-        }
-    }
-
+    server: {
+        watch: {
+            ignored: ['**/storage/framework/views/**'],
+        },
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: undefined,
+            },
+        },
+    },
 });

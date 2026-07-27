@@ -1,11 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-[x-cloak] {
-    display: none;
-}
-
-:root {
-    --rappasoft-table-striped-bgcolor-even: #000000;
-}
+/* Tailwind v4 auto-detection skips .gitignore'd paths, so vendor/ is never scanned
+   and none of the package's table classes make it into the build. */
+@source '../../vendor/rappasoft/laravel-livewire-tables/resources/views';
