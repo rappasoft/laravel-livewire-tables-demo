@@ -100,4 +100,23 @@ class UsersTableTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => $second->id, 'sort' => 1]);
         $this->assertDatabaseHas('users', ['id' => $first->id, 'sort' => 2]);
     }
+
+    public function test_saved_row_order_is_visible_after_the_table_is_reloaded(): void
+    {
+        $first = User::factory()->create(['name' => 'Alpha Demo', 'sort' => 1]);
+        $second = User::factory()->create(['name' => 'Beta Demo', 'sort' => 2]);
+        $third = User::factory()->create(['name' => 'Gamma Demo', 'sort' => 3]);
+
+        Livewire::test(UsersTable::class)
+            ->call('storeReorder', [
+                ['id' => $third->id, 'sort' => 1],
+                ['id' => $first->id, 'sort' => 2],
+                ['id' => $second->id, 'sort' => 3],
+            ]);
+
+        $reloaded = Livewire::test(UsersTable::class);
+
+        $this->assertSame(['Gamma Demo', 'Alpha Demo', 'Beta Demo'], $reloaded->instance()->getRows()->pluck('name')->all());
+        $reloaded->assertSeeInOrder(['Gamma Demo', 'Alpha Demo', 'Beta Demo']);
+    }
 }

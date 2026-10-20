@@ -131,6 +131,7 @@ class UsersTable extends DataTableComponent
           //      'default' => true
           //  ])
             ->setDefaultReorderSort('sort', 'asc')
+            ->setDefaultSort('sort', 'asc')
             ->setEagerLoadAllRelationsDisabled()
             ->setPaginationMethod('cursor')
             ->setPerPageAccepted([10, 25, 50, 100])
