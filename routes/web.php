@@ -8,6 +8,8 @@ Route::get('/', function () {
 
 // Tailwind CSS Demo
 Route::get('/tailwind', App\Livewire\Demos\Tailwind4::class)->name('tailwind');
+Route::get('/bootstrap-4', App\Livewire\Demos\Bootstrap::class)->defaults('version', '4')->name('bootstrap-4');
+Route::get('/bootstrap-5', App\Livewire\Demos\Bootstrap::class)->defaults('version', '5')->name('bootstrap-5');
 
 // New Feature Demos
 Route::get('/summaries', App\Livewire\Demos\SummariesTable::class)->name('summaries');

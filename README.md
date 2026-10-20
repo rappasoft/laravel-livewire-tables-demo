@@ -38,6 +38,8 @@ Browser checks should exercise the table selector, search, filters, pagination, 
 | `/` | Landing page linking to all demos |
 | `/new-features` | Overview of v3 feature cards with code snippets |
 | `/tailwind` | Full-featured table: filters, bulk actions, column select, reordering |
+| `/bootstrap-4` | Bootstrap 4 tables with table, filter-layout and locale selectors |
+| `/bootstrap-5` | Bootstrap 5 tables with table, filter-layout and locale selectors |
 | `/summaries` | Column footer rows with computed values (`footer()`) |
 | `/polling` | Auto refresh via `setRefreshTime()` |
 | `/deferred` | Loading placeholder (`setLoadingPlaceholderEnabled()`) |

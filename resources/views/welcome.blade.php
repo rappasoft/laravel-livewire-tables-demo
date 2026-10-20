@@ -55,7 +55,7 @@
         <!-- Theme Selector -->
         <div class="max-w-4xl mx-auto mb-16">
             <h2 class="text-2xl font-semibold text-white text-center mb-8">Explore the Demo</h2>
-            <div class="max-w-2xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-4 mx-auto">
                 <!-- Tailwind 4 -->
                 <a href="/tailwind" class="theme-card block p-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-purple-400 relative">
                     <div class="flex items-center mb-4">
@@ -73,6 +73,12 @@
                         Experience the latest version with modern CSS features, enhanced performance, and all the power of Laravel Livewire Tables.
                     </p>
                 </a>
+                @foreach (['5', '4'] as $bootstrapVersion)
+                    <a href="/bootstrap-{{ $bootstrapVersion }}" class="theme-card block p-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-purple-400">
+                        <h3 class="text-2xl font-semibold text-white mb-4">Bootstrap {{ $bootstrapVersion }}</h3>
+                        <p class="text-slate-400">Explore sorting, filtering, row reordering, and bulk actions with the Bootstrap {{ $bootstrapVersion }} theme.</p>
+                    </a>
+                @endforeach
             </div>
 
             <!-- Version Support Notice -->
@@ -84,7 +90,7 @@
                     <div>
                         <p class="text-yellow-200 text-sm font-semibold mb-1">Theme Support in Laravel Livewire Tables v3</p>
                         <p class="text-yellow-300/80 text-sm">
-                            Laravel Livewire Tables v3 ships Tailwind CSS, Bootstrap 4, and Bootstrap 5 themes, selected through the package config. This demo uses the Tailwind theme, styled with Tailwind CSS 4.
+                            Laravel Livewire Tables v3 ships Tailwind CSS, Bootstrap 4, and Bootstrap 5 themes. Explore all three themes in this demo, with Tailwind styled using Tailwind CSS 4.
                             <a href="https://rappasoft.com/docs/laravel-livewire-tables/v3/upgrade-guide" class="underline hover:text-yellow-200">Read the upgrade guide →</a>
                         </p>
                     </div>
