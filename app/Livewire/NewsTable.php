@@ -36,7 +36,6 @@ class NewsTable extends DataTableComponent
         //$this->userExample
         //(Tag::inRandomOrder()->take(rand(1,3))->get()->toArray());
         $this->setPrimaryKey('id')
-            ->setDebugEnabled()
             ->setAdditionalSelects(['news.id as id'])
             ->setFilterLayout($this->filterLayout)
             ->setReorderEnabled()

@@ -81,7 +81,7 @@ class PetsTable extends DataTableComponent
                     'alt' => $row->name.' Avatar',
                 ]),
             ImageColumn::make('RowImg')
-                ->location(fn ($row) => 'test'.$row->id)
+                ->location(fn ($row) => asset('images/avatar.svg'))
                 ->attributes(fn ($row) => [
                     'class' => 'rounded-full',
                     'alt' => $row->name.' Avatar',

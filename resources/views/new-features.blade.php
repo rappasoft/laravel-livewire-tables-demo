@@ -43,7 +43,7 @@
                 Features
             </h1>
             <p class="text-xl text-slate-400 max-w-2xl mx-auto">
-                A dynamic, responsive datatable component for Laravel and Livewire 3 &mdash; searching, sorting,
+                A dynamic, responsive datatable component for Laravel and Livewire 3 and 4 &mdash; searching, sorting,
                 filtering, bulk actions, and more. Every snippet below is real v3 API, and each card links to a live demo.
             </p>
         </div>
@@ -314,7 +314,7 @@
                         <svg class="w-5 h-5 text-emerald-400 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span><strong class="text-white">Livewire 3 Support</strong> &mdash; Built for Livewire 3.x on Laravel 10 and above, with Tailwind and Bootstrap themes</span>
+                        <span><strong class="text-white">Livewire 3 and 4 Support</strong> &mdash; Built for Livewire 3.x and 4.x on Laravel 10 and above, with Tailwind and Bootstrap themes</span>
                     </li>
                 </ul>
             </div>
@@ -323,7 +323,7 @@
         <!-- Footer -->
         <div class="text-center text-slate-500 text-sm">
             <p class="mb-2">Built with ❤️ by <a href="https://rappasoft.com" class="text-indigo-400 hover:underline">Rappasoft</a></p>
-            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3</p>
+            <p>Laravel {{ app()->version() }} • PHP {{ PHP_MAJOR_VERSION }}.{{ PHP_MINOR_VERSION }} • Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}</p>
         </div>
     </div>
 </body>

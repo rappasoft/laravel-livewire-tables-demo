@@ -137,8 +137,8 @@
                     <div class="text-slate-400 text-sm">Tailwind CSS</div>
                 </div>
                 <div class="text-center p-6 bg-white/5 rounded-xl">
-                    <div class="text-3xl font-bold text-white mb-1">1571</div>
-                    <div class="text-slate-400 text-sm">Tests Passing</div>
+                    <div class="text-3xl font-bold text-white mb-1">3 + 4</div>
+                    <div class="text-slate-400 text-sm">Livewire Support</div>
                 </div>
             </div>
         </div>

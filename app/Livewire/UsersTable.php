@@ -153,7 +153,9 @@ class UsersTable extends DataTableComponent
 
             ImageColumn::make('Avatar')
             ->location(
-                fn($row) => 'storage/avatars/' . $row->id . '.jpg'
+                fn($row) => file_exists(storage_path('app/public/avatars/' . $row->id . '.jpg'))
+                    ? asset('storage/avatars/' . $row->id . '.jpg')
+                    : asset('images/avatar.svg')
             )
             ->attributes(fn($row) => [
                 'class' => 'rounded-full',

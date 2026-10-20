@@ -6,12 +6,37 @@ use App\Livewire\UsersTable;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class UsersTableTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_avatar_uses_a_placeholder_only_when_the_public_image_is_missing(): void
+    {
+        $user = User::factory()->create(['id' => 1000001]);
+        $avatarPath = storage_path('app/public/avatars/'.$user->id.'.jpg');
+
+        $this->assertFileDoesNotExist($avatarPath);
+        $this->assertFileExists(public_path('images/avatar.svg'));
+
+        Livewire::test(UsersTable::class)
+            ->assertSeeHtml('src="'.asset('images/avatar.svg').'"');
+
+        File::ensureDirectoryExists(dirname($avatarPath));
+
+        try {
+            File::put($avatarPath, 'avatar fixture');
+
+            Livewire::test(UsersTable::class)
+                ->assertSeeHtml('src="'.asset('storage/avatars/'.$user->id.'.jpg').'"')
+                ->assertDontSeeHtml('src="'.asset('images/avatar.svg').'"');
+        } finally {
+            File::delete($avatarPath);
+        }
+    }
 
     public function test_search_controls_remain_visible_after_livewire_updates(): void
     {
