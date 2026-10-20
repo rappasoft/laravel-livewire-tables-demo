@@ -2,6 +2,8 @@
 
 A small Laravel app that demos [rappasoft/laravel-livewire-tables](https://github.com/rappasoft/laravel-livewire-tables) v3 features on Livewire 4 and Laravel 12 against seeded SQLite data. The package also retains Livewire 3 support.
 
+Public demo: [tables.rappasoft.com](https://tables.rappasoft.com), with [Tailwind](https://tables.rappasoft.com/tailwind), [Bootstrap 4](https://tables.rappasoft.com/bootstrap-4) and [Bootstrap 5](https://tables.rappasoft.com/bootstrap-5) examples.
+
 ## The package is symlinked
 
 `composer.json` uses a path repository pointing at `../Livewire Tables`, so `vendor/rappasoft/laravel-livewire-tables` is a **symlink to the package working copy**. That means:
