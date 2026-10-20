@@ -1,13 +1,14 @@
 # Laravel Livewire Tables Demo
 
-A small Laravel app that demos [rappasoft/laravel-livewire-tables](https://github.com/rappasoft/laravel-livewire-tables) v3 features against seeded SQLite data.
+A small Laravel app that demos [rappasoft/laravel-livewire-tables](https://github.com/rappasoft/laravel-livewire-tables) v3 features on Livewire 4 and Laravel 12 against seeded SQLite data. The package also retains Livewire 3 support.
 
 ## The package is symlinked
 
 `composer.json` uses a path repository pointing at `../Livewire Tables`, so `vendor/rappasoft/laravel-livewire-tables` is a **symlink to the package working copy**. That means:
 
 - The demo always runs whatever branch/commit is currently checked out in `../Livewire Tables` — edit the package source and refresh the browser to see changes.
-- **Never run `composer update`** (or `require`/`remove`) here; the package repo may be mid-release and the lockfile is intentionally pinned to the local path.
+- Keep the package checkout on a branch supporting the demo's Livewire version. The Livewire 4 compatibility changes are in [package PR #2337](https://github.com/rappasoft/laravel-livewire-tables/pull/2337), branch `codex/livewire-4-compat`.
+- Avoid broad dependency updates: the lockfile intentionally uses the local package. For an intentional Livewire/package update, first verify the package branch, then run `composer update livewire/livewire rappasoft/laravel-livewire-tables --with-dependencies` and rerun the checks below.
 
 ## Setup
 
@@ -18,6 +19,17 @@ touch database/database.sqlite
 php artisan migrate --seed
 php artisan serve
 ```
+
+The local Herd site is `http://tables-livewire4.test` (`herd link tables-livewire4 --isolate=8.4 --update-env`). The existing `tables.test` points to a separate scratch demo. The demo displays its installed Livewire version; the package's v3 version is separate from Livewire's major version.
+
+## Checks
+
+```bash
+php artisan test
+npm run build
+```
+
+Browser checks should exercise the table selector, search, filters, pagination, bulk actions, column selection and drag-and-save reordering on `/tailwind`, plus the feature pages below.
 
 ## Routes
 

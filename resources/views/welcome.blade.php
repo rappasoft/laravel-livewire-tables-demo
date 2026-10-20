@@ -28,7 +28,7 @@
         <div class="text-center mb-16">
             <div class="inline-flex items-center px-4 py-2 bg-indigo-500/20 rounded-full text-indigo-300 text-sm mb-6">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                Laravel Livewire Tables v3 - Latest Release
+                Laravel Livewire Tables v3 · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}
             </div>
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
                 Livewire Tables
@@ -310,7 +310,7 @@
         <!-- Footer -->
         <div class="text-center text-slate-500 text-sm">
             <p class="mb-2">Built with ❤️ by <a href="https://rappasoft.com" class="text-indigo-400 hover:underline">Rappasoft</a></p>
-            <p>Laravel 10/11/12 • PHP 8.1+ • Livewire 3</p>
+            <p>Laravel {{ app()->version() }} • PHP {{ PHP_MAJOR_VERSION }}.{{ PHP_MINOR_VERSION }} • Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}</p>
         </div>
     </div>
 </body>

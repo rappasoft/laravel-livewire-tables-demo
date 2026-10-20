@@ -107,7 +107,7 @@
     <footer class="border-t border-slate-200 dark:border-slate-700 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between text-sm text-slate-500 dark:text-slate-400">
-                <p>Laravel Livewire Tables v3</p>
+                <p>Laravel Livewire Tables v3 · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}</p>
                 <div class="flex items-center space-x-4 mt-2 md:mt-0">
                     <a href="https://rappasoft.com/docs/laravel-livewire-tables" target="_blank" class="hover:text-indigo-600 dark:hover:text-indigo-400">Documentation</a>
                     <a href="https://github.com/rappasoft/laravel-livewire-tables" target="_blank" class="hover:text-indigo-600 dark:hover:text-indigo-400">GitHub</a>

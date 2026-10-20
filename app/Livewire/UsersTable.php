@@ -50,11 +50,6 @@ class UsersTable extends DataTableComponent
     #[Reactive] 
     public string $testWireable = 'tesat 123';
 
-    public function updatedFilterComponents(string|array|null $value, string $filterName): void
-    {
-        return;
-    }
-
     #[On('update-the-filter')] 
     public function updateTheFilter()
     {
@@ -140,10 +135,7 @@ class UsersTable extends DataTableComponent
             ->setPaginationMethod('cursor')
             ->setPerPageAccepted([10, 25, 50, 100])
             ->setHideReorderColumnUnlessReorderingDisabled()
-            ->setLoadingPlaceholderEnabled()
-            ->setConfigurableAreas([
-                'before-tools' => 'tables.user-before-tools'
-            ]);
+            ->setLoadingPlaceholderEnabled();
 
 
     }
@@ -516,9 +508,8 @@ class UsersTable extends DataTableComponent
 
     public function reorder(array $items): void
     {
-        //User::upsert($items, [$this->getPrimaryKey()], ['sort']);
         foreach ($items as $item) {
-            User::find($item[$this->getPrimaryKey()])->update(['sort_order' => (int)$item[$this->getDefaultReorderColumn()]]);
+            User::find($item[$this->getPrimaryKey()])->update([$this->getDefaultReorderColumn() => (int)$item[$this->getDefaultReorderColumn()]]);
         }
     }
 

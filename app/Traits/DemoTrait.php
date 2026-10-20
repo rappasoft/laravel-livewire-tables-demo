@@ -73,7 +73,7 @@ trait DemoTrait {
 
     public function setFilterDemoKey()
     {
-        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme;
+        $this->filterDemoKey = $this->selectedTable.'-'.$this->filterLayout.'-'.$this->theme.'-'.$this->chosenLocale;
     }
 
     public function rendering()
