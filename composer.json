@@ -9,7 +9,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10",
         "livewire/livewire": "^4.0",
-        "rappasoft/laravel-livewire-tables": "@dev"
+        "rappasoft/laravel-livewire-tables": "^3.10"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -20,12 +20,6 @@
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0.1"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../Livewire Tables"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

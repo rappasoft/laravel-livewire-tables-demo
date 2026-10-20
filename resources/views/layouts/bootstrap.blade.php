@@ -15,7 +15,7 @@
 <body class="bg-light">
     <header class="bg-primary text-white p-4 mb-4">
         <h1 class="h3">Bootstrap {{ $version }} Livewire Tables Demo</h1>
-        <p>Laravel Livewire Tables v3 · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}</p>
+        <p>Laravel Livewire Tables {{ \Composer\InstalledVersions::getPrettyVersion('rappasoft/laravel-livewire-tables') }} · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}</p>
         <nav aria-label="Demo navigation" class="d-flex flex-wrap" style="gap: 1rem">
             <a href="/" class="text-white">Home</a>
             <a href="/tailwind" class="text-white">Tailwind 4</a>

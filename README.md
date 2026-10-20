@@ -4,13 +4,9 @@ A small Laravel app that demos [rappasoft/laravel-livewire-tables](https://githu
 
 Public demo: [tables.rappasoft.com](https://tables.rappasoft.com), with [Tailwind](https://tables.rappasoft.com/tailwind), [Bootstrap 4](https://tables.rappasoft.com/bootstrap-4) and [Bootstrap 5](https://tables.rappasoft.com/bootstrap-5) examples.
 
-## The package is symlinked
+## Published package
 
-`composer.json` uses a path repository pointing at `../Livewire Tables`, so `vendor/rappasoft/laravel-livewire-tables` is a **symlink to the package working copy**. That means:
-
-- The demo always runs whatever branch/commit is currently checked out in `../Livewire Tables` — edit the package source and refresh the browser to see changes.
-- Keep the package checkout on a branch supporting the demo's Livewire version. The Livewire 4 compatibility changes are in [package PR #2337](https://github.com/rappasoft/laravel-livewire-tables/pull/2337), branch `codex/livewire-4-compat`.
-- Avoid broad dependency updates: the lockfile intentionally uses the local package. For an intentional Livewire/package update, first verify the package branch, then run `composer update livewire/livewire rappasoft/laravel-livewire-tables --with-dependencies` and rerun the checks below.
+`composer.json` requires the stable `^3.10` release from Packagist, and the lockfile pins v3.10.0. No sibling package checkout is needed. For an intentional package update, run `composer update rappasoft/laravel-livewire-tables` and rerun the checks below.
 
 ## Setup
 
@@ -22,7 +18,7 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-The local Herd site is `http://tables-livewire4.test` (`herd link tables-livewire4 --isolate=8.4 --update-env`). The existing `tables.test` points to a separate scratch demo. The demo displays its installed Livewire version; the package's v3 version is separate from Livewire's major version.
+The local Herd site is `http://tables-livewire4.test` (`herd link tables-livewire4 --isolate=8.4 --update-env`). The existing `tables.test` points to a separate scratch demo. The demo displays its installed Tables and Livewire versions; the package's v3 version is separate from Livewire's major version.
 
 ## Checks
 

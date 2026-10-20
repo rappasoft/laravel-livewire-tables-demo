@@ -28,7 +28,7 @@
         <div class="text-center mb-16">
             <div class="inline-flex items-center px-4 py-2 bg-indigo-500/20 rounded-full text-indigo-300 text-sm mb-6">
                 <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-                Laravel Livewire Tables v3 · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}
+                Laravel Livewire Tables {{ \Composer\InstalledVersions::getPrettyVersion('rappasoft/laravel-livewire-tables') }} · Livewire {{ \Composer\InstalledVersions::getPrettyVersion('livewire/livewire') }}
             </div>
             <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">
                 Livewire Tables

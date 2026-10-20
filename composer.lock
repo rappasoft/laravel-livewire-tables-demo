@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36fbbd089913c4e826ad65974d4c7251",
+    "content-hash": "c828cfcc70563a5ff120b89924e5a577",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -3524,11 +3524,17 @@
         },
         {
             "name": "rappasoft/laravel-livewire-tables",
-            "version": "dev-codex/livewire-4-compat",
+            "version": "v3.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rappasoft/laravel-livewire-tables.git",
+                "reference": "36bb921699659bdb0a1bd8ea7514e3c81703d392"
+            },
             "dist": {
-                "type": "path",
-                "url": "../Livewire Tables",
-                "reference": "5ad0e3a332a87bf7fd2245ddc91a0b3513b45374"
+                "type": "zip",
+                "url": "https://api.github.com/repos/rappasoft/laravel-livewire-tables/zipball/36bb921699659bdb0a1bd8ea7514e3c81703d392",
+                "reference": "36bb921699659bdb0a1bd8ea7514e3c81703d392",
+                "shasum": ""
             },
             "require": {
                 "blade-ui-kit/blade-heroicons": "^2.1",
@@ -3560,25 +3566,7 @@
                     "Rappasoft\\LaravelLivewireTables\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Rappasoft\\LaravelLivewireTables\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "psalm": [
-                    "vendor/bin/psalm"
-                ],
-                "test": [
-                    "vendor/bin/phpunit --colors=always"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ],
-                "format": [
-                    "vendor/bin/pint"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3603,9 +3591,17 @@
                 "rappasoft",
                 "tables"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/rappasoft/laravel-livewire-tables/issues",
+                "source": "https://github.com/rappasoft/laravel-livewire-tables/tree/v3.10.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/rappasoft",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-10-20T19:04:35+00:00"
         },
         {
             "name": "symfony/clock",
@@ -8676,9 +8672,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rappasoft/laravel-livewire-tables": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

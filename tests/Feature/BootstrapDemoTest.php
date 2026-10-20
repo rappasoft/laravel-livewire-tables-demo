@@ -53,6 +53,7 @@ class BootstrapDemoTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
+            ->assertSee('Laravel Livewire Tables '.\Composer\InstalledVersions::getPrettyVersion('rappasoft/laravel-livewire-tables'))
             ->assertSee('href="/tailwind"', false)
             ->assertSee('href="/bootstrap-4"', false)
             ->assertSee('href="/bootstrap-5"', false);
